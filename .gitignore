@@ -1,0 +1,14 @@
+*.dwarf
+*.o
+*.a
+*.dot
+*.png
+node_modules
+bin/
+build/
+tmp/
+.vscode/
+.DS_Store
+*.s
+*.ll
+crystal

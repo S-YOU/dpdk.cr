@@ -1,0 +1,9 @@
+name: dpdk
+version: 0.0.1
+
+authors:
+  - S-YOU
+
+crystal: 0.24.2
+
+license: MIT
