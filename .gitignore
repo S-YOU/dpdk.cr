@@ -1,0 +1,9 @@
+*.dwarf
+*.o
+*.a
+node_modules
+bin/
+build/
+tmp/
+.vscode/
+.DS_Store
