@@ -1,6 +1,35 @@
-/* SPDX-License-Identifier: BSD-3-Clause
- * Copyright(c) 2010-2014 Intel Corporation.
- * Copyright 2014 6WIND S.A.
+/*-
+ *   BSD LICENSE
+ *
+ *   Copyright(c) 2010-2014 Intel Corporation. All rights reserved.
+ *   Copyright 2014 6WIND S.A.
+ *   All rights reserved.
+ *
+ *   Redistribution and use in source and binary forms, with or without
+ *   modification, are permitted provided that the following conditions
+ *   are met:
+ *
+ *     * Redistributions of source code must retain the above copyright
+ *       notice, this list of conditions and the following disclaimer.
+ *     * Redistributions in binary form must reproduce the above copyright
+ *       notice, this list of conditions and the following disclaimer in
+ *       the documentation and/or other materials provided with the
+ *       distribution.
+ *     * Neither the name of Intel Corporation nor the names of its
+ *       contributors may be used to endorse or promote products derived
+ *       from this software without specific prior written permission.
+ *
+ *   THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
+ *   "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
+ *   LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
+ *   A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT
+ *   OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
+ *   SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
+ *   LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
+ *   DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
+ *   THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
+ *   (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
+ *   OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
 #ifndef _RTE_MBUF_H_
@@ -32,9 +61,7 @@
  */
 
 #include <stdint.h>
-#include <rte_compat.h>
 #include <rte_common.h>
-#include <rte_config.h>
 #include <rte_mempool.h>
 #include <rte_memory.h>
 #include <rte_atomic.h>
@@ -182,13 +209,6 @@ extern "C" {
 /* add new TX flags here */
 
 /**
- * UDP Fragmentation Offload flag. This flag is used for enabling UDP
- * fragmentation in SW or in HW. When use UFO, mbuf->tso_segsz is used
- * to store the MSS of UDP fragments.
- */
-#define PKT_TX_UDP_SEG	(1ULL << 42)
-
-/**
  * Request security offload processing on the TX packet.
  */
 #define PKT_TX_SEC_OFFLOAD 		(1ULL << 43)
@@ -216,9 +236,7 @@ extern "C" {
 /**
  * Second VLAN insertion (QinQ) flag.
  */
-#define PKT_TX_QINQ        (1ULL << 49)   /**< TX packet with double VLAN inserted. */
-/* this old name is deprecated */
-#define PKT_TX_QINQ_PKT    PKT_TX_QINQ
+#define PKT_TX_QINQ_PKT    (1ULL << 49)   /**< TX packet with double VLAN inserted. */
 
 /**
  * TCP segmentation offload. To enable this offload feature for a
@@ -279,12 +297,7 @@ extern "C" {
  */
 #define PKT_TX_IPV6          (1ULL << 56)
 
-/**
- * TX packet is a 802.1q VLAN packet.
- */
-#define PKT_TX_VLAN          (1ULL << 57)
-/* this old name is deprecated */
-#define PKT_TX_VLAN_PKT      PKT_TX_VLAN
+#define PKT_TX_VLAN_PKT      (1ULL << 57) /**< TX packet is a 802.1q VLAN packet. */
 
 /**
  * Offload the IP checksum of an external header in the hardware. The
@@ -489,7 +502,7 @@ struct rte_mbuf {
 
 	uint32_t pkt_len;         /**< Total pkt len: sum of all segments. */
 	uint16_t data_len;        /**< Amount of data in segment buffer. */
-	/** VLAN TCI (CPU order), valid if PKT_RX_VLAN is set. */
+	/** VLAN TCI (CPU order), valid if PKT_RX_VLAN_STRIPPED is set. */
 	uint16_t vlan_tci;
 
 	union {
@@ -515,7 +528,7 @@ struct rte_mbuf {
 		uint32_t usr;	  /**< User defined tags. See rte_distributor_process() */
 	} hash;                   /**< hash information */
 
-	/** Outer VLAN TCI (CPU order), valid if PKT_RX_QINQ is set. */
+	/** Outer VLAN TCI (CPU order), valid if PKT_RX_QINQ_STRIPPED is set. */
 	uint16_t vlan_tci_outer;
 
 	uint16_t buf_len;         /**< Length of segment buffer. */
@@ -751,13 +764,6 @@ rte_mbuf_refcnt_set(struct rte_mbuf *m, uint16_t new_value)
 	rte_atomic16_set(&m->refcnt_atomic, new_value);
 }
 
-/* internal */
-static inline uint16_t
-__rte_mbuf_refcnt_update(struct rte_mbuf *m, int16_t value)
-{
-	return (uint16_t)(rte_atomic16_add_return(&m->refcnt_atomic, value));
-}
-
 /**
  * Adds given value to an mbuf's refcnt and returns its new value.
  * @param m
@@ -782,18 +788,10 @@ rte_mbuf_refcnt_update(struct rte_mbuf *m, int16_t value)
 		return 1 + value;
 	}
 
-	return __rte_mbuf_refcnt_update(m, value);
+	return (uint16_t)(rte_atomic16_add_return(&m->refcnt_atomic, value));
 }
 
 #else /* ! RTE_MBUF_REFCNT_ATOMIC */
-
-/* internal */
-static inline uint16_t
-__rte_mbuf_refcnt_update(struct rte_mbuf *m, int16_t value)
-{
-	m->refcnt = (uint16_t)(m->refcnt + value);
-	return m->refcnt;
-}
 
 /**
  * Adds given value to an mbuf's refcnt and returns its new value.
@@ -801,7 +799,8 @@ __rte_mbuf_refcnt_update(struct rte_mbuf *m, int16_t value)
 static inline uint16_t
 rte_mbuf_refcnt_update(struct rte_mbuf *m, int16_t value)
 {
-	return __rte_mbuf_refcnt_update(m, value);
+	m->refcnt = (uint16_t)(m->refcnt + value);
+	return m->refcnt;
 }
 
 /**
@@ -875,9 +874,11 @@ rte_mbuf_sanity_check(const struct rte_mbuf *m, int is_header);
 static inline struct rte_mbuf *rte_mbuf_raw_alloc(struct rte_mempool *mp)
 {
 	struct rte_mbuf *m;
+	void *mb = NULL;
 
-	if (rte_mempool_get(mp, (void **)&m) < 0)
+	if (rte_mempool_get(mp, &mb) < 0)
 		return NULL;
+	m = (struct rte_mbuf *)mb;
 	MBUF_RAW_ALLOC_CHECK(m);
 	return m;
 }
@@ -1078,48 +1079,6 @@ struct rte_mempool *
 rte_pktmbuf_pool_create(const char *name, unsigned n,
 	unsigned cache_size, uint16_t priv_size, uint16_t data_room_size,
 	int socket_id);
-
-/**
- * Create a mbuf pool with a given mempool ops name
- *
- * This function creates and initializes a packet mbuf pool. It is
- * a wrapper to rte_mempool functions.
- *
- * @param name
- *   The name of the mbuf pool.
- * @param n
- *   The number of elements in the mbuf pool. The optimum size (in terms
- *   of memory usage) for a mempool is when n is a power of two minus one:
- *   n = (2^q - 1).
- * @param cache_size
- *   Size of the per-core object cache. See rte_mempool_create() for
- *   details.
- * @param priv_size
- *   Size of application private are between the rte_mbuf structure
- *   and the data buffer. This value must be aligned to RTE_MBUF_PRIV_ALIGN.
- * @param data_room_size
- *   Size of data buffer in each mbuf, including RTE_PKTMBUF_HEADROOM.
- * @param socket_id
- *   The socket identifier where the memory should be allocated. The
- *   value can be *SOCKET_ID_ANY* if there is no NUMA constraint for the
- *   reserved zone.
- * @param ops_name
- *   The mempool ops name to be used for this mempool instead of
- *   default mempool. The value can be *NULL* to use default mempool.
- * @return
- *   The pointer to the new allocated mempool, on success. NULL on error
- *   with rte_errno set appropriately. Possible rte_errno values include:
- *    - E_RTE_NO_CONFIG - function could not get pointer to rte_config structure
- *    - E_RTE_SECONDARY - function was called from a secondary process instance
- *    - EINVAL - cache size provided is too large, or priv_size is not aligned.
- *    - ENOSPC - the maximum number of memzones has already been allocated
- *    - EEXIST - a memzone with the same name already exists
- *    - ENOMEM - no appropriate memory area found in which to create memzone
- */
-struct rte_mempool * __rte_experimental
-rte_pktmbuf_pool_create_by_ops(const char *name, unsigned int n,
-	unsigned int cache_size, uint16_t priv_size, uint16_t data_room_size,
-	int socket_id, const char *ops_name);
 
 /**
  * Get the data room size of mbufs stored in a pktmbuf_pool
@@ -1405,7 +1364,8 @@ rte_pktmbuf_prefree_seg(struct rte_mbuf *m)
 
 		return m;
 
-	} else if (__rte_mbuf_refcnt_update(m, -1) == 0) {
+       } else if (rte_atomic16_add_return(&m->refcnt_atomic, -1) == 0) {
+
 
 		if (RTE_MBUF_INDIRECT(m))
 			rte_pktmbuf_detach(m);
@@ -1453,14 +1413,13 @@ rte_pktmbuf_free_seg(struct rte_mbuf *m)
  * segment is added back into its original mempool.
  *
  * @param m
- *   The packet mbuf to be freed. If NULL, the function does nothing.
+ *   The packet mbuf to be freed.
  */
 extern inline void rte_pktmbuf_free(struct rte_mbuf *m)
 {
 	struct rte_mbuf *m_next;
 
-	if (m != NULL)
-		__rte_mbuf_sanity_check(m, 1);
+	__rte_mbuf_sanity_check(m, 1);
 
 	while (m != NULL) {
 		m_next = m->next;
@@ -1582,10 +1541,12 @@ static inline uint16_t rte_pktmbuf_tailroom(const struct rte_mbuf *m)
  */
 static inline struct rte_mbuf *rte_pktmbuf_lastseg(struct rte_mbuf *m)
 {
+	struct rte_mbuf *m2 = (struct rte_mbuf *)m;
+
 	__rte_mbuf_sanity_check(m, 1);
-	while (m->next != NULL)
-		m = m->next;
-	return m;
+	while (m2->next != NULL)
+		m2 = m2->next;
+	return m2;
 }
 
 /**

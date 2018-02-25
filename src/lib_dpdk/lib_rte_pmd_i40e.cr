@@ -1,10 +1,4 @@
 lib LibDpdk
-  enum RtePmdI40eInsetType
-    InsetNone    = 0
-    InsetHash    = 1
-    InsetFdir    = 2
-    InsetFdirFlx = 3
-  end
   enum RtePmdI40ePackageInfo
     RtePmdI40EPkgInfoUndefined       =    0
     RtePmdI40EPkgInfoGlobalHeader    =    1
@@ -51,7 +45,6 @@ lib LibDpdk
     RtePmdI40ERssQueueRegionOpMax           = 7
   end
   fun rte_pmd_i40e_add_vf_mac_addr(port : Uint16T, vf_id : Uint16T, mac_addr : EtherAddr*) : LibC::Int
-  fun rte_pmd_i40e_cfg_hash_inset(port : Uint16T, pctype : Uint64T, inset : Uint64T) : LibC::Int
   fun rte_pmd_i40e_flow_add_del_packet_template(port : Uint16T, conf : RtePmdI40ePktTemplateConf*, add : Uint8T) : LibC::Int
   fun rte_pmd_i40e_flow_type_mapping_get(port : Uint16T, mapping_items : RtePmdI40eFlowTypeMapping*) : LibC::Int
   fun rte_pmd_i40e_flow_type_mapping_reset(port : Uint16T) : LibC::Int
@@ -59,11 +52,6 @@ lib LibDpdk
   fun rte_pmd_i40e_get_ddp_info(pkg : Uint8T*, pkg_size : Uint32T, info : Uint8T*, size : Uint32T, type : RtePmdI40ePackageInfo) : LibC::Int
   fun rte_pmd_i40e_get_ddp_list(port : Uint16T, buff : Uint8T*, size : Uint32T) : LibC::Int
   fun rte_pmd_i40e_get_vf_stats(port : Uint16T, vf_id : Uint16T, stats : RteEthStats*) : LibC::Int
-  fun rte_pmd_i40e_inset_field_clear(inset : Uint64T*, field_idx : Uint8T) : LibC::Int
-  fun rte_pmd_i40e_inset_field_get(inset : Uint64T, field_idx : Uint8T) : LibC::Int
-  fun rte_pmd_i40e_inset_field_set(inset : Uint64T*, field_idx : Uint8T) : LibC::Int
-  fun rte_pmd_i40e_inset_get(port : Uint16T, pctype : Uint8T, inset : RtePmdI40eInset*, inset_type : RtePmdI40eInsetType) : LibC::Int
-  fun rte_pmd_i40e_inset_set(port : Uint16T, pctype : Uint8T, inset : RtePmdI40eInset*, inset_type : RtePmdI40eInsetType) : LibC::Int
   fun rte_pmd_i40e_ping_vfs(port : Uint16T, vf : Uint16T) : LibC::Int
   fun rte_pmd_i40e_process_ddp_package(port : Uint16T, buff : Uint8T*, size : Uint32T, op : RtePmdI40ePackageOp) : LibC::Int
   fun rte_pmd_i40e_ptype_mapping_get(port : Uint16T, mapping_items : RtePmdI40ePtypeMapping*, size : Uint16T, count : Uint16T*, valid_only : Uint8T) : LibC::Int
@@ -104,16 +92,6 @@ lib LibDpdk
   struct RtePmdI40eFlowTypeMapping
     flow_type : Uint16T
     pctype : Uint64T
-  end
-
-  struct RtePmdI40eInset
-    inset : Uint64T
-    mask : RtePmdI40eInsetMask[2]
-  end
-
-  struct RtePmdI40eInsetMask
-    field_idx : Uint8T
-    mask : Uint16T
   end
 
   struct RtePmdI40eMbEventParam

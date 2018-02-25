@@ -1,5 +1,4 @@
 lib LibDpdk
-  $rte_thash_ipv6_bswap_mask : LibC::Int
   fun rte_convert_rss_key(orig : Uint32T*, targ : Uint32T*, len : LibC::Int)
   fun rte_softrss(input_tuple : Uint32T*, input_len : Uint32T, rss_key : Uint8T*) : Uint32T
   fun rte_softrss_be(input_tuple : Uint32T*, input_len : Uint32T, rss_key : Uint8T*) : Uint32T

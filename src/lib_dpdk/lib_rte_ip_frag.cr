@@ -29,7 +29,7 @@ lib LibDpdk
     total_size : Uint32T
     frag_size : Uint32T
     last_idx : Uint32T
-    frags : IpFrag[4]
+    frags : IpFrag[3]
   end
 
   struct IpFragPktLru
@@ -60,7 +60,7 @@ lib LibDpdk
 
   struct RteIpFragDeathRow
     cnt : Uint32T
-    row : RteMbuf*[160]
+    row : RteMbuf*[128]
   end
 
   struct RteIpFragTbl

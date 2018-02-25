@@ -2,22 +2,20 @@ lib LibDpdk
   alias RteFlowClassifier = Void
   alias RteFlowClassifyRule = Void
   enum RteFlowClassifyTableType
-    RteFlowClassifyTableTypeNone         = 1
-    RteFlowClassifyTableAclIp45Tuple     = 2
-    RteFlowClassifyTableAclVlanIp45Tuple = 4
-    RteFlowClassifyTableAclQinqIp45Tuple = 8
+    RteFlowClassifyTableTypeNone = 0
+    RteFlowClassifyTableTypeAcl  = 1
   end
   fun rte_flow_classifier_create(params : RteFlowClassifierParams*) : RteFlowClassifier*
   fun rte_flow_classifier_free(cls : RteFlowClassifier*) : LibC::Int
-  fun rte_flow_classifier_query(cls : RteFlowClassifier*, pkts : RteMbuf**, nb_pkts : Uint16T, rule : RteFlowClassifyRule*, stats : RteFlowClassifyStats*) : LibC::Int
-  fun rte_flow_classify_table_create(cls : RteFlowClassifier*, params : RteFlowClassifyTableParams*) : LibC::Int
-  fun rte_flow_classify_table_entry_add(cls : RteFlowClassifier*, attr : RteFlowAttr*, pattern : RteFlowItem*, actions : RteFlowAction*, key_found : LibC::Int*, error : RteFlowError*) : RteFlowClassifyRule*
-  fun rte_flow_classify_table_entry_delete(cls : RteFlowClassifier*, rule : RteFlowClassifyRule*) : LibC::Int
-  fun rte_flow_classify_validate(cls : RteFlowClassifier*, attr : RteFlowAttr*, pattern : RteFlowItem*, actions : RteFlowAction*, error : RteFlowError*) : LibC::Int
+  fun rte_flow_classifier_query(cls : RteFlowClassifier*, table_id : Uint32T, pkts : RteMbuf**, nb_pkts : Uint16T, rule : RteFlowClassifyRule*, stats : RteFlowClassifyStats*) : LibC::Int
+  fun rte_flow_classify_table_create(cls : RteFlowClassifier*, params : RteFlowClassifyTableParams*, table_id : Uint32T*) : LibC::Int
+  fun rte_flow_classify_table_entry_add(cls : RteFlowClassifier*, table_id : Uint32T, key_found : LibC::Int*, attr : RteFlowAttr*, pattern : RteFlowItem*, actions : RteFlowAction*, error : RteFlowError*) : RteFlowClassifyRule*
+  fun rte_flow_classify_table_entry_delete(cls : RteFlowClassifier*, table_id : Uint32T, rule : RteFlowClassifyRule*) : LibC::Int
 
   struct RteFlowClassifierParams
     name : LibC::Char*
     socket_id : LibC::Int
+    type : RteFlowClassifyTableType
   end
 
   struct RteFlowClassifyIpv45tuple
@@ -45,6 +43,5 @@ lib LibDpdk
   struct RteFlowClassifyTableParams
     ops : RteTableOps*
     arg_create : Void*
-    type : RteFlowClassifyTableType
   end
 end

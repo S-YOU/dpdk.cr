@@ -28,7 +28,7 @@ lib LibDpdk
 
   struct RteCryptodevGlobal
     devs : RteCryptodev*
-    data : RteCryptodevData*[64]
+    data : RteCryptodevData*
     nb_devs : Uint8T
     max_devs : Uint8T
   end

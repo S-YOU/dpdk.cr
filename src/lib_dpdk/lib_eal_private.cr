@@ -15,5 +15,4 @@ lib LibDpdk
   fun rte_eal_memzone_init : LibC::Int
   fun rte_eal_tailqs_init : LibC::Int
   fun rte_eal_timer_init : LibC::Int
-  fun rte_mp_channel_init : LibC::Int
 end
