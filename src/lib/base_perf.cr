@@ -7,14 +7,14 @@ module BasePerf
   REQUIRED_CORES =         3
   REQUIRED_PORTS =         2
 
-  macro included
-    RX_DESC_PER_QUEUE    =  4096_u16
-    TX_DESC_PER_QUEUE    =  4096_u16
-    RING_SIZE            = 16384_u32
-    MAX_PKTS_BURST       =    32_u32
-    MBUF_PER_POOL        = 65535_u32
-    MBUF_POOL_CACHE_SIZE =   250_u32
+  RING_SIZE            = 65536_u32
+  MAX_PKTS_BURST       =    64_u32
+  RX_DESC_PER_QUEUE    =   512_u16 # MAX_PKTS_BURST * 8 # DEFAULT_RX_DESC
+  TX_DESC_PER_QUEUE    =   128_u16 # RX_DESC_PER_QUEUE * 2 # DEFAULT_TX_DESC
+  MBUF_PER_POOL        =  1024_u32 # TX_DESC_PER_QUEUE * 8 # MAX_MBUFS_PER_PORT
+  MBUF_POOL_CACHE_SIZE =   512_u32 # RTE_MEMPOOL_CACHE_MAX_SIZE
 
+  macro included
     RTE_LOGTYPE_{{ @type.name.upcase.id }} = RTE_LOGTYPE_USER1
 
     record AppParams, port : PortT, pool : RteMempool*

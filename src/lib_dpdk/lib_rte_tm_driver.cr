@@ -29,7 +29,7 @@ lib LibDpdk
   alias RteTmWredProfileAddT = (RteEthDev*, Uint32T, RteTmWredParams*, RteTmError* -> LibC::Int)
   alias RteTmWredProfileDeleteT = (RteEthDev*, Uint32T, RteTmError* -> LibC::Int)
   fun rte_tm_error_set(error : RteTmError*, code : LibC::Int, type : RteTmErrorType, cause : Void*, message : LibC::Char*) : LibC::Int
-  fun rte_tm_ops_get(port_id : Uint16T, error : RteTmError*) : RteTmOps*
+  fun rte_tm_ops_get(port_id : Uint8T, error : RteTmError*) : RteTmOps*
 
   struct RteTmOps
     node_type_get : RteTmNodeTypeGetT

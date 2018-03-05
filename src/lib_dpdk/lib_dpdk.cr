@@ -1,4 +1,4 @@
-@[Link(ldflags: "-Wl,--whole-archive -Wl,--start-group -lrte_jobstats -lrte_pipeline -lrte_pmd_ixgbe -lrte_acl -lrte_kni -lrte_pmd_kni -lrte_pmd_vhost -lrte_bitratestats -lrte_kvargs -lrte_pmd_virtio -lrte_cfgfile -lrte_latencystats -lrte_cmdline -lrte_lpm -lrte_pmd_null -lrte_port -lrte_cryptodev -lrte_mbuf -lrte_pmd_null_crypto -lrte_power -lrte_distributor -lrte_mempool -lrte_pmd_crypto_scheduler -lrte_reorder -lrte_eal -lrte_mempool_ring -lrte_ring -lrte_efd -lrte_mempool_stack -lrte_pmd_e1000 -lrte_sched -lrte_ethdev -lrte_meter -lrte_table -lrte_eventdev -lrte_metrics -lrte_pmd_skeleton_event -lrte_pmd_i40e -lrte_timer -lrte_pci -lrte_bus_pci -lrte_bus_vdev -lrte_hash -lrte_net -lrte_vhost -lrte_pmd_af_packet -lrte_ip_frag -lrte_pdump -lrte_pmd_tap -Wl,--end-group -Wl,--no-whole-archive")]
+@[Link(ldflags: "-Wl,--whole-archive -Wl,--start-group -lrte_jobstats -lrte_pipeline -lrte_pmd_ixgbe -lrte_acl -lrte_kni -lrte_pmd_kni -lrte_pmd_vhost -lrte_bitratestats -lrte_kvargs -lrte_pmd_virtio -lrte_cfgfile -lrte_latencystats -lrte_cmdline -lrte_lpm -lrte_pmd_null -lrte_port -lrte_cryptodev -lrte_mbuf -lrte_pmd_null_crypto -lrte_power -lrte_distributor -lrte_mempool -lrte_pmd_crypto_scheduler -lrte_reorder -lrte_eal -lrte_mempool_ring -lrte_ring -lrte_efd -lrte_mempool_stack -lrte_pmd_e1000 -lrte_sched -lrte_ethdev -lrte_meter -lrte_table -lrte_eventdev -lrte_metrics -lrte_pmd_skeleton_event -lrte_pmd_i40e -lrte_timer -lrte_hash -lrte_net -lrte_vhost -lrte_pmd_af_packet -lrte_ip_frag -lrte_pdump -lrte_pmd_tap -Wl,--end-group -Wl,--no-whole-archive")]
 lib LibDpdk
   alias RteAclCtx = Void
   alias RteFlow = Void
@@ -9,7 +9,7 @@ lib LibDpdk
   alias RteLogDynamicType = Void
   alias RteBbdevCallback = Void
   alias X_IoLockT = Void
-  alias PortT = UInt16
+  alias PortT = UInt8
 
   struct Timespec
     tv_sec : LibC::Long
@@ -51,7 +51,6 @@ lib LibDpdk
   $per_lcore__lcore_id : LibC::UInt
   @[ThreadLocal]
   $per_lcore__rte_errno : LibC::Int
-  $rte_bbdev_devices : RteBbdev*
   $rte_crypto_aead_algorithm_strings : LibC::Char**
   $rte_crypto_aead_operation_strings : LibC::Char**
   $rte_crypto_auth_algorithm_strings : LibC::Char**
@@ -59,7 +58,6 @@ lib LibDpdk
   $rte_crypto_cipher_algorithm_strings : LibC::Char**
   $rte_crypto_cipher_operation_strings : LibC::Char**
   $rte_cryptodevs : RteCryptodev*
-  $rte_cycles_vmware_tsc_map : LibC::Int
   $rte_cyptodev_names : LibC::Char**
   $rte_delay_us : (LibC::UInt -> Void)
   $rte_eth_devices : RteEthDev*
@@ -67,12 +65,9 @@ lib LibDpdk
   $rte_eventdevs : RteEventdev*
   $rte_flow_item_any_mask : RteFlowItemAny
   $rte_flow_item_e_tag_mask : RteFlowItemETag
-  $rte_flow_item_esp_mask : RteFlowItemEsp
   $rte_flow_item_eth_mask : RteFlowItemEth
   $rte_flow_item_fuzzy_mask : RteFlowItemFuzzy
-  $rte_flow_item_geneve_mask : RteFlowItemGeneve
   $rte_flow_item_gre_mask : RteFlowItemGre
-  $rte_flow_item_gtp_mask : RteFlowItemGtp
   $rte_flow_item_icmp_mask : RteFlowItemIcmp
   $rte_flow_item_ipv4_mask : RteFlowItemIpv4
   $rte_flow_item_ipv6_mask : RteFlowItemIpv6
@@ -88,9 +83,7 @@ lib LibDpdk
   $rte_flow_item_vxlan_mask : RteFlowItemVxlan
   $rte_logs : RteLogs
   $rte_mempool_ops_table : RteMempoolOpsTable
-  $rte_rawdevs : RteRawdev*
   $rte_rtm_supported : Uint8T
-  $rte_table_acl_ops : RteTableOps
   alias ArgHandlerT = (LibC::Char*, LibC::Char*, Void* -> LibC::Int)
   alias BufferTxErrorFn = (RteMbuf**, Uint16T, Void* -> Void)
   alias CcT = UInt8
@@ -104,7 +97,6 @@ lib LibDpdk
   alias EthDevInfosGetT = (RteEthDev*, RteEthDevInfo* -> Void)
   alias EthDevLedOffT = (RteEthDev* -> LibC::Int)
   alias EthDevLedOnT = (RteEthDev* -> LibC::Int)
-  alias EthDevResetT = (RteEthDev* -> LibC::Int)
   alias EthDevSetLinkDownT = (RteEthDev* -> LibC::Int)
   alias EthDevSetLinkUpT = (RteEthDev* -> LibC::Int)
   alias EthDevStartT = (RteEthDev* -> LibC::Int)
@@ -116,7 +108,6 @@ lib LibDpdk
   alias EthGetEepromLengthT = (RteEthDev* -> LibC::Int)
   alias EthGetEepromT = (RteEthDev*, RteDevEepromInfo* -> LibC::Int)
   alias EthGetRegT = (RteEthDev*, RteDevRegInfo* -> LibC::Int)
-  alias EthIsRemovedT = (RteEthDev* -> LibC::Int)
   alias EthL2TunnelEthTypeConfT = (RteEthDev*, RteEthL2TunnelConf* -> LibC::Int)
   alias EthL2TunnelOffloadSetT = (RteEthDev*, RteEthL2TunnelConf*, Uint32T, Uint8T -> LibC::Int)
   alias EthLinkUpdateT = (RteEthDev*, LibC::Int -> LibC::Int)
@@ -125,8 +116,6 @@ lib LibDpdk
   alias EthMacAddrSetT = (RteEthDev*, EtherAddr* -> Void)
   alias EthMirrorRuleResetT = (RteEthDev*, Uint8T -> LibC::Int)
   alias EthMirrorRuleSetT = (RteEthDev*, RteEthMirrorConf*, Uint8T, Uint8T -> LibC::Int)
-  alias EthMtrOpsGetT = (RteEthDev*, Void* -> LibC::Int)
-  alias EthPoolOpsSupportedT = (RteEthDev*, LibC::Char* -> LibC::Int)
   alias EthPromiscuousDisableT = (RteEthDev* -> Void)
   alias EthPromiscuousEnableT = (RteEthDev* -> Void)
   alias EthQueueReleaseT = (Void* -> Void)
@@ -144,7 +133,7 @@ lib LibDpdk
   alias EthSetEepromT = (RteEthDev*, RteDevEepromInfo* -> LibC::Int)
   alias EthSetMcAddrListT = (RteEthDev*, EtherAddr*, Uint32T -> LibC::Int)
   alias EthSetQueueRateLimitT = (RteEthDev*, Uint16T, Uint16T -> LibC::Int)
-  alias EthStatsGetT = (RteEthDev*, RteEthStats* -> LibC::Int)
+  alias EthStatsGetT = (RteEthDev*, RteEthStats* -> Void)
   alias EthStatsResetT = (RteEthDev* -> Void)
   alias EthTimesyncAdjustTime = (RteEthDev*, Int64T -> LibC::Int)
   alias EthTimesyncDisableT = (RteEthDev* -> LibC::Int)
@@ -173,6 +162,7 @@ lib LibDpdk
   alias EventDequeueT = (Void*, RteEvent*, Uint64T -> Uint16T)
   alias EventEnqueueBurstT = (Void*, RteEvent*, Uint16T -> Uint16T)
   alias EventEnqueueT = (Void*, RteEvent* -> Uint16T)
+  alias EventScheduleT = (RteEventdev* -> Void)
   alias FlowCtrlGetT = (RteEthDev*, RteEthFcConf* -> LibC::Int)
   alias FlowCtrlSetT = (RteEthDev*, RteEthFcConf* -> LibC::Int)
   alias InAddrT = Uint32T
@@ -190,13 +180,7 @@ lib LibDpdk
   alias RetaUpdateT = (RteEthDev*, RteEthRssRetaEntry64*, Uint16T -> LibC::Int)
   alias RssHashConfGetT = (RteEthDev*, RteEthRssConf* -> LibC::Int)
   alias RssHashUpdateT = (RteEthDev*, RteEthRssConf* -> LibC::Int)
-  alias RteBbdevCbFn = (Uint16T, RteBbdevEventType, Void*, Void* -> Void)
-  alias RteBbdevDequeueDecOpsT = (RteBbdevQueueData*, RteBbdevDecOp**, Uint16T -> Uint16T)
-  alias RteBbdevDequeueEncOpsT = (RteBbdevQueueData*, RteBbdevEncOp**, Uint16T -> Uint16T)
-  alias RteBbdevEnqueueDecOpsT = (RteBbdevQueueData*, RteBbdevDecOp**, Uint16T -> Uint16T)
-  alias RteBbdevEnqueueEncOpsT = (RteBbdevQueueData*, RteBbdevEncOp**, Uint16T -> Uint16T)
   alias RteBe16T = Uint16T
-  alias RteBe32T = Uint32T
   alias RteBusCmpT = (RteBus*, Void* -> LibC::Int)
   alias RteCpusetT = CpuSetT
   alias RteCryptodevCbFn = (Uint8T, RteCryptodevEventType, Void* -> Void)
@@ -207,18 +191,14 @@ lib LibDpdk
   alias RteCryptodevSchedulerSlaveAttachT = (RteCryptodev*, Uint8T -> LibC::Int)
   alias RteCryptodevSchedulerStartT = (RteCryptodev* -> LibC::Int)
   alias RteCryptodevSchedulerStopT = (RteCryptodev* -> LibC::Int)
-  alias RteEthDevCbFn = (Uint16T, RteEthEventType, Void*, Void* -> LibC::Int)
+  alias RteEthDevCbFn = (Uint8T, RteEthEventType, Void*, Void* -> LibC::Int)
   alias RteIntrCallbackFn = (Void* -> Void)
   alias RteIntrEventCbT = (LibC::Int, Void* -> Void)
-  alias RteIovaT = Uint64T
   alias RteMempoolAllocT = (RteMempool* -> LibC::Int)
   alias RteMempoolDequeueT = (RteMempool*, Void**, LibC::UInt -> LibC::Int)
   alias RteMempoolEnqueueT = (RteMempool*, Void**, LibC::UInt -> LibC::Int)
   alias RteMempoolFreeT = (RteMempool* -> Void)
-  alias RteMempoolGetCapabilitiesT = (RteMempool*, LibC::UInt* -> LibC::Int)
   alias RteMempoolGetCount = (RteMempool* -> LibC::UInt)
-  alias RteMempoolOpsRegisterMemoryAreaT = (RteMempool*, LibC::Char*, RteIovaT, LibC::Int -> LibC::Int)
-  alias RteMpT = (RteMpMsg*, Void* -> LibC::Int)
   alias RtePortInOpCreate = (Void*, LibC::Int -> Void*)
   alias RtePortInOpFree = (Void* -> LibC::Int)
   alias RtePortInOpRx = (Void*, RteMbuf**, Uint32T -> LibC::Int)
@@ -229,8 +209,7 @@ lib LibDpdk
   alias RtePortOutOpStatsRead = (Void*, RtePortOutStats*, LibC::Int -> LibC::Int)
   alias RtePortOutOpTx = (Void*, RteMbuf* -> LibC::Int)
   alias RtePortOutOpTxBulk = (Void*, RteMbuf**, Uint64T -> LibC::Int)
-  alias RteRawdevObjT = Void*
-  alias RteRxCallbackFn = (Uint16T, Uint16T, RteMbuf**, Uint16T, Uint16T, Void* -> Uint16T)
+  alias RteRxCallbackFn = (Uint8T, Uint16T, RteMbuf**, Uint16T, Uint16T, Void* -> Uint16T)
   alias RteTableOpCreate = (Void*, LibC::Int, Uint32T -> Void*)
   alias RteTableOpEntryAdd = (Void*, Void*, Void*, LibC::Int*, Void** -> LibC::Int)
   alias RteTableOpEntryAddBulk = (Void*, Void**, Void**, Uint32T, LibC::Int*, Void** -> LibC::Int)
@@ -239,9 +218,8 @@ lib LibDpdk
   alias RteTableOpFree = (Void* -> LibC::Int)
   alias RteTableOpLookup = (Void*, RteMbuf**, Uint64T, Uint64T*, Void** -> LibC::Int)
   alias RteTableOpStatsRead = (Void*, RteTableStats*, LibC::Int -> LibC::Int)
-  alias RteTxCallbackFn = (Uint16T, Uint16T, RteMbuf**, Uint16T, Void* -> Uint16T)
+  alias RteTxCallbackFn = (Uint8T, Uint16T, RteMbuf**, Uint16T, Void* -> Uint16T)
   alias RteUsageHookT = (LibC::Char* -> Void)
-  alias RteVdevScanCallback = (Void* -> Void)
   alias SpeedT = LibC::UInt
   alias SsizeT = X__SsizeT
   alias TcflagT = LibC::UInt
@@ -252,7 +230,7 @@ lib LibDpdk
   alias UintptrT = LibC::ULong
   alias VaList = LibC::Int
   alias VlanFilterSetT = (RteEthDev*, Uint16T, LibC::Int -> LibC::Int)
-  alias VlanOffloadSetT = (RteEthDev*, LibC::Int -> LibC::Int)
+  alias VlanOffloadSetT = (RteEthDev*, LibC::Int -> Void)
   alias VlanPvidSetT = (RteEthDev*, Uint16T, LibC::Int -> LibC::Int)
   alias VlanStripQueueSetT = (RteEthDev*, Uint16T, LibC::Int -> Void)
   alias VlanTpidSetT = (RteEthDev*, RteVlanType, Uint16T -> LibC::Int)
@@ -295,22 +273,6 @@ lib LibDpdk
     RteAclClassifyAltivec = 5
     RteAclClassifyNum     = 6
   end
-  enum RteBbdevEventType
-    RteBbdevEventUnknown = 0
-    RteBbdevEventError   = 1
-    RteBbdevEventDequeue = 2
-    RteBbdevEventMax     = 3
-  end
-  enum RteBbdevOpType
-    RteBbdevOpNone      = 0
-    RteBbdevOpTurboDec  = 1
-    RteBbdevOpTurboEnc  = 2
-    RteBbdevOpTypeCount = 3
-  end
-  enum RteBbdevState
-    RteBbdevUnused      = 0
-    RteBbdevInitialized = 1
-  end
   enum RteCpuFlagT
     RteCpuflagSse3          =  0
     RteCpuflagPclmulqdq     =  1
@@ -341,64 +303,63 @@ lib LibDpdk
     RteCpuflagAvx           = 26
     RteCpuflagF16C          = 27
     RteCpuflagRdrand        = 28
-    RteCpuflagHypervisor    = 29
-    RteCpuflagFpu           = 30
-    RteCpuflagVme           = 31
-    RteCpuflagDe            = 32
-    RteCpuflagPse           = 33
-    RteCpuflagTsc           = 34
-    RteCpuflagMsr           = 35
-    RteCpuflagPae           = 36
-    RteCpuflagMce           = 37
-    RteCpuflagCx8           = 38
-    RteCpuflagApic          = 39
-    RteCpuflagSep           = 40
-    RteCpuflagMtrr          = 41
-    RteCpuflagPge           = 42
-    RteCpuflagMca           = 43
-    RteCpuflagCmov          = 44
-    RteCpuflagPat           = 45
-    RteCpuflagPse36         = 46
-    RteCpuflagPsn           = 47
-    RteCpuflagClfsh         = 48
-    RteCpuflagDs            = 49
-    RteCpuflagAcpi          = 50
-    RteCpuflagMmx           = 51
-    RteCpuflagFxsr          = 52
-    RteCpuflagSse           = 53
-    RteCpuflagSse2          = 54
-    RteCpuflagSs            = 55
-    RteCpuflagHtt           = 56
-    RteCpuflagTm            = 57
-    RteCpuflagPbe           = 58
-    RteCpuflagDigtemp       = 59
-    RteCpuflagTrbobst       = 60
-    RteCpuflagArat          = 61
-    RteCpuflagPln           = 62
-    RteCpuflagEcmd          = 63
-    RteCpuflagPtm           = 64
-    RteCpuflagMperfAperfMsr = 65
-    RteCpuflagAcnt2         = 66
-    RteCpuflagEnergyEff     = 67
-    RteCpuflagFsgsbase      = 68
-    RteCpuflagBmi1          = 69
-    RteCpuflagHle           = 70
-    RteCpuflagAvx2          = 71
-    RteCpuflagSmep          = 72
-    RteCpuflagBmi2          = 73
-    RteCpuflagErms          = 74
-    RteCpuflagInvpcid       = 75
-    RteCpuflagRtm           = 76
-    RteCpuflagAvx512F       = 77
-    RteCpuflagLahfSahf      = 78
-    RteCpuflagLzcnt         = 79
-    RteCpuflagSyscall       = 80
-    RteCpuflagXd            = 81
-    RteCpuflag1GbPg         = 82
-    RteCpuflagRdtscp        = 83
-    RteCpuflagEm64T         = 84
-    RteCpuflagInvtsc        = 85
-    RteCpuflagNumflags      = 86
+    RteCpuflagFpu           = 29
+    RteCpuflagVme           = 30
+    RteCpuflagDe            = 31
+    RteCpuflagPse           = 32
+    RteCpuflagTsc           = 33
+    RteCpuflagMsr           = 34
+    RteCpuflagPae           = 35
+    RteCpuflagMce           = 36
+    RteCpuflagCx8           = 37
+    RteCpuflagApic          = 38
+    RteCpuflagSep           = 39
+    RteCpuflagMtrr          = 40
+    RteCpuflagPge           = 41
+    RteCpuflagMca           = 42
+    RteCpuflagCmov          = 43
+    RteCpuflagPat           = 44
+    RteCpuflagPse36         = 45
+    RteCpuflagPsn           = 46
+    RteCpuflagClfsh         = 47
+    RteCpuflagDs            = 48
+    RteCpuflagAcpi          = 49
+    RteCpuflagMmx           = 50
+    RteCpuflagFxsr          = 51
+    RteCpuflagSse           = 52
+    RteCpuflagSse2          = 53
+    RteCpuflagSs            = 54
+    RteCpuflagHtt           = 55
+    RteCpuflagTm            = 56
+    RteCpuflagPbe           = 57
+    RteCpuflagDigtemp       = 58
+    RteCpuflagTrbobst       = 59
+    RteCpuflagArat          = 60
+    RteCpuflagPln           = 61
+    RteCpuflagEcmd          = 62
+    RteCpuflagPtm           = 63
+    RteCpuflagMperfAperfMsr = 64
+    RteCpuflagAcnt2         = 65
+    RteCpuflagEnergyEff     = 66
+    RteCpuflagFsgsbase      = 67
+    RteCpuflagBmi1          = 68
+    RteCpuflagHle           = 69
+    RteCpuflagAvx2          = 70
+    RteCpuflagSmep          = 71
+    RteCpuflagBmi2          = 72
+    RteCpuflagErms          = 73
+    RteCpuflagInvpcid       = 74
+    RteCpuflagRtm           = 75
+    RteCpuflagAvx512F       = 76
+    RteCpuflagLahfSahf      = 77
+    RteCpuflagLzcnt         = 78
+    RteCpuflagSyscall       = 79
+    RteCpuflagXd            = 80
+    RteCpuflag1GbPg         = 81
+    RteCpuflagRdtscp        = 82
+    RteCpuflagEm64T         = 83
+    RteCpuflagInvtsc        = 84
+    RteCpuflagNumflags      = 85
   end
   enum RteCryptoAeadAlgorithm
     RteCryptoAeadAesCcm  = 1
@@ -487,7 +448,6 @@ lib LibDpdk
     RteEthDevUnused   = 0
     RteEthDevAttached = 1
     RteEthDevDeferred = 2
-    RteEthDevRemoved  = 3
   end
   enum RteEthEventType
     RteEthEventUnknown    = 0
@@ -497,9 +457,7 @@ lib LibDpdk
     RteEthEventVfMbox     = 4
     RteEthEventMacsec     = 5
     RteEthEventIntrRmv    = 6
-    RteEthEventNew        = 7
-    RteEthEventDestroy    = 8
-    RteEthEventMax        = 9
+    RteEthEventMax        = 7
   end
   enum RteEthFcMode
     RteFcNone    = 0
@@ -698,8 +656,6 @@ lib LibDpdk
     RteFlowActionTypeRss      =  9
     RteFlowActionTypePf       = 10
     RteFlowActionTypeVf       = 11
-    RteFlowActionTypeMeter    = 12
-    RteFlowActionTypeSecurity = 13
   end
   enum RteFlowErrorType
     RteFlowErrorTypeNone         =  0
@@ -738,11 +694,6 @@ lib LibDpdk
     RteFlowItemTypeMpls   = 19
     RteFlowItemTypeGre    = 20
     RteFlowItemTypeFuzzy  = 21
-    RteFlowItemTypeGtp    = 22
-    RteFlowItemTypeGtpc   = 23
-    RteFlowItemTypeGtpu   = 24
-    RteFlowItemTypeEsp    = 25
-    RteFlowItemTypeGeneve = 26
   end
   enum RteIntrHandleType
     RteIntrHandleUnknown    = 0
@@ -761,11 +712,6 @@ lib LibDpdk
     RteIntrModeLegacy = 1
     RteIntrModeMsi    = 2
     RteIntrModeMsix   = 3
-  end
-  enum RteIovaMode
-    RteIovaDc = 0
-    RteIovaPa = 1
-    RteIovaVa = 2
   end
   enum RteKernelDriver
     RteKdrvUnknown    = 0
@@ -797,38 +743,6 @@ lib LibDpdk
     ERteMeterRed    = 2
     ERteMeterColors = 3
   end
-  enum RteMtrAlgorithm
-    RteMtrNone         = 0
-    RteMtrSrtcmRfc2697 = 1
-    RteMtrTrtcmRfc2698 = 2
-    RteMtrTrtcmRfc4115 = 3
-  end
-  enum RteMtrColor
-    RteMtrGreen  = 0
-    RteMtrYellow = 1
-    RteMtrRed    = 2
-    RteMtrColors = 3
-  end
-  enum RteMtrErrorType
-    RteMtrErrorTypeNone                =  0
-    RteMtrErrorTypeUnspecified         =  1
-    RteMtrErrorTypeMeterProfileId      =  2
-    RteMtrErrorTypeMeterProfile        =  3
-    RteMtrErrorTypeMtrId               =  4
-    RteMtrErrorTypeMtrParams           =  5
-    RteMtrErrorTypePolicerActionGreen  =  6
-    RteMtrErrorTypePolicerActionYellow =  7
-    RteMtrErrorTypePolicerActionRed    =  8
-    RteMtrErrorTypeStatsMask           =  9
-    RteMtrErrorTypeStats               = 10
-    RteMtrErrorTypeShared              = 11
-  end
-  enum RteMtrPolicerAction
-    MtrPolicerActionColorGreen  = 0
-    MtrPolicerActionColorYellow = 1
-    MtrPolicerActionColorRed    = 2
-    MtrPolicerActionDrop        = 3
-  end
   enum RteProcTypeT
     RteProcAuto      = -1
     RteProcPrimary   =  0
@@ -842,32 +756,6 @@ lib LibDpdk
   enum RteRmtCallMasterT
     SkipMaster = 0
     CallMaster = 1
-  end
-  enum RteSecurityIpsecSaDirection
-    RteSecurityIpsecSaDirEgress  = 0
-    RteSecurityIpsecSaDirIngress = 1
-  end
-  enum RteSecurityIpsecSaMode
-    RteSecurityIpsecSaModeTransport = 1
-    RteSecurityIpsecSaModeTunnel    = 2
-  end
-  enum RteSecurityIpsecSaProtocol
-    RteSecurityIpsecSaProtoAh  = 1
-    RteSecurityIpsecSaProtoEsp = 2
-  end
-  enum RteSecurityIpsecTunnelType
-    RteSecurityIpsecTunnelIpv4 = 1
-    RteSecurityIpsecTunnelIpv6 = 2
-  end
-  enum RteSecuritySessionActionType
-    RteSecurityActionTypeNone              = 0
-    RteSecurityActionTypeInlineCrypto      = 1
-    RteSecurityActionTypeInlineProtocol    = 2
-    RteSecurityActionTypeLookasideProtocol = 3
-  end
-  enum RteSecuritySessionProtocol
-    RteSecurityProtocolIpsec  = 1
-    RteSecurityProtocolMacsec = 2
   end
   enum RteTmCmanMode
     RteTmCmanTailDrop = 0
@@ -930,7 +818,6 @@ lib LibDpdk
   fun __rte_jhash_2hashes(key : Void*, length : Uint32T, pc : Uint32T*, pb : Uint32T*, check_align : LibC::UInt)
   fun __rte_jhash_3words(a : Uint32T, b : Uint32T, c : Uint32T, initval : Uint32T) : Uint32T
   fun __rte_mbuf_raw_free(m : RteMbuf*)
-  fun __rte_mbuf_refcnt_update(m : RteMbuf*, value : Int16T) : Uint16T
   fun __rte_panic(funcname : LibC::Char*, format : LibC::Char*, ...)
   fun __rte_pktmbuf_prefree_seg(m : RteMbuf*) : RteMbuf*
   fun __rte_pktmbuf_read(m : RteMbuf*, off : Uint32T, len : Uint32T, buf : Void*) : Void*
@@ -940,7 +827,6 @@ lib LibDpdk
   fun __rte_ring_do_enqueue(r : RteRing*, obj_table : Void**, n : LibC::UInt, behavior : RteRingQueueBehavior, is_sp : LibC::Int, free_space : LibC::UInt*) : LibC::UInt
   fun __rte_ring_move_cons_head(r : RteRing*, is_sc : LibC::Int, n : LibC::UInt, behavior : RteRingQueueBehavior, old_head : Uint32T*, new_head : Uint32T*, entries : Uint32T*) : LibC::UInt
   fun __rte_ring_move_prod_head(r : RteRing*, is_sp : LibC::Int, n : LibC::UInt, behavior : RteRingQueueBehavior, old_head : Uint32T*, new_head : Uint32T*, free_entries : Uint32T*) : LibC::UInt
-  fun __rte_security_attach_session(sym_op : RteCryptoSymOp*, sess : RteSecuritySession*) : LibC::Int
   fun cmdline_complete(cl : Cmdline*, buf : LibC::Char*, state : LibC::Int*, dst : LibC::Char*, size : LibC::UInt) : LibC::Int
   fun cmdline_free(cl : Cmdline*)
   fun cmdline_in(cl : Cmdline*, buf : LibC::Char*, size : LibC::Int) : LibC::Int
@@ -1015,41 +901,11 @@ lib LibDpdk
   fun rte_atomic64_sub(v : RteAtomic64T*, dec : Int64T)
   fun rte_atomic64_sub_return(v : RteAtomic64T*, dec : Int64T) : Int64T
   fun rte_atomic64_test_and_set(v : RteAtomic64T*) : LibC::Int
-  fun rte_bbdev_callback_register(dev_id : Uint16T, event : RteBbdevEventType, cb_fn : RteBbdevCbFn, cb_arg : Void*) : LibC::Int
-  fun rte_bbdev_callback_unregister(dev_id : Uint16T, event : RteBbdevEventType, cb_fn : RteBbdevCbFn, cb_arg : Void*) : LibC::Int
-  fun rte_bbdev_close(dev_id : Uint16T) : LibC::Int
-  fun rte_bbdev_count : Uint16T
-  fun rte_bbdev_dec_op_alloc_bulk(mempool : RteMempool*, ops : RteBbdevDecOp**, num_ops : Uint16T) : LibC::Int
-  fun rte_bbdev_dec_op_free_bulk(ops : RteBbdevDecOp**, num_ops : LibC::UInt)
-  fun rte_bbdev_dequeue_dec_ops(dev_id : Uint16T, queue_id : Uint16T, ops : RteBbdevDecOp**, num_ops : Uint16T) : Uint16T
-  fun rte_bbdev_dequeue_enc_ops(dev_id : Uint16T, queue_id : Uint16T, ops : RteBbdevEncOp**, num_ops : Uint16T) : Uint16T
-  fun rte_bbdev_enc_op_alloc_bulk(mempool : RteMempool*, ops : RteBbdevEncOp**, num_ops : Uint16T) : LibC::Int
-  fun rte_bbdev_enc_op_free_bulk(ops : RteBbdevEncOp**, num_ops : LibC::UInt)
-  fun rte_bbdev_enqueue_dec_ops(dev_id : Uint16T, queue_id : Uint16T, ops : RteBbdevDecOp**, num_ops : Uint16T) : Uint16T
-  fun rte_bbdev_enqueue_enc_ops(dev_id : Uint16T, queue_id : Uint16T, ops : RteBbdevEncOp**, num_ops : Uint16T) : Uint16T
-  fun rte_bbdev_find_next(dev_id : Uint16T) : Uint16T
-  fun rte_bbdev_info_get(dev_id : Uint16T, dev_info : RteBbdevInfo*) : LibC::Int
-  fun rte_bbdev_intr_enable(dev_id : Uint16T) : LibC::Int
-  fun rte_bbdev_op_pool_create(name : LibC::Char*, type : RteBbdevOpType, num_elements : LibC::UInt, cache_size : LibC::UInt, socket_id : LibC::Int) : RteMempool*
-  fun rte_bbdev_op_type_str(op_type : RteBbdevOpType) : LibC::Char*
-  fun rte_bbdev_queue_configure(dev_id : Uint16T, queue_id : Uint16T, conf : RteBbdevQueueConf*) : LibC::Int
-  fun rte_bbdev_queue_info_get(dev_id : Uint16T, queue_id : Uint16T, queue_info : RteBbdevQueueInfo*) : LibC::Int
-  fun rte_bbdev_queue_intr_ctl(dev_id : Uint16T, queue_id : Uint16T, epfd : LibC::Int, op : LibC::Int, data : Void*) : LibC::Int
-  fun rte_bbdev_queue_intr_disable(dev_id : Uint16T, queue_id : Uint16T) : LibC::Int
-  fun rte_bbdev_queue_intr_enable(dev_id : Uint16T, queue_id : Uint16T) : LibC::Int
-  fun rte_bbdev_queue_start(dev_id : Uint16T, queue_id : Uint16T) : LibC::Int
-  fun rte_bbdev_queue_stop(dev_id : Uint16T, queue_id : Uint16T) : LibC::Int
-  fun rte_bbdev_setup_queues(dev_id : Uint16T, num_queues : Uint16T, socket_id : LibC::Int) : LibC::Int
-  fun rte_bbdev_start(dev_id : Uint16T) : LibC::Int
-  fun rte_bbdev_stats_get(dev_id : Uint16T, stats : RteBbdevStats*) : LibC::Int
-  fun rte_bbdev_stats_reset(dev_id : Uint16T) : LibC::Int
-  fun rte_bbdev_stop(dev_id : Uint16T) : LibC::Int
   fun rte_bsf32(v : Uint32T) : Uint32T
   fun rte_bus_dump(f : File*)
   fun rte_bus_find(start : RteBus*, cmp : RteBusCmpT, data : Void*) : RteBus*
   fun rte_bus_find_by_device(dev : RteDevice*) : RteBus*
   fun rte_bus_find_by_name(busname : LibC::Char*) : RteBus*
-  fun rte_bus_get_iommu_class : RteIovaMode
   fun rte_bus_probe : LibC::Int
   fun rte_bus_register(bus : RteBus*)
   fun rte_bus_scan : LibC::Int
@@ -1070,11 +926,13 @@ lib LibDpdk
   fun rte_crypto_op_pool_create(name : LibC::Char*, type : RteCryptoOpType, nb_elts : LibC::UInt, cache_size : LibC::UInt, priv_size : Uint16T, socket_id : LibC::Int) : RteMempool*
   fun rte_crypto_op_sym_xforms_alloc(op : RteCryptoOp*, nb_xforms : Uint8T) : RteCryptoSymXform*
   fun rte_crypto_sym_op_alloc_from_mbuf_priv_data(m : RteMbuf*) : RteCryptoOp*
+  fun rte_cryptodev_allocate_driver(driver : RteDriver*) : Uint8T
   fun rte_cryptodev_callback_register(dev_id : Uint8T, event : RteCryptodevEventType, cb_fn : RteCryptodevCbFn, cb_arg : Void*) : LibC::Int
   fun rte_cryptodev_callback_unregister(dev_id : Uint8T, event : RteCryptodevEventType, cb_fn : RteCryptodevCbFn, cb_arg : Void*) : LibC::Int
   fun rte_cryptodev_close(dev_id : Uint8T) : LibC::Int
   fun rte_cryptodev_configure(dev_id : Uint8T, config : RteCryptodevConfig*) : LibC::Int
   fun rte_cryptodev_count : Uint8T
+  fun rte_cryptodev_create_vdev(name : LibC::Char*, args : LibC::Char*) : LibC::Int
   fun rte_cryptodev_dequeue_burst(dev_id : Uint8T, qp_id : Uint16T, ops : RteCryptoOp**, nb_ops : Uint16T) : Uint16T
   fun rte_cryptodev_device_count_by_driver(driver_id : Uint8T) : Uint8T
   fun rte_cryptodev_devices_get(driver_name : LibC::Char*, devices : Uint8T*, nb_devices : Uint8T) : Uint8T
@@ -1088,9 +946,7 @@ lib LibDpdk
   fun rte_cryptodev_get_feature_name(flag : Uint64T) : LibC::Char*
   fun rte_cryptodev_get_header_session_size : LibC::UInt
   fun rte_cryptodev_get_private_session_size(dev_id : Uint8T) : LibC::UInt
-  fun rte_cryptodev_get_sec_ctx(dev_id : Uint8T) : Void*
   fun rte_cryptodev_info_get(dev_id : Uint8T, dev_info : RteCryptodevInfo*)
-  fun rte_cryptodev_name_get(dev_id : Uint8T) : LibC::Char*
   fun rte_cryptodev_queue_pair_attach_sym_session(dev_id : Uint8T, qp_id : Uint16T, session : RteCryptodevSymSession*) : LibC::Int
   fun rte_cryptodev_queue_pair_count(dev_id : Uint8T) : Uint16T
   fun rte_cryptodev_queue_pair_detach_sym_session(dev_id : Uint8T, qp_id : Uint16T, session : RteCryptodevSymSession*) : LibC::Int
@@ -1118,9 +974,7 @@ lib LibDpdk
   fun rte_dump_registers
   fun rte_dump_stack
   fun rte_dump_tailq(f : File*)
-  fun rte_eal_cleanup : LibC::Int
   fun rte_eal_compare_pci_addr(addr : RtePciAddr*, addr2 : RtePciAddr*) : LibC::Int
-  fun rte_eal_create_uio_dev : LibC::Int
   fun rte_eal_dev_attach(name : LibC::Char*, devargs : LibC::Char*) : LibC::Int
   fun rte_eal_dev_detach(dev : RteDevice*) : LibC::Int
   fun rte_eal_devargs_add(devtype : RteDevtype, devargs_str : LibC::Char*) : LibC::Int
@@ -1134,15 +988,11 @@ lib LibDpdk
   fun rte_eal_get_physmem_layout : RteMemseg*
   fun rte_eal_get_physmem_size : Uint64T
   fun rte_eal_has_hugepages : LibC::Int
-  fun rte_eal_has_pci : LibC::Int
   fun rte_eal_hotplug_add(busname : LibC::Char*, devname : LibC::Char*, devargs : LibC::Char*) : LibC::Int
   fun rte_eal_hotplug_remove(busname : LibC::Char*, devname : LibC::Char*) : LibC::Int
   fun rte_eal_init(argc : LibC::Int, argv : LibC::Char**) : LibC::Int
   fun rte_eal_iopl_init : LibC::Int
-  fun rte_eal_iova_mode : RteIovaMode
   fun rte_eal_lcore_role(lcore_id : LibC::UInt) : RteLcoreRoleT
-  fun rte_eal_mbuf_default_mempool_ops : LibC::Char*
-  fun rte_eal_mbuf_user_pool_ops : LibC::Char*
   fun rte_eal_mcfg_wait_complete(mcfg : RteMemConfig*)
   fun rte_eal_mp_remote_launch(f : (Void* -> LibC::Int), arg : Void*, call_master : RteRmtCallMasterT) : LibC::Int
   fun rte_eal_mp_wait_lcore
@@ -1152,154 +1002,137 @@ lib LibDpdk
   fun rte_eal_remote_launch(f : (Void* -> LibC::Int), arg : Void*, slave_id : LibC::UInt) : LibC::Int
   fun rte_eal_tailq_lookup(name : LibC::Char*) : RteTailqHead*
   fun rte_eal_tailq_register(t : RteTailqElem*) : LibC::Int
-  fun rte_eal_using_phys_addrs : LibC::Int
-  fun rte_eal_vfio_intr_mode : RteIntrMode
   fun rte_eal_wait_lcore(slave_id : LibC::UInt) : LibC::Int
   fun rte_epoll_ctl(epfd : LibC::Int, op : LibC::Int, fd : LibC::Int, event : RteEpollEvent*) : LibC::Int
   fun rte_epoll_wait(epfd : LibC::Int, events : RteEpollEvent*, maxevents : LibC::Int, timeout : LibC::Int) : LibC::Int
-  fun rte_eth_add_first_rx_callback(port_id : Uint16T, queue_id : Uint16T, fn : RteRxCallbackFn, user_param : Void*) : Void*
-  fun rte_eth_add_rx_callback(port_id : Uint16T, queue_id : Uint16T, fn : RteRxCallbackFn, user_param : Void*) : Void*
-  fun rte_eth_add_tx_callback(port_id : Uint16T, queue_id : Uint16T, fn : RteTxCallbackFn, user_param : Void*) : Void*
-  fun rte_eth_allmulticast_disable(port_id : Uint16T)
-  fun rte_eth_allmulticast_enable(port_id : Uint16T)
-  fun rte_eth_allmulticast_get(port_id : Uint16T) : LibC::Int
-  fun rte_eth_dev_adjust_nb_rx_tx_desc(port_id : Uint16T, nb_rx_desc : Uint16T*, nb_tx_desc : Uint16T*) : LibC::Int
+  fun rte_eth_add_first_rx_callback(port_id : Uint8T, queue_id : Uint16T, fn : RteRxCallbackFn, user_param : Void*) : Void*
+  fun rte_eth_add_rx_callback(port_id : Uint8T, queue_id : Uint16T, fn : RteRxCallbackFn, user_param : Void*) : Void*
+  fun rte_eth_add_tx_callback(port_id : Uint8T, queue_id : Uint16T, fn : RteTxCallbackFn, user_param : Void*) : Void*
+  fun rte_eth_allmulticast_disable(port_id : Uint8T)
+  fun rte_eth_allmulticast_enable(port_id : Uint8T)
+  fun rte_eth_allmulticast_get(port_id : Uint8T) : LibC::Int
+  fun rte_eth_dev_adjust_nb_rx_tx_desc(port_id : Uint8T, nb_rx_desc : Uint16T*, nb_tx_desc : Uint16T*) : LibC::Int
   fun rte_eth_dev_allocate(name : LibC::Char*) : RteEthDev*
   fun rte_eth_dev_allocated(name : LibC::Char*) : RteEthDev*
-  fun rte_eth_dev_attach(devargs : LibC::Char*, port_id : Uint16T*) : LibC::Int
+  fun rte_eth_dev_attach(devargs : LibC::Char*, port_id : Uint8T*) : LibC::Int
   fun rte_eth_dev_attach_secondary(name : LibC::Char*) : RteEthDev*
-  fun rte_eth_dev_callback_register(port_id : Uint16T, event : RteEthEventType, cb_fn : RteEthDevCbFn, cb_arg : Void*) : LibC::Int
-  fun rte_eth_dev_callback_unregister(port_id : Uint16T, event : RteEthEventType, cb_fn : RteEthDevCbFn, cb_arg : Void*) : LibC::Int
-  fun rte_eth_dev_close(port_id : Uint16T)
-  fun rte_eth_dev_configure(port_id : Uint16T, nb_rx_queue : Uint16T, nb_tx_queue : Uint16T, eth_conf : RteEthConf*) : LibC::Int
-  fun rte_eth_dev_count : Uint16T
-  fun rte_eth_dev_default_mac_addr_set(port_id : Uint16T, mac_addr : EtherAddr*) : LibC::Int
-  fun rte_eth_dev_detach(port_id : Uint16T, devname : LibC::Char*) : LibC::Int
-  fun rte_eth_dev_filter_ctrl(port_id : Uint16T, filter_type : RteFilterType, filter_op : RteFilterOp, arg : Void*) : LibC::Int
-  fun rte_eth_dev_filter_supported(port_id : Uint16T, filter_type : RteFilterType) : LibC::Int
-  fun rte_eth_dev_flow_ctrl_get(port_id : Uint16T, fc_conf : RteEthFcConf*) : LibC::Int
-  fun rte_eth_dev_flow_ctrl_set(port_id : Uint16T, fc_conf : RteEthFcConf*) : LibC::Int
-  fun rte_eth_dev_fw_version_get(port_id : Uint16T, fw_version : LibC::Char*, fw_size : LibC::Int) : LibC::Int
-  fun rte_eth_dev_get_dcb_info(port_id : Uint16T, dcb_info : RteEthDcbInfo*) : LibC::Int
-  fun rte_eth_dev_get_eeprom(port_id : Uint16T, info : RteDevEepromInfo*) : LibC::Int
-  fun rte_eth_dev_get_eeprom_length(port_id : Uint16T) : LibC::Int
-  fun rte_eth_dev_get_mtu(port_id : Uint16T, mtu : Uint16T*) : LibC::Int
-  fun rte_eth_dev_get_name_by_port(port_id : Uint16T, name : LibC::Char*) : LibC::Int
-  fun rte_eth_dev_get_port_by_name(name : LibC::Char*, port_id : Uint16T*) : LibC::Int
-  fun rte_eth_dev_get_reg_info(port_id : Uint16T, info : RteDevRegInfo*) : LibC::Int
-  fun rte_eth_dev_get_sec_ctx(port_id : Uint8T) : Void*
-  fun rte_eth_dev_get_supported_ptypes(port_id : Uint16T, ptype_mask : Uint32T, ptypes : Uint32T*, num : LibC::Int) : LibC::Int
-  fun rte_eth_dev_get_vlan_offload(port_id : Uint16T) : LibC::Int
-  fun rte_eth_dev_info_get(port_id : Uint16T, dev_info : RteEthDevInfo*)
-  fun rte_eth_dev_is_removed(port_id : Uint16T) : LibC::Int
-  fun rte_eth_dev_is_valid_port(port_id : Uint16T) : LibC::Int
-  fun rte_eth_dev_l2_tunnel_eth_type_conf(port_id : Uint16T, l2_tunnel : RteEthL2TunnelConf*) : LibC::Int
-  fun rte_eth_dev_l2_tunnel_offload_set(port_id : Uint16T, l2_tunnel : RteEthL2TunnelConf*, mask : Uint32T, en : Uint8T) : LibC::Int
-  fun rte_eth_dev_mac_addr_add(port_id : Uint16T, mac_addr : EtherAddr*, pool : Uint32T) : LibC::Int
-  fun rte_eth_dev_mac_addr_remove(port_id : Uint16T, mac_addr : EtherAddr*) : LibC::Int
-  fun rte_eth_dev_owner_delete(owner_id : Uint64T)
-  fun rte_eth_dev_owner_get(port_id : Uint16T, owner : RteEthDevOwner*) : LibC::Int
-  fun rte_eth_dev_owner_new(owner_id : Uint64T*) : LibC::Int
-  fun rte_eth_dev_owner_set(port_id : Uint16T, owner : RteEthDevOwner*) : LibC::Int
-  fun rte_eth_dev_owner_unset(port_id : Uint16T, owner_id : Uint64T) : LibC::Int
-  fun rte_eth_dev_pool_ops_supported(port_id : Uint16T, pool : LibC::Char*) : LibC::Int
-  fun rte_eth_dev_priority_flow_ctrl_set(port_id : Uint16T, pfc_conf : RteEthPfcConf*) : LibC::Int
+  fun rte_eth_dev_callback_register(port_id : Uint8T, event : RteEthEventType, cb_fn : RteEthDevCbFn, cb_arg : Void*) : LibC::Int
+  fun rte_eth_dev_callback_unregister(port_id : Uint8T, event : RteEthEventType, cb_fn : RteEthDevCbFn, cb_arg : Void*) : LibC::Int
+  fun rte_eth_dev_close(port_id : Uint8T)
+  fun rte_eth_dev_configure(port_id : Uint8T, nb_rx_queue : Uint16T, nb_tx_queue : Uint16T, eth_conf : RteEthConf*) : LibC::Int
+  fun rte_eth_dev_count : Uint8T
+  fun rte_eth_dev_default_mac_addr_set(port : Uint8T, mac_addr : EtherAddr*) : LibC::Int
+  fun rte_eth_dev_detach(port_id : Uint8T, devname : LibC::Char*) : LibC::Int
+  fun rte_eth_dev_filter_ctrl(port_id : Uint8T, filter_type : RteFilterType, filter_op : RteFilterOp, arg : Void*) : LibC::Int
+  fun rte_eth_dev_filter_supported(port_id : Uint8T, filter_type : RteFilterType) : LibC::Int
+  fun rte_eth_dev_flow_ctrl_get(port_id : Uint8T, fc_conf : RteEthFcConf*) : LibC::Int
+  fun rte_eth_dev_flow_ctrl_set(port_id : Uint8T, fc_conf : RteEthFcConf*) : LibC::Int
+  fun rte_eth_dev_fw_version_get(port_id : Uint8T, fw_version : LibC::Char*, fw_size : LibC::Int) : LibC::Int
+  fun rte_eth_dev_get_dcb_info(port_id : Uint8T, dcb_info : RteEthDcbInfo*) : LibC::Int
+  fun rte_eth_dev_get_eeprom(port_id : Uint8T, info : RteDevEepromInfo*) : LibC::Int
+  fun rte_eth_dev_get_eeprom_length(port_id : Uint8T) : LibC::Int
+  fun rte_eth_dev_get_mtu(port_id : Uint8T, mtu : Uint16T*) : LibC::Int
+  fun rte_eth_dev_get_name_by_port(port_id : Uint8T, name : LibC::Char*) : LibC::Int
+  fun rte_eth_dev_get_port_by_name(name : LibC::Char*, port_id : Uint8T*) : LibC::Int
+  fun rte_eth_dev_get_reg_info(port_id : Uint8T, info : RteDevRegInfo*) : LibC::Int
+  fun rte_eth_dev_get_supported_ptypes(port_id : Uint8T, ptype_mask : Uint32T, ptypes : Uint32T*, num : LibC::Int) : LibC::Int
+  fun rte_eth_dev_get_vlan_offload(port_id : Uint8T) : LibC::Int
+  fun rte_eth_dev_info_get(port_id : Uint8T, dev_info : RteEthDevInfo*)
+  fun rte_eth_dev_is_valid_port(port_id : Uint8T) : LibC::Int
+  fun rte_eth_dev_l2_tunnel_eth_type_conf(port_id : Uint8T, l2_tunnel : RteEthL2TunnelConf*) : LibC::Int
+  fun rte_eth_dev_l2_tunnel_offload_set(port_id : Uint8T, l2_tunnel : RteEthL2TunnelConf*, mask : Uint32T, en : Uint8T) : LibC::Int
+  fun rte_eth_dev_mac_addr_add(port : Uint8T, mac_addr : EtherAddr*, pool : Uint32T) : LibC::Int
+  fun rte_eth_dev_mac_addr_remove(port : Uint8T, mac_addr : EtherAddr*) : LibC::Int
+  fun rte_eth_dev_priority_flow_ctrl_set(port_id : Uint8T, pfc_conf : RteEthPfcConf*) : LibC::Int
   fun rte_eth_dev_release_port(eth_dev : RteEthDev*) : LibC::Int
-  fun rte_eth_dev_reset(port_id : Uint16T) : LibC::Int
-  fun rte_eth_dev_rss_hash_conf_get(port_id : Uint16T, rss_conf : RteEthRssConf*) : LibC::Int
-  fun rte_eth_dev_rss_hash_update(port_id : Uint16T, rss_conf : RteEthRssConf*) : LibC::Int
-  fun rte_eth_dev_rss_reta_query(port_id : Uint16T, reta_conf : RteEthRssRetaEntry64*, reta_size : Uint16T) : LibC::Int
-  fun rte_eth_dev_rss_reta_update(port_id : Uint16T, reta_conf : RteEthRssRetaEntry64*, reta_size : Uint16T) : LibC::Int
-  fun rte_eth_dev_rx_intr_ctl(port_id : Uint16T, epfd : LibC::Int, op : LibC::Int, data : Void*) : LibC::Int
-  fun rte_eth_dev_rx_intr_ctl_q(port_id : Uint16T, queue_id : Uint16T, epfd : LibC::Int, op : LibC::Int, data : Void*) : LibC::Int
-  fun rte_eth_dev_rx_intr_disable(port_id : Uint16T, queue_id : Uint16T) : LibC::Int
-  fun rte_eth_dev_rx_intr_enable(port_id : Uint16T, queue_id : Uint16T) : LibC::Int
-  fun rte_eth_dev_rx_offload_name(offload : Uint64T) : LibC::Char*
-  fun rte_eth_dev_rx_queue_start(port_id : Uint16T, rx_queue_id : Uint16T) : LibC::Int
-  fun rte_eth_dev_rx_queue_stop(port_id : Uint16T, rx_queue_id : Uint16T) : LibC::Int
-  fun rte_eth_dev_set_eeprom(port_id : Uint16T, info : RteDevEepromInfo*) : LibC::Int
-  fun rte_eth_dev_set_link_down(port_id : Uint16T) : LibC::Int
-  fun rte_eth_dev_set_link_up(port_id : Uint16T) : LibC::Int
-  fun rte_eth_dev_set_mc_addr_list(port_id : Uint16T, mc_addr_set : EtherAddr*, nb_mc_addr : Uint32T) : LibC::Int
-  fun rte_eth_dev_set_mtu(port_id : Uint16T, mtu : Uint16T) : LibC::Int
-  fun rte_eth_dev_set_rx_queue_stats_mapping(port_id : Uint16T, rx_queue_id : Uint16T, stat_idx : Uint8T) : LibC::Int
-  fun rte_eth_dev_set_tx_queue_stats_mapping(port_id : Uint16T, tx_queue_id : Uint16T, stat_idx : Uint8T) : LibC::Int
-  fun rte_eth_dev_set_vlan_ether_type(port_id : Uint16T, vlan_type : RteVlanType, tag_type : Uint16T) : LibC::Int
-  fun rte_eth_dev_set_vlan_offload(port_id : Uint16T, offload_mask : LibC::Int) : LibC::Int
-  fun rte_eth_dev_set_vlan_pvid(port_id : Uint16T, pvid : Uint16T, on : LibC::Int) : LibC::Int
-  fun rte_eth_dev_set_vlan_strip_on_queue(port_id : Uint16T, rx_queue_id : Uint16T, on : LibC::Int) : LibC::Int
-  fun rte_eth_dev_socket_id(port_id : Uint16T) : LibC::Int
-  fun rte_eth_dev_start(port_id : Uint16T) : LibC::Int
-  fun rte_eth_dev_stop(port_id : Uint16T)
-  fun rte_eth_dev_tx_offload_name(offload : Uint64T) : LibC::Char*
-  fun rte_eth_dev_tx_queue_start(port_id : Uint16T, tx_queue_id : Uint16T) : LibC::Int
-  fun rte_eth_dev_tx_queue_stop(port_id : Uint16T, tx_queue_id : Uint16T) : LibC::Int
-  fun rte_eth_dev_uc_all_hash_table_set(port_id : Uint16T, on : Uint8T) : LibC::Int
-  fun rte_eth_dev_uc_hash_table_set(port_id : Uint16T, addr : EtherAddr*, on : Uint8T) : LibC::Int
-  fun rte_eth_dev_udp_tunnel_port_add(port_id : Uint16T, tunnel_udp : RteEthUdpTunnel*) : LibC::Int
-  fun rte_eth_dev_udp_tunnel_port_delete(port_id : Uint16T, tunnel_udp : RteEthUdpTunnel*) : LibC::Int
-  fun rte_eth_dev_vlan_filter(port_id : Uint16T, vlan_id : Uint16T, on : LibC::Int) : LibC::Int
+  fun rte_eth_dev_rss_hash_conf_get(port_id : Uint8T, rss_conf : RteEthRssConf*) : LibC::Int
+  fun rte_eth_dev_rss_hash_update(port_id : Uint8T, rss_conf : RteEthRssConf*) : LibC::Int
+  fun rte_eth_dev_rss_reta_query(port : Uint8T, reta_conf : RteEthRssRetaEntry64*, reta_size : Uint16T) : LibC::Int
+  fun rte_eth_dev_rss_reta_update(port : Uint8T, reta_conf : RteEthRssRetaEntry64*, reta_size : Uint16T) : LibC::Int
+  fun rte_eth_dev_rx_intr_ctl(port_id : Uint8T, epfd : LibC::Int, op : LibC::Int, data : Void*) : LibC::Int
+  fun rte_eth_dev_rx_intr_ctl_q(port_id : Uint8T, queue_id : Uint16T, epfd : LibC::Int, op : LibC::Int, data : Void*) : LibC::Int
+  fun rte_eth_dev_rx_intr_disable(port_id : Uint8T, queue_id : Uint16T) : LibC::Int
+  fun rte_eth_dev_rx_intr_enable(port_id : Uint8T, queue_id : Uint16T) : LibC::Int
+  fun rte_eth_dev_rx_queue_start(port_id : Uint8T, rx_queue_id : Uint16T) : LibC::Int
+  fun rte_eth_dev_rx_queue_stop(port_id : Uint8T, rx_queue_id : Uint16T) : LibC::Int
+  fun rte_eth_dev_set_eeprom(port_id : Uint8T, info : RteDevEepromInfo*) : LibC::Int
+  fun rte_eth_dev_set_link_down(port_id : Uint8T) : LibC::Int
+  fun rte_eth_dev_set_link_up(port_id : Uint8T) : LibC::Int
+  fun rte_eth_dev_set_mc_addr_list(port_id : Uint8T, mc_addr_set : EtherAddr*, nb_mc_addr : Uint32T) : LibC::Int
+  fun rte_eth_dev_set_mtu(port_id : Uint8T, mtu : Uint16T) : LibC::Int
+  fun rte_eth_dev_set_rx_queue_stats_mapping(port_id : Uint8T, rx_queue_id : Uint16T, stat_idx : Uint8T) : LibC::Int
+  fun rte_eth_dev_set_tx_queue_stats_mapping(port_id : Uint8T, tx_queue_id : Uint16T, stat_idx : Uint8T) : LibC::Int
+  fun rte_eth_dev_set_vlan_ether_type(port_id : Uint8T, vlan_type : RteVlanType, tag_type : Uint16T) : LibC::Int
+  fun rte_eth_dev_set_vlan_offload(port_id : Uint8T, offload_mask : LibC::Int) : LibC::Int
+  fun rte_eth_dev_set_vlan_pvid(port_id : Uint8T, pvid : Uint16T, on : LibC::Int) : LibC::Int
+  fun rte_eth_dev_set_vlan_strip_on_queue(port_id : Uint8T, rx_queue_id : Uint16T, on : LibC::Int) : LibC::Int
+  fun rte_eth_dev_socket_id(port_id : Uint8T) : LibC::Int
+  fun rte_eth_dev_start(port_id : Uint8T) : LibC::Int
+  fun rte_eth_dev_stop(port_id : Uint8T)
+  fun rte_eth_dev_tx_queue_start(port_id : Uint8T, tx_queue_id : Uint16T) : LibC::Int
+  fun rte_eth_dev_tx_queue_stop(port_id : Uint8T, tx_queue_id : Uint16T) : LibC::Int
+  fun rte_eth_dev_uc_all_hash_table_set(port : Uint8T, on : Uint8T) : LibC::Int
+  fun rte_eth_dev_uc_hash_table_set(port : Uint8T, addr : EtherAddr*, on : Uint8T) : LibC::Int
+  fun rte_eth_dev_udp_tunnel_port_add(port_id : Uint8T, tunnel_udp : RteEthUdpTunnel*) : LibC::Int
+  fun rte_eth_dev_udp_tunnel_port_delete(port_id : Uint8T, tunnel_udp : RteEthUdpTunnel*) : LibC::Int
+  fun rte_eth_dev_vlan_filter(port_id : Uint8T, vlan_id : Uint16T, on : LibC::Int) : LibC::Int
   fun rte_eth_dma_zone_reserve(eth_dev : RteEthDev*, name : LibC::Char*, queue_id : Uint16T, size : LibC::Int, align : LibC::UInt, socket_id : LibC::Int) : RteMemzone*
-  fun rte_eth_find_next(port_id : Uint16T) : Uint16T
-  fun rte_eth_find_next_owned_by(port_id : Uint16T, owner_id : Uint64T) : Uint64T
-  fun rte_eth_led_off(port_id : Uint16T) : LibC::Int
-  fun rte_eth_led_on(port_id : Uint16T) : LibC::Int
-  fun rte_eth_link_get(port_id : Uint16T, link : RteEthLink*)
-  fun rte_eth_link_get_nowait(port_id : Uint16T, link : RteEthLink*)
-  fun rte_eth_macaddr_get(port_id : Uint16T, mac_addr : EtherAddr*)
-  fun rte_eth_mirror_rule_reset(port_id : Uint16T, rule_id : Uint8T) : LibC::Int
-  fun rte_eth_mirror_rule_set(port_id : Uint16T, mirror_conf : RteEthMirrorConf*, rule_id : Uint8T, on : Uint8T) : LibC::Int
-  fun rte_eth_promiscuous_disable(port_id : Uint16T)
-  fun rte_eth_promiscuous_enable(port_id : Uint16T)
-  fun rte_eth_promiscuous_get(port_id : Uint16T) : LibC::Int
-  fun rte_eth_remove_rx_callback(port_id : Uint16T, queue_id : Uint16T, user_cb : RteEthRxtxCallback*) : LibC::Int
-  fun rte_eth_remove_tx_callback(port_id : Uint16T, queue_id : Uint16T, user_cb : RteEthRxtxCallback*) : LibC::Int
-  fun rte_eth_rx_burst(port_id : Uint16T, queue_id : Uint16T, rx_pkts : RteMbuf**, nb_pkts : Uint16T) : Uint16T
-  fun rte_eth_rx_descriptor_done(port_id : Uint16T, queue_id : Uint16T, offset : Uint16T) : LibC::Int
-  fun rte_eth_rx_descriptor_status(port_id : Uint16T, queue_id : Uint16T, offset : Uint16T) : LibC::Int
-  fun rte_eth_rx_queue_count(port_id : Uint16T, queue_id : Uint16T) : LibC::Int
-  fun rte_eth_rx_queue_info_get(port_id : Uint16T, queue_id : Uint16T, qinfo : RteEthRxqInfo*) : LibC::Int
-  fun rte_eth_rx_queue_setup(port_id : Uint16T, rx_queue_id : Uint16T, nb_rx_desc : Uint16T, socket_id : LibC::UInt, rx_conf : RteEthRxconf*, mb_pool : RteMempool*) : LibC::Int
-  fun rte_eth_set_queue_rate_limit(port_id : Uint16T, queue_idx : Uint16T, tx_rate : Uint16T) : LibC::Int
+  fun rte_eth_find_next(port_id : Uint8T) : Uint8T
+  fun rte_eth_led_off(port_id : Uint8T) : LibC::Int
+  fun rte_eth_led_on(port_id : Uint8T) : LibC::Int
+  fun rte_eth_link_get(port_id : Uint8T, link : RteEthLink*)
+  fun rte_eth_link_get_nowait(port_id : Uint8T, link : RteEthLink*)
+  fun rte_eth_macaddr_get(port_id : Uint8T, mac_addr : EtherAddr*)
+  fun rte_eth_mirror_rule_reset(port_id : Uint8T, rule_id : Uint8T) : LibC::Int
+  fun rte_eth_mirror_rule_set(port_id : Uint8T, mirror_conf : RteEthMirrorConf*, rule_id : Uint8T, on : Uint8T) : LibC::Int
+  fun rte_eth_promiscuous_disable(port_id : Uint8T)
+  fun rte_eth_promiscuous_enable(port_id : Uint8T)
+  fun rte_eth_promiscuous_get(port_id : Uint8T) : LibC::Int
+  fun rte_eth_remove_rx_callback(port_id : Uint8T, queue_id : Uint16T, user_cb : RteEthRxtxCallback*) : LibC::Int
+  fun rte_eth_remove_tx_callback(port_id : Uint8T, queue_id : Uint16T, user_cb : RteEthRxtxCallback*) : LibC::Int
+  fun rte_eth_rx_burst(port_id : Uint8T, queue_id : Uint16T, rx_pkts : RteMbuf**, nb_pkts : Uint16T) : Uint16T
+  fun rte_eth_rx_descriptor_done(port_id : Uint8T, queue_id : Uint16T, offset : Uint16T) : LibC::Int
+  fun rte_eth_rx_descriptor_status(port_id : Uint8T, queue_id : Uint16T, offset : Uint16T) : LibC::Int
+  fun rte_eth_rx_queue_count(port_id : Uint8T, queue_id : Uint16T) : LibC::Int
+  fun rte_eth_rx_queue_info_get(port_id : Uint8T, queue_id : Uint16T, qinfo : RteEthRxqInfo*) : LibC::Int
+  fun rte_eth_rx_queue_setup(port_id : Uint8T, rx_queue_id : Uint16T, nb_rx_desc : Uint16T, socket_id : LibC::UInt, rx_conf : RteEthRxconf*, mb_pool : RteMempool*) : LibC::Int
+  fun rte_eth_set_queue_rate_limit(port_id : Uint8T, queue_idx : Uint16T, tx_rate : Uint16T) : LibC::Int
   fun rte_eth_speed_bitflag(speed : Uint32T, duplex : LibC::Int) : Uint32T
-  fun rte_eth_stats_get(port_id : Uint16T, stats : RteEthStats*) : LibC::Int
-  fun rte_eth_stats_reset(port_id : Uint16T) : LibC::Int
-  fun rte_eth_timesync_adjust_time(port_id : Uint16T, delta : Int64T) : LibC::Int
-  fun rte_eth_timesync_disable(port_id : Uint16T) : LibC::Int
-  fun rte_eth_timesync_enable(port_id : Uint16T) : LibC::Int
-  fun rte_eth_timesync_read_rx_timestamp(port_id : Uint16T, timestamp : Timespec*, flags : Uint32T) : LibC::Int
-  fun rte_eth_timesync_read_time(port_id : Uint16T, time : Timespec*) : LibC::Int
-  fun rte_eth_timesync_read_tx_timestamp(port_id : Uint16T, timestamp : Timespec*) : LibC::Int
-  fun rte_eth_timesync_write_time(port_id : Uint16T, time : Timespec*) : LibC::Int
-  fun rte_eth_tx_buffer(port_id : Uint16T, queue_id : Uint16T, buffer : RteEthDevTxBuffer*, tx_pkt : RteMbuf*) : Uint16T
+  fun rte_eth_stats_get(port_id : Uint8T, stats : RteEthStats*) : LibC::Int
+  fun rte_eth_stats_reset(port_id : Uint8T)
+  fun rte_eth_timesync_adjust_time(port_id : Uint8T, delta : Int64T) : LibC::Int
+  fun rte_eth_timesync_disable(port_id : Uint8T) : LibC::Int
+  fun rte_eth_timesync_enable(port_id : Uint8T) : LibC::Int
+  fun rte_eth_timesync_read_rx_timestamp(port_id : Uint8T, timestamp : Timespec*, flags : Uint32T) : LibC::Int
+  fun rte_eth_timesync_read_time(port_id : Uint8T, time : Timespec*) : LibC::Int
+  fun rte_eth_timesync_read_tx_timestamp(port_id : Uint8T, timestamp : Timespec*) : LibC::Int
+  fun rte_eth_timesync_write_time(port_id : Uint8T, time : Timespec*) : LibC::Int
+  fun rte_eth_tx_buffer(port_id : Uint8T, queue_id : Uint16T, buffer : RteEthDevTxBuffer*, tx_pkt : RteMbuf*) : Uint16T
   fun rte_eth_tx_buffer_count_callback(pkts : RteMbuf**, unsent : Uint16T, userdata : Void*)
   fun rte_eth_tx_buffer_drop_callback(pkts : RteMbuf**, unsent : Uint16T, userdata : Void*)
-  fun rte_eth_tx_buffer_flush(port_id : Uint16T, queue_id : Uint16T, buffer : RteEthDevTxBuffer*) : Uint16T
+  fun rte_eth_tx_buffer_flush(port_id : Uint8T, queue_id : Uint16T, buffer : RteEthDevTxBuffer*) : Uint16T
   fun rte_eth_tx_buffer_init(buffer : RteEthDevTxBuffer*, size : Uint16T) : LibC::Int
   fun rte_eth_tx_buffer_set_err_callback(buffer : RteEthDevTxBuffer*, callback : BufferTxErrorFn, userdata : Void*) : LibC::Int
-  fun rte_eth_tx_burst(port_id : Uint16T, queue_id : Uint16T, tx_pkts : RteMbuf**, nb_pkts : Uint16T) : Uint16T
-  fun rte_eth_tx_descriptor_status(port_id : Uint16T, queue_id : Uint16T, offset : Uint16T) : LibC::Int
-  fun rte_eth_tx_done_cleanup(port_id : Uint16T, queue_id : Uint16T, free_cnt : Uint32T) : LibC::Int
-  fun rte_eth_tx_prepare(port_id : Uint16T, queue_id : Uint16T, tx_pkts : RteMbuf**, nb_pkts : Uint16T) : Uint16T
-  fun rte_eth_tx_queue_info_get(port_id : Uint16T, queue_id : Uint16T, qinfo : RteEthTxqInfo*) : LibC::Int
-  fun rte_eth_tx_queue_setup(port_id : Uint16T, tx_queue_id : Uint16T, nb_tx_desc : Uint16T, socket_id : LibC::UInt, tx_conf : RteEthTxconf*) : LibC::Int
-  fun rte_eth_xstats_get(port_id : Uint16T, xstats : RteEthXstat*, n : LibC::UInt) : LibC::Int
-  fun rte_eth_xstats_get_by_id(port_id : Uint16T, ids : Uint64T*, values : Uint64T*, size : LibC::UInt) : LibC::Int
-  fun rte_eth_xstats_get_id_by_name(port_id : Uint16T, xstat_name : LibC::Char*, id : Uint64T*) : LibC::Int
-  fun rte_eth_xstats_get_names(port_id : Uint16T, xstats_names : RteEthXstatName*, size : LibC::UInt) : LibC::Int
-  fun rte_eth_xstats_get_names_by_id(port_id : Uint16T, xstats_names : RteEthXstatName*, size : LibC::UInt, ids : Uint64T*) : LibC::Int
-  fun rte_eth_xstats_reset(port_id : Uint16T)
+  fun rte_eth_tx_burst(port_id : Uint8T, queue_id : Uint16T, tx_pkts : RteMbuf**, nb_pkts : Uint16T) : Uint16T
+  fun rte_eth_tx_descriptor_status(port_id : Uint8T, queue_id : Uint16T, offset : Uint16T) : LibC::Int
+  fun rte_eth_tx_done_cleanup(port_id : Uint8T, queue_id : Uint16T, free_cnt : Uint32T) : LibC::Int
+  fun rte_eth_tx_prepare(port_id : Uint8T, queue_id : Uint16T, tx_pkts : RteMbuf**, nb_pkts : Uint16T) : Uint16T
+  fun rte_eth_tx_queue_info_get(port_id : Uint8T, queue_id : Uint16T, qinfo : RteEthTxqInfo*) : LibC::Int
+  fun rte_eth_tx_queue_setup(port_id : Uint8T, tx_queue_id : Uint16T, nb_tx_desc : Uint16T, socket_id : LibC::UInt, tx_conf : RteEthTxconf*) : LibC::Int
+  fun rte_eth_xstats_get(port_id : Uint8T, xstats : RteEthXstat*, n : LibC::UInt) : LibC::Int
+  fun rte_eth_xstats_get_by_id(port_id : Uint8T, ids : Uint64T*, values : Uint64T*, n : LibC::UInt) : LibC::Int
+  fun rte_eth_xstats_get_id_by_name(port_id : Uint8T, xstat_name : LibC::Char*, id : Uint64T*) : LibC::Int
+  fun rte_eth_xstats_get_names(port_id : Uint8T, xstats_names : RteEthXstatName*, size : LibC::UInt) : LibC::Int
+  fun rte_eth_xstats_get_names_by_id(port_id : Uint8T, xstats_names : RteEthXstatName*, size : LibC::UInt, ids : Uint64T*) : LibC::Int
+  fun rte_eth_xstats_reset(port_id : Uint8T)
   fun rte_event_dequeue_burst(dev_id : Uint8T, port_id : Uint8T, ev : RteEvent*, nb_events : Uint16T, timeout_ticks : Uint64T) : Uint16T
   fun rte_event_dequeue_timeout_ticks(dev_id : Uint8T, ns : Uint64T, timeout_ticks : Uint64T*) : LibC::Int
-  fun rte_event_dev_attr_get(dev_id : Uint8T, attr_id : Uint32T, attr_value : Uint32T*) : LibC::Int
   fun rte_event_dev_close(dev_id : Uint8T) : LibC::Int
   fun rte_event_dev_configure(dev_id : Uint8T, dev_conf : RteEventDevConfig*) : LibC::Int
   fun rte_event_dev_count : Uint8T
   fun rte_event_dev_dump(dev_id : Uint8T, f : File*) : LibC::Int
   fun rte_event_dev_get_dev_id(name : LibC::Char*) : LibC::Int
   fun rte_event_dev_info_get(dev_id : Uint8T, dev_info : RteEventDevInfo*) : LibC::Int
-  fun rte_event_dev_selftest(dev_id : Uint8T) : LibC::Int
-  fun rte_event_dev_service_id_get(dev_id : Uint8T, service_id : Uint32T*) : LibC::Int
   fun rte_event_dev_socket_id(dev_id : Uint8T) : LibC::Int
   fun rte_event_dev_start(dev_id : Uint8T) : LibC::Int
   fun rte_event_dev_stop(dev_id : Uint8T)
@@ -1310,30 +1143,34 @@ lib LibDpdk
   fun rte_event_enqueue_burst(dev_id : Uint8T, port_id : Uint8T, ev : RteEvent*, nb_events : Uint16T) : Uint16T
   fun rte_event_enqueue_forward_burst(dev_id : Uint8T, port_id : Uint8T, ev : RteEvent*, nb_events : Uint16T) : Uint16T
   fun rte_event_enqueue_new_burst(dev_id : Uint8T, port_id : Uint8T, ev : RteEvent*, nb_events : Uint16T) : Uint16T
-  fun rte_event_eth_rx_adapter_caps_get(dev_id : Uint8T, eth_port_id : Uint8T, caps : Uint32T*) : LibC::Int
   fun rte_event_pmd_allocate(name : LibC::Char*, socket_id : LibC::Int) : RteEventdev*
   fun rte_event_pmd_get_named_dev(name : LibC::Char*) : RteEventdev*
   fun rte_event_pmd_is_valid_dev(dev_id : Uint8T) : LibC::UInt
   fun rte_event_pmd_release(eventdev : RteEventdev*) : LibC::Int
-  fun rte_event_port_attr_get(dev_id : Uint8T, port_id : Uint8T, attr_id : Uint32T, attr_value : Uint32T*) : LibC::Int
+  fun rte_event_port_count(dev_id : Uint8T) : Uint8T
   fun rte_event_port_default_conf_get(dev_id : Uint8T, port_id : Uint8T, port_conf : RteEventPortConf*) : LibC::Int
+  fun rte_event_port_dequeue_depth(dev_id : Uint8T, port_id : Uint8T) : Uint8T
+  fun rte_event_port_enqueue_depth(dev_id : Uint8T, port_id : Uint8T) : Uint8T
   fun rte_event_port_link(dev_id : Uint8T, port_id : Uint8T, queues : Uint8T*, priorities : Uint8T*, nb_links : Uint16T) : LibC::Int
   fun rte_event_port_links_get(dev_id : Uint8T, port_id : Uint8T, queues : Uint8T*, priorities : Uint8T*) : LibC::Int
   fun rte_event_port_setup(dev_id : Uint8T, port_id : Uint8T, port_conf : RteEventPortConf*) : LibC::Int
   fun rte_event_port_unlink(dev_id : Uint8T, port_id : Uint8T, queues : Uint8T*, nb_unlinks : Uint16T) : LibC::Int
-  fun rte_event_queue_attr_get(dev_id : Uint8T, queue_id : Uint8T, attr_id : Uint32T, attr_value : Uint32T*) : LibC::Int
+  fun rte_event_queue_count(dev_id : Uint8T) : Uint8T
   fun rte_event_queue_default_conf_get(dev_id : Uint8T, queue_id : Uint8T, queue_conf : RteEventQueueConf*) : LibC::Int
+  fun rte_event_queue_priority(dev_id : Uint8T, queue_id : Uint8T) : Uint8T
   fun rte_event_queue_setup(dev_id : Uint8T, queue_id : Uint8T, queue_conf : RteEventQueueConf*) : LibC::Int
+  fun rte_event_schedule(dev_id : Uint8T)
   fun rte_exit(exit_code : LibC::Int, format : LibC::Char*, ...) : NoReturn
   fun rte_flow_copy : LibC::Int
-  fun rte_flow_create(port_id : Uint16T, attr : RteFlowAttr*, pattern : RteFlowItem*, actions : RteFlowAction*, error : RteFlowError*) : RteFlow*
-  fun rte_flow_destroy(port_id : Uint16T, flow : RteFlow*, error : RteFlowError*) : LibC::Int
-  fun rte_flow_error_set(error : RteFlowError*, code : LibC::Int, type : RteFlowErrorType, cause : Void*, message : LibC::Char*) : LibC::Int
-  fun rte_flow_flush(port_id : Uint16T, error : RteFlowError*) : LibC::Int
-  fun rte_flow_isolate(port_id : Uint16T, set : LibC::Int, error : RteFlowError*) : LibC::Int
-  fun rte_flow_query(port_id : Uint16T, flow : RteFlow*, action : RteFlowActionType, data : Void*, error : RteFlowError*) : LibC::Int
-  fun rte_flow_validate(port_id : Uint16T, attr : RteFlowAttr*, pattern : RteFlowItem*, actions : RteFlowAction*, error : RteFlowError*) : LibC::Int
+  fun rte_flow_create(port_id : Uint8T, attr : RteFlowAttr*, pattern : RteFlowItem*, actions : RteFlowAction*, error : RteFlowError*) : RteFlow*
+  fun rte_flow_destroy(port_id : Uint8T, flow : RteFlow*, error : RteFlowError*) : LibC::Int
+  fun rte_flow_flush(port_id : Uint8T, error : RteFlowError*) : LibC::Int
+  fun rte_flow_isolate(port_id : Uint8T, set : LibC::Int, error : RteFlowError*) : LibC::Int
+  fun rte_flow_query(port_id : Uint8T, flow : RteFlow*, action : RteFlowActionType, data : Void*, error : RteFlowError*) : LibC::Int
+  fun rte_flow_validate(port_id : Uint8T, attr : RteFlowAttr*, pattern : RteFlowItem*, actions : RteFlowAction*, error : RteFlowError*) : LibC::Int
   fun rte_free(ptr : Void*)
+  fun rte_get_log_level : Uint32T
+  fun rte_get_log_type : Uint32T
   fun rte_get_master_lcore : LibC::UInt
   fun rte_get_next_lcore(i : LibC::UInt, skip_master : LibC::Int, wrap : LibC::Int) : LibC::UInt
   fun rte_get_ptype_inner_l2_name(ptype : Uint32T) : LibC::Char*
@@ -1353,13 +1190,6 @@ lib LibDpdk
   fun rte_get_tx_ol_flag_list(mask : Uint64T, buf : LibC::Char*, buflen : LibC::Int) : LibC::Int
   fun rte_get_tx_ol_flag_name(mask : Uint64T) : LibC::Char*
   fun rte_gettid : LibC::Int
-  fun rte_hash_crc(data : Void*, data_len : Uint32T, init_val : Uint32T) : Uint32T
-  fun rte_hash_crc_1byte(data : Uint8T, init_val : Uint32T) : Uint32T
-  fun rte_hash_crc_2byte(data : Uint16T, init_val : Uint32T) : Uint32T
-  fun rte_hash_crc_4byte(data : Uint32T, init_val : Uint32T) : Uint32T
-  fun rte_hash_crc_8byte(data : Uint64T, init_val : Uint32T) : Uint32T
-  fun rte_hash_crc_init_alg
-  fun rte_hash_crc_set_alg(alg : Uint8T)
   fun rte_intr_allow_others(intr_handle : RteIntrHandle*) : LibC::Int
   fun rte_intr_callback_register(intr_handle : RteIntrHandle*, cb : RteIntrCallbackFn, cb_arg : Void*) : LibC::Int
   fun rte_intr_callback_unregister(intr_handle : RteIntrHandle*, cb : RteIntrCallbackFn, cb_arg : Void*) : LibC::Int
@@ -1403,7 +1233,6 @@ lib LibDpdk
   fun rte_kvargs_parse(args : LibC::Char*, valid_keys : LibC::Char**) : RteKvargs*
   fun rte_kvargs_process(kvlist : RteKvargs*, key_match : LibC::Char*, handler : ArgHandlerT, opaque_arg : Void*) : LibC::Int
   fun rte_lcore_count : LibC::UInt
-  fun rte_lcore_has_role(lcore_id : LibC::UInt, role : RteLcoreRoleT) : LibC::Int
   fun rte_lcore_id : LibC::UInt
   fun rte_lcore_index(lcore_id : LibC::Int) : LibC::Int
   fun rte_lcore_is_enabled(lcore_id : LibC::UInt) : LibC::Int
@@ -1449,12 +1278,9 @@ lib LibDpdk
   fun rte_malloc_set_limit(type : LibC::Char*, max : LibC::Int) : LibC::Int
   fun rte_malloc_socket(type : LibC::Char*, size : LibC::Int, align : LibC::UInt, socket : LibC::Int) : Void*
   fun rte_malloc_validate(ptr : Void*, size : LibC::Int*) : LibC::Int
-  fun rte_malloc_virt2iova(addr : Void*) : RteIovaT
   fun rte_malloc_virt2phy(addr : Void*) : PhysAddrT
   fun rte_mbuf_data_dma_addr(mb : RteMbuf*) : PhysAddrT
   fun rte_mbuf_data_dma_addr_default(mb : RteMbuf*) : PhysAddrT
-  fun rte_mbuf_data_iova(mb : RteMbuf*) : RteIovaT
-  fun rte_mbuf_data_iova_default(mb : RteMbuf*) : RteIovaT
   fun rte_mbuf_from_indirect(mi : RteMbuf*) : RteMbuf*
   fun rte_mbuf_prefetch_part1(m : RteMbuf*)
   fun rte_mbuf_prefetch_part2(m : RteMbuf*)
@@ -1466,7 +1292,7 @@ lib LibDpdk
   fun rte_mbuf_sanity_check(m : RteMbuf*, is_header : LibC::Int)
   fun rte_mbuf_to_baddr(md : RteMbuf*) : LibC::Char*
   fun rte_mem_lock_page(virt : Void*) : LibC::Int
-  fun rte_mem_virt2iova(virt : Void*) : RteIovaT
+  fun rte_mem_phy2mch(memseg_id : Int32T, phy_addr : PhysAddrT) : PhysAddrT
   fun rte_mem_virt2phy(virt : Void*) : PhysAddrT
   fun rte_memcpy(dst : Void*, src : Void*, n : LibC::Int) : Void*
   fun rte_memcpy_aligned(dst : Void*, src : Void*, n : LibC::Int) : Void*
@@ -1488,8 +1314,8 @@ lib LibDpdk
   fun rte_mempool_free(mp : RteMempool*)
   fun rte_mempool_from_obj(obj : Void*) : RteMempool*
   fun rte_mempool_full(mp : RteMempool*) : LibC::Int
-  fun rte_mempool_generic_get(mp : RteMempool*, obj_table : Void**, n : LibC::UInt, cache : RteMempoolCache*) : LibC::Int
-  fun rte_mempool_generic_put(mp : RteMempool*, obj_table : Void**, n : LibC::UInt, cache : RteMempoolCache*)
+  fun rte_mempool_generic_get(mp : RteMempool*, obj_table : Void**, n : LibC::UInt, cache : RteMempoolCache*, flags : LibC::Int) : LibC::Int
+  fun rte_mempool_generic_put(mp : RteMempool*, obj_table : Void**, n : LibC::UInt, cache : RteMempoolCache*, flags : LibC::Int)
   fun rte_mempool_get(mp : RteMempool*, obj_p : Void**) : LibC::Int
   fun rte_mempool_get_bulk(mp : RteMempool*, obj_table : Void**, n : LibC::UInt) : LibC::Int
   fun rte_mempool_get_ops(ops_index : LibC::Int) : RteMempoolOps*
@@ -1503,13 +1329,9 @@ lib LibDpdk
   fun rte_mempool_ops_dequeue_bulk(mp : RteMempool*, obj_table : Void**, n : LibC::UInt) : LibC::Int
   fun rte_mempool_ops_enqueue_bulk(mp : RteMempool*, obj_table : Void**, n : LibC::UInt) : LibC::Int
   fun rte_mempool_ops_free(mp : RteMempool*)
-  fun rte_mempool_ops_get_capabilities(mp : RteMempool*, flags : LibC::UInt*) : LibC::Int
   fun rte_mempool_ops_get_count(mp : RteMempool*) : LibC::UInt
-  fun rte_mempool_ops_register_memory_area(mp : RteMempool*, vaddr : LibC::Char*, iova : RteIovaT, len : LibC::Int) : LibC::Int
   fun rte_mempool_populate_anon(mp : RteMempool*) : LibC::Int
   fun rte_mempool_populate_default(mp : RteMempool*) : LibC::Int
-  fun rte_mempool_populate_iova(mp : RteMempool*, vaddr : LibC::Char*, iova : RteIovaT, len : LibC::Int, free_cb : (RteMempoolMemhdr*, Void* -> Void), opaque : Void*) : LibC::Int
-  fun rte_mempool_populate_iova_tab(mp : RteMempool*, vaddr : LibC::Char*, iova : RteIovaT*, pg_num : Uint32T, pg_shift : Uint32T, free_cb : (RteMempoolMemhdr*, Void* -> Void), opaque : Void*) : LibC::Int
   fun rte_mempool_populate_phys(mp : RteMempool*, vaddr : LibC::Char*, paddr : PhysAddrT, len : LibC::Int, free_cb : (RteMempoolMemhdr*, Void* -> Void), opaque : Void*) : LibC::Int
   fun rte_mempool_populate_phys_tab(mp : RteMempool*, vaddr : LibC::Char*, paddr : PhysAddrT*, pg_num : Uint32T, pg_shift : Uint32T, free_cb : (RteMempoolMemhdr*, Void* -> Void), opaque : Void*) : LibC::Int
   fun rte_mempool_populate_virt(mp : RteMempool*, addr : LibC::Char*, len : LibC::Int, pg_sz : LibC::Int, free_cb : (RteMempoolMemhdr*, Void* -> Void), opaque : Void*) : LibC::Int
@@ -1517,12 +1339,11 @@ lib LibDpdk
   fun rte_mempool_put_bulk(mp : RteMempool*, obj_table : Void**, n : LibC::UInt)
   fun rte_mempool_register_ops(ops : RteMempoolOps*) : LibC::Int
   fun rte_mempool_set_ops_byname(mp : RteMempool*, name : LibC::Char*, pool_config : Void*) : LibC::Int
-  fun rte_mempool_virt2iova(elt : Void*) : RteIovaT
   fun rte_mempool_virt2phy(mp : RteMempool*, elt : Void*) : PhysAddrT
   fun rte_mempool_walk(func : (RteMempool*, Void* -> Void), arg : Void*)
-  fun rte_mempool_xmem_create(name : LibC::Char*, n : LibC::UInt, elt_size : LibC::UInt, cache_size : LibC::UInt, private_data_size : LibC::UInt, mp_init : (RteMempool*, Void* -> Void), mp_init_arg : Void*, obj_init : (RteMempool*, Void*, Void*, LibC::UInt -> Void), obj_init_arg : Void*, socket_id : LibC::Int, flags : LibC::UInt, vaddr : Void*, iova : RteIovaT*, pg_num : Uint32T, pg_shift : Uint32T) : RteMempool*
+  fun rte_mempool_xmem_create(name : LibC::Char*, n : LibC::UInt, elt_size : LibC::UInt, cache_size : LibC::UInt, private_data_size : LibC::UInt, mp_init : (RteMempool*, Void* -> Void), mp_init_arg : Void*, obj_init : (RteMempool*, Void*, Void*, LibC::UInt -> Void), obj_init_arg : Void*, socket_id : LibC::Int, flags : LibC::UInt, vaddr : Void*, paddr : PhysAddrT*, pg_num : Uint32T, pg_shift : Uint32T) : RteMempool*
   fun rte_mempool_xmem_size : LibC::Int
-  fun rte_mempool_xmem_usage(vaddr : Void*, elt_num : Uint32T, total_elt_sz : LibC::Int, iova : RteIovaT*, pg_num : Uint32T, pg_shift : Uint32T, flags : LibC::UInt) : SsizeT
+  fun rte_mempool_xmem_usage(vaddr : Void*, elt_num : Uint32T, total_elt_sz : LibC::Int, paddr : PhysAddrT*, pg_num : Uint32T, pg_shift : Uint32T) : SsizeT
   fun rte_memzone_dump(f : File*)
   fun rte_memzone_free(mz : RteMemzone*) : LibC::Int
   fun rte_memzone_lookup(name : LibC::Char*) : RteMemzone*
@@ -1548,38 +1369,21 @@ lib LibDpdk
   fun rte_mov256(dst : Uint8T*, src : Uint8T*)
   fun rte_mov32(dst : Uint8T*, src : Uint8T*)
   fun rte_mov64(dst : Uint8T*, src : Uint8T*)
-  fun rte_mp_action_register(name : LibC::Char*, action : RteMpT) : LibC::Int
-  fun rte_mp_action_unregister(name : LibC::Char*)
-  fun rte_mp_reply(msg : RteMpMsg*, peer : LibC::Char*) : LibC::Int
-  fun rte_mp_request(req : RteMpMsg*, reply : RteMpReply*, ts : Timespec*) : LibC::Int
-  fun rte_mp_sendmsg(msg : RteMpMsg*) : LibC::Int
-  fun rte_mtr_capabilities_get(port_id : Uint16T, cap : RteMtrCapabilities*, error : RteMtrError*) : LibC::Int
-  fun rte_mtr_create(port_id : Uint16T, mtr_id : Uint32T, params : RteMtrParams*, shared : LibC::Int, error : RteMtrError*) : LibC::Int
-  fun rte_mtr_destroy(port_id : Uint16T, mtr_id : Uint32T, error : RteMtrError*) : LibC::Int
-  fun rte_mtr_meter_disable(port_id : Uint16T, mtr_id : Uint32T, error : RteMtrError*) : LibC::Int
-  fun rte_mtr_meter_dscp_table_update(port_id : Uint16T, mtr_id : Uint32T, dscp_table : RteMtrColor*, error : RteMtrError*) : LibC::Int
-  fun rte_mtr_meter_enable(port_id : Uint16T, mtr_id : Uint32T, error : RteMtrError*) : LibC::Int
-  fun rte_mtr_meter_profile_add(port_id : Uint16T, meter_profile_id : Uint32T, profile : RteMtrMeterProfile*, error : RteMtrError*) : LibC::Int
-  fun rte_mtr_meter_profile_delete(port_id : Uint16T, meter_profile_id : Uint32T, error : RteMtrError*) : LibC::Int
-  fun rte_mtr_meter_profile_update(port_id : Uint16T, mtr_id : Uint32T, meter_profile_id : Uint32T, error : RteMtrError*) : LibC::Int
-  fun rte_mtr_policer_actions_update(port_id : Uint16T, mtr_id : Uint32T, action_mask : Uint32T, actions : RteMtrPolicerAction*, error : RteMtrError*) : LibC::Int
-  fun rte_mtr_stats_read(port_id : Uint16T, mtr_id : Uint32T, stats : RteMtrStats*, stats_mask : Uint64T*, clear : LibC::Int, error : RteMtrError*) : LibC::Int
-  fun rte_mtr_stats_update(port_id : Uint16T, mtr_id : Uint32T, stats_mask : Uint64T, error : RteMtrError*) : LibC::Int
-  fun rte_net_make_rarp_packet(mpool : RteMempool*, mac : EtherAddr*) : RteMbuf*
   fun rte_openlog_stream(f : File*) : LibC::Int
   fun rte_pause
-  fun rte_pci_addr_cmp(addr : RtePciAddr*, addr2 : RtePciAddr*) : LibC::Int
-  fun rte_pci_addr_parse(str : LibC::Char*, addr : RtePciAddr*) : LibC::Int
+  fun rte_pci_detach(addr : RtePciAddr*) : LibC::Int
   fun rte_pci_device_name(addr : RtePciAddr*, output : LibC::Char*, size : LibC::Int)
   fun rte_pci_dump(f : File*)
-  fun rte_pci_get_sysfs_path : LibC::Char*
   fun rte_pci_ioport_map(dev : RtePciDevice*, bar : LibC::Int, p : RtePciIoport*) : LibC::Int
   fun rte_pci_ioport_read(p : RtePciIoport*, data : Void*, len : LibC::Int, offset : OffT)
   fun rte_pci_ioport_unmap(p : RtePciIoport*) : LibC::Int
   fun rte_pci_ioport_write(p : RtePciIoport*, data : Void*, len : LibC::Int, offset : OffT)
   fun rte_pci_map_device(dev : RtePciDevice*) : LibC::Int
+  fun rte_pci_probe : LibC::Int
+  fun rte_pci_probe_one(addr : RtePciAddr*) : LibC::Int
   fun rte_pci_read_config(device : RtePciDevice*, buf : Void*, len : LibC::Int, offset : OffT) : LibC::Int
   fun rte_pci_register(driver : RtePciDriver*)
+  fun rte_pci_scan : LibC::Int
   fun rte_pci_unmap_device(dev : RtePciDevice*)
   fun rte_pci_unregister(driver : RtePciDriver*)
   fun rte_pci_write_config(device : RtePciDevice*, buf : Void*, len : LibC::Int, offset : OffT) : LibC::Int
@@ -1601,7 +1405,6 @@ lib LibDpdk
   fun rte_pktmbuf_lastseg(m : RteMbuf*) : RteMbuf*
   fun rte_pktmbuf_linearize(mbuf : RteMbuf*) : LibC::Int
   fun rte_pktmbuf_pool_create(name : LibC::Char*, n : LibC::UInt, cache_size : LibC::UInt, priv_size : Uint16T, data_room_size : Uint16T, socket_id : LibC::Int) : RteMempool*
-  fun rte_pktmbuf_pool_create_by_ops(name : LibC::Char*, n : LibC::UInt, cache_size : LibC::UInt, priv_size : Uint16T, data_room_size : Uint16T, socket_id : LibC::Int, ops_name : LibC::Char*) : RteMempool*
   fun rte_pktmbuf_pool_init(mp : RteMempool*, opaque_arg : Void*)
   fun rte_pktmbuf_prefree_seg(m : RteMbuf*) : RteMbuf*
   fun rte_pktmbuf_prepend(m : RteMbuf*, len : Uint16T) : LibC::Char*
@@ -1675,40 +1478,29 @@ lib LibDpdk
   fun rte_sched_queue_read_stats(port : RteSchedPort*, queue_id : Uint32T, stats : RteSchedQueueStats*, qlen : Uint16T*) : LibC::Int
   fun rte_sched_subport_config(port : RteSchedPort*, subport_id : Uint32T, params : RteSchedSubportParams*) : LibC::Int
   fun rte_sched_subport_read_stats(port : RteSchedPort*, subport_id : Uint32T, stats : RteSchedSubportStats*, tc_ov : Uint32T*) : LibC::Int
-  fun rte_security_attach_session(op : RteCryptoOp*, sess : RteSecuritySession*) : LibC::Int
-  fun rte_security_capabilities_get(instance : RteSecurityCtx*) : RteSecurityCapability*
-  fun rte_security_capability_get(instance : RteSecurityCtx*, idx : RteSecurityCapabilityIdx*) : RteSecurityCapability*
-  fun rte_security_get_userdata(instance : RteSecurityCtx*, md : Uint64T) : Void*
-  fun rte_security_session_create(instance : RteSecurityCtx*, conf : RteSecuritySessionConf*, mp : RteMempool*) : RteSecuritySession*
-  fun rte_security_session_destroy(instance : RteSecurityCtx*, sess : RteSecuritySession*) : LibC::Int
-  fun rte_security_session_get_size(instance : RteSecurityCtx*) : LibC::UInt
-  fun rte_security_session_stats_get(instance : RteSecurityCtx*, sess : RteSecuritySession*, stats : RteSecurityStats*) : LibC::Int
-  fun rte_security_session_update(instance : RteSecurityCtx*, sess : RteSecuritySession*, conf : RteSecuritySessionConf*) : LibC::Int
-  fun rte_security_set_pkt_metadata(instance : RteSecurityCtx*, sess : RteSecuritySession*, mb : RteMbuf*, params : Void*) : LibC::Int
-  fun rte_service_attr_get(id : Uint32T, attr_id : Uint32T, attr_value : Uint32T*) : Int32T
-  fun rte_service_attr_reset_all(id : Uint32T) : Int32T
-  fun rte_service_dump(f : File*, id : Uint32T) : Int32T
-  fun rte_service_get_by_name(name : LibC::Char*, service_id : Uint32T*) : Int32T
+  fun rte_service_disable_on_lcore(service : RteServiceSpec*, lcore : Uint32T) : Int32T
+  fun rte_service_dump(f : File*, service : RteServiceSpec*) : Int32T
+  fun rte_service_enable_on_lcore(service : RteServiceSpec*, lcore : Uint32T) : Int32T
+  fun rte_service_get_by_id(id : Uint32T) : RteServiceSpec*
+  fun rte_service_get_by_name(name : LibC::Char*) : RteServiceSpec*
   fun rte_service_get_count : Uint32T
-  fun rte_service_get_name(id : Uint32T) : LibC::Char*
+  fun rte_service_get_enabled_on_lcore(service : RteServiceSpec*, lcore : Uint32T) : Int32T
+  fun rte_service_get_name(service : RteServiceSpec*) : LibC::Char*
+  fun rte_service_is_running(service : RteServiceSpec*) : Int32T
   fun rte_service_lcore_add(lcore : Uint32T) : Int32T
   fun rte_service_lcore_count : Int32T
-  fun rte_service_lcore_count_services(lcore : Uint32T) : Int32T
   fun rte_service_lcore_del(lcore : Uint32T) : Int32T
   fun rte_service_lcore_list(array : Uint32T*, n : Uint32T) : Int32T
   fun rte_service_lcore_reset_all : Int32T
   fun rte_service_lcore_start(lcore_id : Uint32T) : Int32T
   fun rte_service_lcore_stop(lcore_id : Uint32T) : Int32T
-  fun rte_service_map_lcore_get(service_id : Uint32T, lcore : Uint32T) : Int32T
-  fun rte_service_map_lcore_set(service_id : Uint32T, lcore : Uint32T, enable : Uint32T) : Int32T
-  fun rte_service_probe_capability(id : Uint32T, capability : Uint32T) : Int32T
-  fun rte_service_run_iter_on_app_lcore(id : Uint32T, serialize_multithread_unsafe : Uint32T) : Int32T
-  fun rte_service_runstate_get(id : Uint32T) : Int32T
-  fun rte_service_runstate_set(id : Uint32T, runstate : Uint32T) : Int32T
-  fun rte_service_set_runstate_mapped_check(id : Uint32T, enable : Int32T) : Int32T
-  fun rte_service_set_stats_enable(id : Uint32T, enable : Int32T) : Int32T
+  fun rte_service_probe_capability(service : RteServiceSpec*, capability : Uint32T) : Int32T
+  fun rte_service_set_stats_enable(service : RteServiceSpec*, enable : Int32T) : Int32T
+  fun rte_service_start(service : RteServiceSpec*) : Int32T
+  fun rte_service_stop(service : RteServiceSpec*) : Int32T
   fun rte_set_application_usage_hook(usage_func : RteUsageHookT) : RteUsageHookT
-  fun rte_smp_mb
+  fun rte_set_log_level(level : Uint32T)
+  fun rte_set_log_type(type : Uint32T, enable : LibC::Int)
   fun rte_socket_id : LibC::UInt
   fun rte_spinlock_init(sl : RteSpinlockT*)
   fun rte_spinlock_is_locked(sl : RteSpinlockT*) : LibC::Int
@@ -1733,45 +1525,43 @@ lib LibDpdk
   fun rte_thread_get_affinity(cpusetp : RteCpusetT*)
   fun rte_thread_set_affinity(cpusetp : RteCpusetT*) : LibC::Int
   fun rte_thread_setname(id : PthreadT, name : LibC::Char*) : LibC::Int
-  fun rte_tm_capabilities_get(port_id : Uint16T, cap : RteTmCapabilities*, error : RteTmError*) : LibC::Int
-  fun rte_tm_get_number_of_leaf_nodes(port_id : Uint16T, n_leaf_nodes : Uint32T*, error : RteTmError*) : LibC::Int
-  fun rte_tm_hierarchy_commit(port_id : Uint16T, clear_on_fail : LibC::Int, error : RteTmError*) : LibC::Int
-  fun rte_tm_level_capabilities_get(port_id : Uint16T, level_id : Uint32T, cap : RteTmLevelCapabilities*, error : RteTmError*) : LibC::Int
-  fun rte_tm_mark_ip_dscp(port_id : Uint16T, mark_green : LibC::Int, mark_yellow : LibC::Int, mark_red : LibC::Int, error : RteTmError*) : LibC::Int
-  fun rte_tm_mark_ip_ecn(port_id : Uint16T, mark_green : LibC::Int, mark_yellow : LibC::Int, mark_red : LibC::Int, error : RteTmError*) : LibC::Int
-  fun rte_tm_mark_vlan_dei(port_id : Uint16T, mark_green : LibC::Int, mark_yellow : LibC::Int, mark_red : LibC::Int, error : RteTmError*) : LibC::Int
-  fun rte_tm_node_add(port_id : Uint16T, node_id : Uint32T, parent_node_id : Uint32T, priority : Uint32T, weight : Uint32T, level_id : Uint32T, params : RteTmNodeParams*, error : RteTmError*) : LibC::Int
-  fun rte_tm_node_capabilities_get(port_id : Uint16T, node_id : Uint32T, cap : RteTmNodeCapabilities*, error : RteTmError*) : LibC::Int
-  fun rte_tm_node_cman_update(port_id : Uint16T, node_id : Uint32T, cman : RteTmCmanMode, error : RteTmError*) : LibC::Int
-  fun rte_tm_node_delete(port_id : Uint16T, node_id : Uint32T, error : RteTmError*) : LibC::Int
-  fun rte_tm_node_parent_update(port_id : Uint16T, node_id : Uint32T, parent_node_id : Uint32T, priority : Uint32T, weight : Uint32T, error : RteTmError*) : LibC::Int
-  fun rte_tm_node_resume(port_id : Uint16T, node_id : Uint32T, error : RteTmError*) : LibC::Int
-  fun rte_tm_node_shaper_update(port_id : Uint16T, node_id : Uint32T, shaper_profile_id : Uint32T, error : RteTmError*) : LibC::Int
-  fun rte_tm_node_shared_shaper_update(port_id : Uint16T, node_id : Uint32T, shared_shaper_id : Uint32T, add : LibC::Int, error : RteTmError*) : LibC::Int
-  fun rte_tm_node_shared_wred_context_update(port_id : Uint16T, node_id : Uint32T, shared_wred_context_id : Uint32T, add : LibC::Int, error : RteTmError*) : LibC::Int
-  fun rte_tm_node_stats_read(port_id : Uint16T, node_id : Uint32T, stats : RteTmNodeStats*, stats_mask : Uint64T*, clear : LibC::Int, error : RteTmError*) : LibC::Int
-  fun rte_tm_node_stats_update(port_id : Uint16T, node_id : Uint32T, stats_mask : Uint64T, error : RteTmError*) : LibC::Int
-  fun rte_tm_node_suspend(port_id : Uint16T, node_id : Uint32T, error : RteTmError*) : LibC::Int
-  fun rte_tm_node_type_get(port_id : Uint16T, node_id : Uint32T, is_leaf : LibC::Int*, error : RteTmError*) : LibC::Int
-  fun rte_tm_node_wfq_weight_mode_update(port_id : Uint16T, node_id : Uint32T, wfq_weight_mode : LibC::Int*, n_sp_priorities : Uint32T, error : RteTmError*) : LibC::Int
-  fun rte_tm_node_wred_context_update(port_id : Uint16T, node_id : Uint32T, wred_profile_id : Uint32T, error : RteTmError*) : LibC::Int
-  fun rte_tm_shaper_profile_add(port_id : Uint16T, shaper_profile_id : Uint32T, profile : RteTmShaperParams*, error : RteTmError*) : LibC::Int
-  fun rte_tm_shaper_profile_delete(port_id : Uint16T, shaper_profile_id : Uint32T, error : RteTmError*) : LibC::Int
-  fun rte_tm_shared_shaper_add_update(port_id : Uint16T, shared_shaper_id : Uint32T, shaper_profile_id : Uint32T, error : RteTmError*) : LibC::Int
-  fun rte_tm_shared_shaper_delete(port_id : Uint16T, shared_shaper_id : Uint32T, error : RteTmError*) : LibC::Int
-  fun rte_tm_shared_wred_context_add_update(port_id : Uint16T, shared_wred_context_id : Uint32T, wred_profile_id : Uint32T, error : RteTmError*) : LibC::Int
-  fun rte_tm_shared_wred_context_delete(port_id : Uint16T, shared_wred_context_id : Uint32T, error : RteTmError*) : LibC::Int
+  fun rte_tm_capabilities_get(port_id : Uint8T, cap : RteTmCapabilities*, error : RteTmError*) : LibC::Int
+  fun rte_tm_get_number_of_leaf_nodes(port_id : Uint8T, n_leaf_nodes : Uint32T*, error : RteTmError*) : LibC::Int
+  fun rte_tm_hierarchy_commit(port_id : Uint8T, clear_on_fail : LibC::Int, error : RteTmError*) : LibC::Int
+  fun rte_tm_level_capabilities_get(port_id : Uint8T, level_id : Uint32T, cap : RteTmLevelCapabilities*, error : RteTmError*) : LibC::Int
+  fun rte_tm_mark_ip_dscp(port_id : Uint8T, mark_green : LibC::Int, mark_yellow : LibC::Int, mark_red : LibC::Int, error : RteTmError*) : LibC::Int
+  fun rte_tm_mark_ip_ecn(port_id : Uint8T, mark_green : LibC::Int, mark_yellow : LibC::Int, mark_red : LibC::Int, error : RteTmError*) : LibC::Int
+  fun rte_tm_mark_vlan_dei(port_id : Uint8T, mark_green : LibC::Int, mark_yellow : LibC::Int, mark_red : LibC::Int, error : RteTmError*) : LibC::Int
+  fun rte_tm_node_add(port_id : Uint8T, node_id : Uint32T, parent_node_id : Uint32T, priority : Uint32T, weight : Uint32T, level_id : Uint32T, params : RteTmNodeParams*, error : RteTmError*) : LibC::Int
+  fun rte_tm_node_capabilities_get(port_id : Uint8T, node_id : Uint32T, cap : RteTmNodeCapabilities*, error : RteTmError*) : LibC::Int
+  fun rte_tm_node_cman_update(port_id : Uint8T, node_id : Uint32T, cman : RteTmCmanMode, error : RteTmError*) : LibC::Int
+  fun rte_tm_node_delete(port_id : Uint8T, node_id : Uint32T, error : RteTmError*) : LibC::Int
+  fun rte_tm_node_parent_update(port_id : Uint8T, node_id : Uint32T, parent_node_id : Uint32T, priority : Uint32T, weight : Uint32T, error : RteTmError*) : LibC::Int
+  fun rte_tm_node_resume(port_id : Uint8T, node_id : Uint32T, error : RteTmError*) : LibC::Int
+  fun rte_tm_node_shaper_update(port_id : Uint8T, node_id : Uint32T, shaper_profile_id : Uint32T, error : RteTmError*) : LibC::Int
+  fun rte_tm_node_shared_shaper_update(port_id : Uint8T, node_id : Uint32T, shared_shaper_id : Uint32T, add : LibC::Int, error : RteTmError*) : LibC::Int
+  fun rte_tm_node_shared_wred_context_update(port_id : Uint8T, node_id : Uint32T, shared_wred_context_id : Uint32T, add : LibC::Int, error : RteTmError*) : LibC::Int
+  fun rte_tm_node_stats_read(port_id : Uint8T, node_id : Uint32T, stats : RteTmNodeStats*, stats_mask : Uint64T*, clear : LibC::Int, error : RteTmError*) : LibC::Int
+  fun rte_tm_node_stats_update(port_id : Uint8T, node_id : Uint32T, stats_mask : Uint64T, error : RteTmError*) : LibC::Int
+  fun rte_tm_node_suspend(port_id : Uint8T, node_id : Uint32T, error : RteTmError*) : LibC::Int
+  fun rte_tm_node_type_get(port_id : Uint8T, node_id : Uint32T, is_leaf : LibC::Int*, error : RteTmError*) : LibC::Int
+  fun rte_tm_node_wfq_weight_mode_update(port_id : Uint8T, node_id : Uint32T, wfq_weight_mode : LibC::Int*, n_sp_priorities : Uint32T, error : RteTmError*) : LibC::Int
+  fun rte_tm_node_wred_context_update(port_id : Uint8T, node_id : Uint32T, wred_profile_id : Uint32T, error : RteTmError*) : LibC::Int
+  fun rte_tm_shaper_profile_add(port_id : Uint8T, shaper_profile_id : Uint32T, profile : RteTmShaperParams*, error : RteTmError*) : LibC::Int
+  fun rte_tm_shaper_profile_delete(port_id : Uint8T, shaper_profile_id : Uint32T, error : RteTmError*) : LibC::Int
+  fun rte_tm_shared_shaper_add_update(port_id : Uint8T, shared_shaper_id : Uint32T, shaper_profile_id : Uint32T, error : RteTmError*) : LibC::Int
+  fun rte_tm_shared_shaper_delete(port_id : Uint8T, shared_shaper_id : Uint32T, error : RteTmError*) : LibC::Int
+  fun rte_tm_shared_wred_context_add_update(port_id : Uint8T, shared_wred_context_id : Uint32T, wred_profile_id : Uint32T, error : RteTmError*) : LibC::Int
+  fun rte_tm_shared_wred_context_delete(port_id : Uint8T, shared_wred_context_id : Uint32T, error : RteTmError*) : LibC::Int
   fun rte_tm_supported : LibC::Int
-  fun rte_tm_wred_profile_add(port_id : Uint16T, wred_profile_id : Uint32T, profile : RteTmWredParams*, error : RteTmError*) : LibC::Int
-  fun rte_tm_wred_profile_delete(port_id : Uint16T, wred_profile_id : Uint32T, error : RteTmError*) : LibC::Int
+  fun rte_tm_wred_profile_add(port_id : Uint8T, wred_profile_id : Uint32T, profile : RteTmWredParams*, error : RteTmError*) : LibC::Int
+  fun rte_tm_wred_profile_delete(port_id : Uint8T, wred_profile_id : Uint32T, error : RteTmError*) : LibC::Int
   fun rte_try_tm(lock : LibC::Int*) : LibC::Int
   fun rte_validate_tx_offload(m : RteMbuf*) : LibC::Int
-  fun rte_vdev_add_custom_scan(callback : RteVdevScanCallback, user_arg : Void*) : LibC::Int
   fun rte_vdev_device_args(dev : RteVdevDevice*) : LibC::Char*
   fun rte_vdev_device_name(dev : RteVdevDevice*) : LibC::Char*
   fun rte_vdev_init(name : LibC::Char*, args : LibC::Char*) : LibC::Int
   fun rte_vdev_register(driver : RteVdevDriver*)
-  fun rte_vdev_remove_custom_scan(callback : RteVdevScanCallback, user_arg : Void*) : LibC::Int
   fun rte_vdev_uninit(name : LibC::Char*) : LibC::Int
   fun rte_vdev_unregister(driver : RteVdevDriver*)
   fun rte_vhost_avail_entries(vid : LibC::Int, queue_id : Uint16T) : Uint16T
@@ -1798,11 +1588,11 @@ lib LibDpdk
   fun rte_vhost_log_used_vring(vid : LibC::Int, vring_idx : Uint16T, offset : Uint64T, len : Uint64T)
   fun rte_vhost_log_write(vid : LibC::Int, addr : Uint64T, len : Uint64T)
   fun rte_vhost_rx_queue_count(vid : LibC::Int, qid : Uint16T) : Uint32T
-  fun rte_vhost_vring_call(vid : LibC::Int, vring_idx : Uint16T) : LibC::Int
   fun rte_vlan_insert(m : RteMbuf**) : LibC::Int
   fun rte_vlan_strip(m : RteMbuf*) : LibC::Int
   fun rte_vlog(level : Uint32T, logtype : Uint32T, format : LibC::Char*, ap : VaList) : LibC::Int
   fun rte_xbegin : LibC::UInt
+  fun rte_xen_dom0_supported : LibC::Int
   fun rte_xend
   fun rte_xtest : LibC::Int
   fun rte_zmalloc(type : LibC::Char*, size : LibC::Int, align : LibC::UInt) : Void*
@@ -1854,11 +1644,6 @@ lib LibDpdk
     __bits : X__CpuMask[16]
   end
 
-  struct EspHdr
-    spi : RteBe32T
-    seq : RteBe32T
-  end
-
   struct EthDevOps
     dev_configure : EthDevConfigureT
     dev_start : EthDevStartT
@@ -1866,9 +1651,7 @@ lib LibDpdk
     dev_set_link_up : EthDevSetLinkUpT
     dev_set_link_down : EthDevSetLinkDownT
     dev_close : EthDevCloseT
-    dev_reset : EthDevResetT
     link_update : EthLinkUpdateT
-    is_removed : EthIsRemovedT
     promiscuous_enable : EthPromiscuousEnableT
     promiscuous_disable : EthPromiscuousDisableT
     allmulticast_enable : EthAllmulticastEnableT
@@ -1943,8 +1726,6 @@ lib LibDpdk
     xstats_get_by_id : EthXstatsGetByIdT
     xstats_get_names_by_id : EthXstatsGetNamesByIdT
     tm_ops_get : EthTmOpsGetT
-    mtr_ops_get : EthMtrOpsGetT
-    pool_ops_supported : EthPoolOpsSupportedT
   end
 
   struct EtherAddr
@@ -1980,6 +1761,7 @@ lib LibDpdk
     force_nrank : LibC::UInt
     no_hugetlbfs : LibC::UInt
     hugepage_unlink : LibC::UInt
+    xen_dom0_support : LibC::UInt
     no_pci : LibC::UInt
     no_hpet : LibC::UInt
     vmware_tsc_map : LibC::UInt
@@ -1993,7 +1775,6 @@ lib LibDpdk
     vfio_intr_mode : RteIntrMode
     hugefile_prefix : LibC::Char*
     hugepage_dir : LibC::Char*
-    user_mbuf_pool_ops_name : LibC::Char*
     num_hugepage_sizes : LibC::UInt
     hugepage_info : HugepageInfo[3]
   end
@@ -2147,10 +1928,10 @@ lib LibDpdk
     magic : Uint32T
     version : Uint32T
     ifname : LibC::Char[32]
-    tx_phys : RteIovaT
-    rx_phys : RteIovaT
-    alloc_phys : RteIovaT
-    free_phys : RteIovaT
+    tx_phys : PhysAddrT
+    rx_phys : PhysAddrT
+    alloc_phys : PhysAddrT
+    free_phys : PhysAddrT
     features : Uint32T
     min_rx_queues : Uint8T
     num_rx_queues : Uint8T
@@ -2162,12 +1943,12 @@ lib LibDpdk
     rx_size : Uint32T
     alloc_size : Uint32T
     free_size : Uint32T
-    req_phys : RteIovaT
-    resp_phys : RteIovaT
-    sync_phys : RteIovaT
+    req_phys : PhysAddrT
+    resp_phys : PhysAddrT
+    sync_phys : PhysAddrT
     sync_va : Void*
     mbuf_va : Void*
-    mbuf_phys : RteIovaT
+    mbuf_phys : PhysAddrT
     pool : RteAvpMempoolInfo[8]
     ethaddr : LibC::Char[6]
     mode : Uint8T
@@ -2186,7 +1967,7 @@ lib LibDpdk
 
   struct RteAvpMemmap
     addr : Void*
-    phys_addr : RteIovaT
+    phys_addr : PhysAddrT
     length : Uint64T
   end
 
@@ -2199,189 +1980,13 @@ lib LibDpdk
 
   struct RteAvpMempoolInfo
     addr : Void*
-    phys_addr : RteIovaT
+    phys_addr : PhysAddrT
     length : Uint64T
   end
 
   struct RteAvpRequest
     req_id : Uint32T
     result : Int32T
-  end
-
-  struct RteBbdev
-    enqueue_enc_ops : RteBbdevEnqueueEncOpsT
-    enqueue_dec_ops : RteBbdevEnqueueDecOpsT
-    dequeue_enc_ops : RteBbdevDequeueEncOpsT
-    dequeue_dec_ops : RteBbdevDequeueDecOpsT
-    dev_ops : RteBbdevOps*
-    data : RteBbdevData*
-    state : RteBbdevState
-    device : RteDevice*
-    list_cbs : RteBbdevCbList
-    intr_handle : RteIntrHandle*
-  end
-
-  struct RteBbdevCbList
-    tqh_first : RteBbdevCallback*
-    tqh_last : RteBbdevCallback**
-  end
-
-  struct RteBbdevData
-    name : LibC::Char[64]
-    dev_private : Void*
-    num_queues : Uint16T
-    queues : RteBbdevQueueData*
-    dev_id : Uint16T
-    socket_id : LibC::Int
-    started : LibC::Int
-    process_cnt : RteAtomic16T
-  end
-
-  struct RteBbdevDecOp
-    status : LibC::Int
-    mempool : RteMempool*
-    opaque_data : Void*
-    turbo_dec : RteBbdevOpTurboDec
-  end
-
-  struct RteBbdevDriverInfo
-    driver_name : LibC::Char*
-    max_num_queues : LibC::UInt
-    queue_size_lim : Uint32T
-    hardware_accelerated : LibC::Int
-    max_queue_priority : Uint8T
-    queue_intr_supported : LibC::Int
-    min_alignment : Uint16T
-    default_queue_conf : RteBbdevQueueConf
-    capabilities : RteBbdevOpCap*
-    cpu_flag_reqs : RteCpuFlagT*
-  end
-
-  struct RteBbdevEncOp
-    status : LibC::Int
-    mempool : RteMempool*
-    opaque_data : Void*
-    turbo_enc : RteBbdevOpTurboEnc
-  end
-
-  struct RteBbdevInfo
-    socket_id : LibC::Int
-    dev_name : LibC::Char*
-    bus : RteBus*
-    num_queues : Uint16T
-    started : LibC::Int
-    drv : RteBbdevDriverInfo
-  end
-
-  struct RteBbdevOpCap
-    type : RteBbdevOpType
-    cap : RteBbdevOpCapCap
-  end
-
-  struct RteBbdevOpCapTurboDec
-    capability_flags : Uint32T
-    num_buffers_src : Uint8T
-    num_buffers_hard_out : Uint8T
-    num_buffers_soft_out : Uint8T
-  end
-
-  struct RteBbdevOpCapTurboEnc
-    capability_flags : Uint32T
-    num_buffers_src : Uint8T
-    num_buffers_dst : Uint8T
-  end
-
-  struct RteBbdevOpData
-    data : RteMbuf*
-    offset : Uint32T
-    length : Uint32T
-  end
-
-  struct RteBbdevOpDecCbParams
-    k : Uint16T
-    e : Uint32T
-  end
-
-  struct RteBbdevOpDecTbParams
-    k_neg : Uint16T
-    k_pos : Uint16T
-    c_neg : Uint8T
-    c : Uint8T
-    cab : Uint8T
-    ea : Uint32T
-    eb : Uint32T
-  end
-
-  struct RteBbdevOpEncCbParams
-    k : Uint16T
-    e : Uint32T
-    ncb : Uint16T
-  end
-
-  struct RteBbdevOpEncTbParams
-    k_neg : Uint16T
-    k_pos : Uint16T
-    c_neg : Uint8T
-    c : Uint8T
-    cab : Uint8T
-    ea : Uint32T
-    eb : Uint32T
-    ncb_neg : Uint16T
-    ncb_pos : Uint16T
-    r : Uint8T
-  end
-
-  struct RteBbdevOpPoolPrivate
-    type : RteBbdevOpType
-  end
-
-  struct RteBbdevOpTurboDec
-    input : RteBbdevOpData
-    hard_output : RteBbdevOpData
-    soft_output : RteBbdevOpData
-    op_flags : Uint32T
-    rv_index : Uint8T
-    iter_min : Uint8T
-    iter_max : Uint8T
-    iter_count : Uint8T
-    ext_scale : Uint8T
-    num_maps : Uint8T
-    code_block_mode : Uint8T
-  end
-
-  struct RteBbdevOpTurboEnc
-    input : RteBbdevOpData
-    output : RteBbdevOpData
-    op_flags : Uint32T
-    rv_index : Uint8T
-    code_block_mode : Uint8T
-  end
-
-  struct RteBbdevQueueConf
-    socket : LibC::Int
-    queue_size : Uint32T
-    priority : Uint8T
-    deferred_start : LibC::Int
-    op_type : RteBbdevOpType
-  end
-
-  struct RteBbdevQueueData
-    queue_private : Void*
-    conf : RteBbdevQueueConf
-    queue_stats : RteBbdevStats
-    started : LibC::Int
-  end
-
-  struct RteBbdevQueueInfo
-    conf : RteBbdevQueueConf
-    started : LibC::Int
-  end
-
-  struct RteBbdevStats
-    enqueued_count : Uint64T
-    dequeued_count : Uint64T
-    enqueue_err_count : Uint64T
-    dequeue_err_count : Uint64T
   end
 
   struct RteBus
@@ -2394,7 +1999,6 @@ lib LibDpdk
     unplug : Void*
     parse : Void*
     conf : RteBusConf
-    get_iommu_class : Void*
   end
 
   struct RteBusConf
@@ -2418,7 +2022,6 @@ lib LibDpdk
     service_lcore_count : Uint32T
     lcore_role : RteLcoreRoleT[128]
     process_type : RteProcTypeT
-    iova_mode : RteIovaMode
     mem_config : RteMemConfig*
   end
 
@@ -2482,7 +2085,7 @@ lib LibDpdk
     sess_type : Uint8T
     reserved : Uint8T[5]
     mempool : RteMempool*
-    phys_addr : RteIovaT
+    phys_addr : PhysAddrT
   end
 
   struct RteCryptoOpPoolPrivate
@@ -2515,7 +2118,6 @@ lib LibDpdk
     device : RteDevice*
     driver_id : Uint8T
     link_intr_cbs : RteCryptodevCbList
-    security_ctx : Void*
     attached : Uint8T
   end
 
@@ -2614,7 +2216,7 @@ lib LibDpdk
     type : RteDevtype
     policy : RteDevPolicy
     bus : RteBus*
-    name : LibC::Char[64]
+    name : LibC::Char[32]
     args : LibC::Char*
   end
 
@@ -2737,7 +2339,6 @@ lib LibDpdk
     post_rx_burst_cbs : RteEthRxtxCallback*[1024]
     pre_tx_burst_cbs : RteEthRxtxCallback*[1024]
     state : RteEthDevState
-    security_ctx : Void*
   end
 
   struct RteEthDevCbList
@@ -2746,7 +2347,7 @@ lib LibDpdk
   end
 
   struct RteEthDevData
-    name : LibC::Char[64]
+    name : LibC::Char[32]
     rx_queues : Void**
     tx_queues : Void**
     nb_rx_queues : Uint16T
@@ -2761,7 +2362,7 @@ lib LibDpdk
     mac_addrs : EtherAddr*
     mac_pool_sel : Uint64T[128]
     hash_mac_addrs : EtherAddr*
-    port_id : Uint16T
+    port_id : Uint8T
     promiscuous : Uint8T
     scattered_rx : Uint8T
     all_multicast : Uint8T
@@ -2773,7 +2374,6 @@ lib LibDpdk
     kdrv : RteKernelDriver
     numa_node : LibC::Int
     vlan_filter_conf : RteVlanFilterConf
-    owner : RteEthDevOwner
   end
 
   struct RteEthDevInfo
@@ -2788,10 +2388,8 @@ lib LibDpdk
     max_hash_mac_addrs : Uint32T
     max_vfs : Uint16T
     max_vmdq_pools : Uint16T
-    rx_offload_capa : Uint64T
-    tx_offload_capa : Uint64T
-    rx_queue_offload_capa : Uint64T
-    tx_queue_offload_capa : Uint64T
+    rx_offload_capa : Uint32T
+    tx_offload_capa : Uint32T
     reta_size : Uint16T
     hash_key_size : Uint8T
     flow_type_rss_offloads : Uint64T
@@ -2805,11 +2403,6 @@ lib LibDpdk
     speed_capa : Uint32T
     nb_rx_queues : Uint16T
     nb_tx_queues : Uint16T
-  end
-
-  struct RteEthDevOwner
-    id : Uint64T
-    name : LibC::Char[64]
   end
 
   struct RteEthDevSriov
@@ -2887,7 +2480,7 @@ lib LibDpdk
     flex_conf : RteEthFdirFlexConf
     guarant_spc : Uint32T
     best_spc : Uint32T
-    flow_types_mask : Uint64T
+    flow_types_mask : Uint32T
     max_flexpayload : Uint32T
     flex_payload_unit : Uint32T
     max_flex_payload_segment_num : Uint32T
@@ -2951,8 +2544,8 @@ lib LibDpdk
 
   struct RteEthHashGlobalConf
     hash_func : RteEthHashFunction
-    sym_hash_enable_mask : Uint64T
-    valid_bit_mask : Uint64T
+    sym_hash_enable_mask : Uint32T
+    valid_bit_mask : Uint32T
   end
 
   struct RteEthInputSetConf
@@ -3058,7 +2651,6 @@ lib LibDpdk
     rx_free_thresh : Uint16T
     rx_drop_en : Uint8T
     rx_deferred_start : Uint8T
-    offloads : Uint64T
   end
 
   # added
@@ -3082,7 +2674,6 @@ lib LibDpdk
     mq_mode : RteEthRxMqMode
     max_rx_pkt_len : Uint32T
     split_hdr_size : Uint16T
-    offloads : Uint64T # !dpdk-17.08
     flags : RteEthRxmodeFlags # changed
   end
 
@@ -3176,22 +2767,14 @@ lib LibDpdk
     tx_free_thresh : Uint16T
     txq_flags : Uint32T
     tx_deferred_start : Uint8T
-    offloads : Uint64T
-  end
-
-  # added
-  @[Flags]
-  enum RteEthTxmodeFlags : Uint8T
-    HwVlanRejectTagged
-    HwVlanRejectUntagged
-    HwVlanInsertPvid
   end
 
   struct RteEthTxmode
     mq_mode : RteEthTxMqMode
-    offloads   : Uint64T
     pvid : Uint16T
-    flags : RteEthTxmodeFlags # updated
+    hw_vlan_reject_tagged : Uint8T
+    hw_vlan_reject_untagged : Uint8T
+    hw_vlan_insert_pvid : Uint8T
   end
 
   struct RteEthTxqInfo
@@ -3304,18 +2887,17 @@ lib LibDpdk
     new_event_threshold : Int32T
     dequeue_depth : Uint16T
     enqueue_depth : Uint16T
-    disable_implicit_release : Uint8T
   end
 
   struct RteEventQueueConf
     nb_atomic_flows : Uint32T
     nb_atomic_order_sequences : Uint32T
     event_queue_cfg : Uint32T
-    schedule_type : Uint8T
     priority : Uint8T
   end
 
   struct RteEventdev
+    schedule : EventScheduleT
     enqueue : EventEnqueueT
     enqueue_burst : EventEnqueueBurstT
     enqueue_new_burst : EventEnqueueBurstT
@@ -3328,20 +2910,19 @@ lib LibDpdk
     attached : Uint8T
   end
 
-  struct RteEventdevData
+struct RteEventdevData
     socket_id : LibC::Int
     dev_id : Uint8T
     nb_queues : Uint8T
     nb_ports : Uint8T
     ports : Void**
-    ports_cfg : RteEventPortConf*
-    queues_cfg : RteEventQueueConf*
+    ports_dequeue_depth : Uint8T*
+    ports_enqueue_depth : Uint8T*
+    queues_prio : Uint8T*
     links_map : Uint16T*
     dev_private : Void*
     event_dev_cap : Uint32T
     dev_conf : RteEventDevConfig
-    service_inited : Uint8T
-    service_id : Uint32T
     dev_started : Uint8T
     name : LibC::Char[64]
   end
@@ -3370,14 +2951,6 @@ lib LibDpdk
     xstats_get_names : Void*
     xstats_get_by_name : Void*
     xstats_reset : Void*
-    eth_rx_adapter_caps_get : Void*
-    eth_rx_adapter_queue_add : Void*
-    eth_rx_adapter_queue_del : Void*
-    eth_rx_adapter_start : Void*
-    eth_rx_adapter_stop : Void*
-    eth_rx_adapter_stats_get : Void*
-    eth_rx_adapter_stats_reset : Void*
-    dev_selftest : Void*
   end
 
   struct RteFdirConf
@@ -3402,22 +2975,8 @@ lib LibDpdk
     id : Uint32T
   end
 
-  struct RteFlowActionMeter
-    mtr_id : Uint32T
-  end
-
   struct RteFlowActionQueue
     index : Uint16T
-  end
-
-  struct RteFlowActionRss
-    rss_conf : RteEthRssConf*
-    num : Uint16T
-    queue : Uint16T*
-  end
-
-  struct RteFlowActionSecurity
-    security_session : Void*
   end
 
   struct RteFlowActionVf
@@ -3467,10 +3026,6 @@ lib LibDpdk
     ecid_e : Uint8T
   end
 
-  struct RteFlowItemEsp
-    hdr : EspHdr
-  end
-
   struct RteFlowItemEth
     dst : EtherAddr
     src : EtherAddr
@@ -3481,23 +3036,9 @@ lib LibDpdk
     thresh : Uint32T
   end
 
-  struct RteFlowItemGeneve
-    ver_opt_len_o_c_rsvd0 : RteBe16T
-    protocol : RteBe16T
-    vni : Uint8T[3]
-    rsvd1 : Uint8T
-  end
-
   struct RteFlowItemGre
     c_rsvd0_ver : RteBe16T
     protocol : RteBe16T
-  end
-
-  struct RteFlowItemGtp
-    v_pt_rsv_flags : Uint8T
-    msg_type : Uint8T
-    msg_len : RteBe16T
-    teid : RteBe32T
   end
 
   struct RteFlowItemIcmp
@@ -3586,7 +3127,6 @@ lib LibDpdk
     type : RteIntrHandleType
     max_intr : Uint32T
     nb_efd : Uint32T
-    efd_counter_size : Uint8T
     efds : LibC::Int[32]
     elist : RteEpollEvent[32]
     intr_vec : LibC::Int*
@@ -3600,8 +3140,6 @@ lib LibDpdk
     addr : RtePciAddr
     id : RtePciId
     force_bind : Uint8T
-    mac_addr : LibC::Char[6]
-    mtu : Uint16T
   end
 
   struct RteKniDeviceInfo
@@ -3625,8 +3163,6 @@ lib LibDpdk
     core_id : Uint32T
     force_bind : Uint8T
     mbuf_size : LibC::UInt
-    mtu : LibC::UInt
-    mac_addr : LibC::Char[6]
   end
 
   struct RteKniFifo
@@ -3654,11 +3190,9 @@ lib LibDpdk
   end
 
   struct RteKniOps
-    port_id : Uint16T
-    change_mtu : (Uint16T, LibC::UInt -> LibC::Int)
-    config_network_if : (Uint16T, Uint8T -> LibC::Int)
-    config_mac_address : (Uint16T, Uint8T* -> LibC::Int)
-    config_promiscusity : (Uint16T, Uint8T -> LibC::Int)
+    port_id : Uint8T
+    change_mtu : (Uint8T, LibC::UInt -> LibC::Int)
+    config_network_if : (Uint8T, Uint8T -> LibC::Int)
   end
 
   struct RteKniRequest
@@ -3843,7 +3377,7 @@ lib LibDpdk
     mp : RteMempool*
     addr : Void*
     phys_addr : PhysAddrT
-    len : Uint64T
+    len : LibC::Int
     free_cb : (RteMempoolMemhdr*, Void* -> Void)
     opaque : Void*
   end
@@ -3857,7 +3391,7 @@ lib LibDpdk
     stqe_next : RteMempoolMemhdr*
   end
 
-struct RteMempoolObjhdr
+  struct RteMempoolObjhdr
     next : RteMempoolObjhdrNext
     mp : RteMempool*
     physaddr : PhysAddrT
@@ -3886,8 +3420,6 @@ struct RteMempoolObjhdr
     enqueue : RteMempoolEnqueueT
     dequeue : RteMempoolDequeueT
     get_count : RteMempoolGetCount
-    get_capabilities : RteMempoolGetCapabilitiesT
-    register_memory_area : RteMempoolOpsRegisterMemoryAreaT
   end
 
   struct RteMempoolOpsTable
@@ -3896,23 +3428,19 @@ struct RteMempoolObjhdr
     ops : RteMempoolOps[16]
   end
 
-  @[Packed]
   struct RteMemseg
     phys_addr : PhysAddrT
-    addr : Void*
-    len : Uint64T
+    len : LibC::Int
     hugepage_sz : Uint64T
     socket_id : Int32T
     nchannel : Uint32T
     nrank : Uint32T
   end
 
-  @[Packed]
   struct RteMemzone
     name : LibC::Char[32]
-    iova : RteIovaT # added
-    addr : Void* # added
-    len : Uint64T # changed
+    phys_addr : PhysAddrT
+    len : LibC::Int
     hugepage_sz : Uint64T
     socket_id : Int32T
     flags : Uint32T
@@ -3962,67 +3490,6 @@ struct RteMempoolObjhdr
   struct RteMetricValue
     key : Uint16T
     value : Uint64T
-  end
-
-  struct RteMpMsg
-    name : LibC::Char[64]
-    len_param : LibC::Int
-    num_fds : LibC::Int
-    param : Uint8T[256]
-    fds : LibC::Int[8]
-  end
-
-  struct RteMpReply
-    nb_sent : LibC::Int
-    nb_received : LibC::Int
-    msgs : RteMpMsg*
-  end
-
-  struct RteMtrCapabilities
-    n_max : Uint32T
-    n_shared_max : Uint32T
-    identical : LibC::Int
-    shared_identical : LibC::Int
-    shared_n_flows_per_mtr_max : Uint32T
-    chaining_n_mtrs_per_flow_max : Uint32T
-    chaining_use_prev_mtr_color_supported : LibC::Int
-    chaining_use_prev_mtr_color_enforced : LibC::Int
-    meter_srtcm_rfc2697_n_max : Uint32T
-    meter_trtcm_rfc2698_n_max : Uint32T
-    meter_trtcm_rfc4115_n_max : Uint32T
-    meter_rate_max : Uint64T
-    color_aware_srtcm_rfc2697_supported : LibC::Int
-    color_aware_trtcm_rfc2698_supported : LibC::Int
-    color_aware_trtcm_rfc4115_supported : LibC::Int
-    policer_action_recolor_supported : LibC::Int
-    policer_action_drop_supported : LibC::Int
-    stats_mask : Uint64T
-  end
-
-  struct RteMtrError
-    type : RteMtrErrorType
-    cause : Void*
-    message : LibC::Char*
-  end
-
-  struct RteMtrMeterProfile
-    alg : RteMtrAlgorithm
-  end
-
-  struct RteMtrParams
-    meter_profile_id : Uint32T
-    use_prev_mtr_color : LibC::Int
-    dscp_table : RteMtrColor*
-    meter_enable : LibC::Int
-    action : RteMtrPolicerAction[3]
-    stats_mask : Uint64T
-  end
-
-  struct RteMtrStats
-    n_pkts : Uint64T[3]
-    n_bytes : Uint64T[3]
-    n_pkts_dropped : Uint64T
-    n_bytes_dropped : Uint64T
   end
 
   struct RtePciAddr
@@ -4126,14 +3593,6 @@ struct RteMempoolObjhdr
     n_pkts_drop : Uint64T
   end
 
-  struct RteRawdevBuf
-    buf_addr : Void*
-  end
-
-  struct RteRawdevXstatsName
-    name : LibC::Char[64]
-  end
-
   struct RteRing
     name : LibC::Char[32]
     flags : LibC::Int # 32
@@ -4203,68 +3662,6 @@ struct RteMempoolObjhdr
     n_bytes_tc_dropped : Uint32T[4]
   end
 
-  struct RteSecurityCapability
-    action : RteSecuritySessionActionType
-    protocol : RteSecuritySessionProtocol
-    crypto_capabilities : Void*
-    ol_flags : Uint32T
-  end
-
-  struct RteSecurityCapabilityIdx
-    action : RteSecuritySessionActionType
-    protocol : RteSecuritySessionProtocol
-  end
-
-  struct RteSecurityIpsecSaOptions
-    esn : Uint32T
-    udp_encap : Uint32T
-    copy_dscp : Uint32T
-    copy_flabel : Uint32T
-    copy_df : Uint32T
-    dec_ttl : Uint32T
-  end
-
-  struct RteSecurityIpsecStats
-    reserved : Uint64T
-  end
-
-  struct RteSecurityIpsecTunnelParam
-    type : RteSecurityIpsecTunnelType
-  end
-
-  struct RteSecurityIpsecXform
-    spi : Uint32T
-    salt : Uint32T
-    options : RteSecurityIpsecSaOptions
-    direction : RteSecurityIpsecSaDirection
-    proto : RteSecurityIpsecSaProtocol
-    mode : RteSecurityIpsecSaMode
-    tunnel : RteSecurityIpsecTunnelParam
-  end
-
-  struct RteSecurityMacsecStats
-    reserved : Uint64T
-  end
-
-  struct RteSecurityMacsecXform
-    dummy : LibC::Int
-  end
-
-  struct RteSecuritySession
-    sess_private_data : Void*
-  end
-
-  struct RteSecuritySessionConf
-    action_type : RteSecuritySessionActionType
-    protocol : RteSecuritySessionProtocol
-    crypto_xform : RteCryptoSymXform*
-    userdata : Void*
-  end
-
-  struct RteSecurityStats
-    protocol : RteSecuritySessionProtocol
-  end
-
   struct RteSpinlockRecursiveT
     sl : RteSpinlockT
     user : LibC::Int
@@ -4273,22 +3670,6 @@ struct RteMempoolObjhdr
 
   struct RteSpinlockT
     locked : LibC::Int
-  end
-
-  struct RteTableAclParams
-    name : LibC::Char*
-    n_rules : Uint32T
-    n_rule_fields : Uint32T
-    field_format : RteAclFieldDef[64]
-  end
-
-  struct RteTableAclRuleAddParams
-    priority : Int32T
-    field_value : RteAclField[64]
-  end
-
-  struct RteTableAclRuleDeleteParams
-    field_value : RteAclField[64]
   end
 
   struct RteTableOps
@@ -4533,9 +3914,7 @@ struct RteMempoolObjhdr
     destroy_device : (LibC::Int -> Void)
     vring_state_changed : (LibC::Int, Uint16T, LibC::Int -> LibC::Int)
     features_changed : (LibC::Int, Uint64T -> LibC::Int)
-    new_connection : (LibC::Int -> LibC::Int)
-    destroy_connection : (LibC::Int -> Void)
-    reserved : Void*[2]
+    reserved : Void*[4]
   end
 
   struct VringAvail
@@ -4617,11 +3996,6 @@ struct RteMempoolObjhdr
     u64 : Uint64T
   end
 
-  union RteBbdevOpCapCap
-    turbo_dec : RteBbdevOpCapTurboDec
-    turbo_enc : RteBbdevOpCapTurboEnc
-  end
-
   union RteCryptodevSymCapabilityIdxAlgo
     cipher : RteCryptoCipherAlgorithm
     auth : RteCryptoAuthAlgorithm
@@ -4692,18 +4066,13 @@ end
 
 require "./lib_rte_bitrate.cr"
 require "./lib_rte_sched.cr"
-require "./lib_rte_eventdev.cr"
 require "./lib_rte_port_kni.cr"
 require "./lib_rte_port_ras.cr"
 require "./lib_rte_pipeline.cr"
-require "./lib_rte_rawdev.cr"
-require "./lib_rte_gso.cr"
 require "./lib_rte_port_ethdev.cr"
 require "./lib_eal_thread.cr"
+require "./lib_rte_service.cr"
 require "./lib_cmdline_socket.cr"
-require "./lib_rte_mbuf_pool_ops.cr"
-require "./lib_rte_rawdev_pmd.cr"
-require "./lib_rte_ethdev_core.cr"
 require "./lib_rte_service_component.cr"
 require "./lib_rte_pdump.cr"
 require "./lib_rte_distributor_private.cr"
@@ -4718,9 +4087,7 @@ require "./lib_rte_flow.cr"
 require "./lib_rte_io.cr"
 require "./lib_rte_reciprocal.cr"
 require "./lib_rte_eth_vhost.cr"
-require "./lib_rte_mtr_driver.cr"
 require "./lib_rte_ethdev_pci.cr"
-require "./lib_rte_hypervisor.cr"
 require "./lib_eal_hugepages.cr"
 require "./lib_rte_flow_driver.cr"
 require "./lib_rte_approx.cr"
@@ -4732,11 +4099,11 @@ require "./lib_rte_memcpy.cr"
 require "./lib_rte_eth_ring.cr"
 require "./lib_rte_devargs.cr"
 require "./lib_rte_power.cr"
-require "./lib_rte_security.cr"
 require "./lib_rte_fbk_hash.cr"
 require "./lib_rte_distributor_v20.cr"
 require "./lib_rte_hexdump.cr"
 require "./lib_rte_avp_fifo.cr"
+require "./lib_rte_memory.cr"
 require "./lib_cmdline_parse_num.cr"
 require "./lib_rte_table_lpm_ipv6.cr"
 require "./lib_rte_port_frag.cr"
@@ -4756,7 +4123,6 @@ require "./lib_cmdline_parse_string.cr"
 require "./lib_rte_distributor_v1705.cr"
 require "./lib_rte_vhost.cr"
 require "./lib_cmdline_parse_portlist.cr"
-require "./lib_rte_bbdev.cr"
 require "./lib_rte_port_ring.cr"
 require "./lib_rte_eth_bond_8023ad.cr"
 require "./lib_rte_alarm.cr"
@@ -4765,9 +4131,8 @@ require "./lib_rte_cryptodev_scheduler.cr"
 require "./lib_rte_net_crc.cr"
 require "./lib_rte_eventdev_pmd_pci.cr"
 require "./lib_rte_tm_driver.cr"
-require "./lib_rte_flow_classify.cr"
+require "./lib_rte_hash_crc.cr"
 require "./lib_cmdline_cirbuf.cr"
-require "./lib_rte_security_driver.cr"
 require "./lib_rte_cfgfile.cr"
 require "./lib_rte_version.cr"
 require "./lib_rte_efd.cr"
@@ -4777,23 +4142,19 @@ require "./lib_rte_thash.cr"
 require "./lib_rte_keepalive.cr"
 require "./lib_rte_event_ring.cr"
 require "./lib_cmdline_vt100.cr"
-require "./lib_rte_eth_softnic.cr"
+require "./lib_rte_table_acl.cr"
 require "./lib_rte_red.cr"
 require "./lib_rte_sched_common.cr"
 require "./lib_rte_port_source_sink.cr"
 require "./lib_rte_hash.cr"
-require "./lib_rte_bbdev_pmd.cr"
 require "./lib_rte_arp.cr"
-require "./lib_rte_member.cr"
 require "./lib_rte_byteorder_32.cr"
 require "./lib_rte_lpm6.cr"
-require "./lib_rte_esp.cr"
 require "./lib_rte_gre.cr"
 require "./lib_rte_latencystats.cr"
 require "./lib_rte_port_fd.cr"
 require "./lib_rte_reorder.cr"
 require "./lib_rte_ip.cr"
 require "./lib_rte_eventdev_pmd_vdev.cr"
-require "./lib_rte_event_eth_rx_adapter.cr"
 require "./lib_rte_time.cr"
 require "./lib_rte_ether.cr"

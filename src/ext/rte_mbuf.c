@@ -1,6 +1,35 @@
-/* SPDX-License-Identifier: BSD-3-Clause
- * Copyright(c) 2010-2014 Intel Corporation.
- * Copyright 2014 6WIND S.A.
+/*-
+ *   BSD LICENSE
+ *
+ *   Copyright(c) 2010-2014 Intel Corporation. All rights reserved.
+ *   Copyright 2014 6WIND S.A.
+ *   All rights reserved.
+ *
+ *   Redistribution and use in source and binary forms, with or without
+ *   modification, are permitted provided that the following conditions
+ *   are met:
+ *
+ *     * Redistributions of source code must retain the above copyright
+ *       notice, this list of conditions and the following disclaimer.
+ *     * Redistributions in binary form must reproduce the above copyright
+ *       notice, this list of conditions and the following disclaimer in
+ *       the documentation and/or other materials provided with the
+ *       distribution.
+ *     * Neither the name of Intel Corporation nor the names of its
+ *       contributors may be used to endorse or promote products derived
+ *       from this software without specific prior written permission.
+ *
+ *   THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
+ *   "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
+ *   LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
+ *   A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT
+ *   OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
+ *   SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
+ *   LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
+ *   DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
+ *   THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
+ *   (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
+ *   OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
 #ifndef _RTE_MBUF_H_
@@ -32,9 +61,7 @@
  */
 
 #include <stdint.h>
-#include <rte_compat.h>
 #include <rte_common.h>
-#include <rte_config.h>
 #include <rte_mempool.h>
 #include <rte_memory.h>
 #include <rte_atomic.h>
@@ -62,13 +89,12 @@ extern "C" {
  */
 
 /**
- * The RX packet is a 802.1q VLAN packet, and the tci has been
- * saved in in mbuf->vlan_tci.
- * If the flag PKT_RX_VLAN_STRIPPED is also present, the VLAN
- * header has been stripped from mbuf data, else it is still
- * present.
+ * RX packet is a 802.1q VLAN packet. This flag was set by PMDs when
+ * the packet is recognized as a VLAN, but the behavior between PMDs
+ * was not the same. This flag is kept for some time to avoid breaking
+ * applications and should be replaced by PKT_RX_VLAN_STRIPPED.
  */
-#define PKT_RX_VLAN          (1ULL << 0)
+#define PKT_RX_VLAN_PKT      (1ULL << 0)
 
 #define PKT_RX_RSS_HASH      (1ULL << 1)  /**< RX packet with RSS hash result. */
 #define PKT_RX_FDIR          (1ULL << 2)  /**< RX packet with FDIR match indicate. */
@@ -97,7 +123,6 @@ extern "C" {
  * A vlan has been stripped by the hardware and its tci is saved in
  * mbuf->vlan_tci. This can only happen if vlan stripping is enabled
  * in the RX configuration of the PMD.
- * When PKT_RX_VLAN_STRIPPED is set, PKT_RX_VLAN must also be set.
  */
 #define PKT_RX_VLAN_STRIPPED (1ULL << 6)
 
@@ -140,11 +165,17 @@ extern "C" {
  * The 2 vlans have been stripped by the hardware and their tci are
  * saved in mbuf->vlan_tci (inner) and mbuf->vlan_tci_outer (outer).
  * This can only happen if vlan stripping is enabled in the RX
- * configuration of the PMD. If this flag is set,
- * When PKT_RX_QINQ_STRIPPED is set, the flags (PKT_RX_VLAN |
- * PKT_RX_VLAN_STRIPPED | PKT_RX_QINQ) must also be set.
+ * configuration of the PMD. If this flag is set, PKT_RX_VLAN_STRIPPED
+ * must also be set.
  */
 #define PKT_RX_QINQ_STRIPPED (1ULL << 15)
+
+/**
+ * Deprecated.
+ * RX packet with double VLAN stripped.
+ * This flag is replaced by PKT_RX_QINQ_STRIPPED.
+ */
+#define PKT_RX_QINQ_PKT      PKT_RX_QINQ_STRIPPED
 
 /**
  * When packets are coalesced by a hardware or virtual driver, this flag
@@ -158,40 +189,9 @@ extern "C" {
  */
 #define PKT_RX_TIMESTAMP     (1ULL << 17)
 
-/**
- * Indicate that security offload processing was applied on the RX packet.
- */
-#define PKT_RX_SEC_OFFLOAD		(1ULL << 18)
-
-/**
- * Indicate that security offload processing failed on the RX packet.
- */
-#define PKT_RX_SEC_OFFLOAD_FAILED  	(1ULL << 19)
-
-/**
- * The RX packet is a double VLAN, and the outer tci has been
- * saved in in mbuf->vlan_tci_outer.
- * If the flag PKT_RX_QINQ_STRIPPED is also present, both VLANs
- * headers have been stripped from mbuf data, else they are still
- * present.
- */
-#define PKT_RX_QINQ          (1ULL << 20)
-
 /* add new RX flags here */
 
 /* add new TX flags here */
-
-/**
- * UDP Fragmentation Offload flag. This flag is used for enabling UDP
- * fragmentation in SW or in HW. When use UFO, mbuf->tso_segsz is used
- * to store the MSS of UDP fragments.
- */
-#define PKT_TX_UDP_SEG	(1ULL << 42)
-
-/**
- * Request security offload processing on the TX packet.
- */
-#define PKT_TX_SEC_OFFLOAD 		(1ULL << 43)
 
 /**
  * Offload the MACsec. This flag must be set by the application to enable
@@ -216,9 +216,7 @@ extern "C" {
 /**
  * Second VLAN insertion (QinQ) flag.
  */
-#define PKT_TX_QINQ        (1ULL << 49)   /**< TX packet with double VLAN inserted. */
-/* this old name is deprecated */
-#define PKT_TX_QINQ_PKT    PKT_TX_QINQ
+#define PKT_TX_QINQ_PKT    (1ULL << 49)   /**< TX packet with double VLAN inserted. */
 
 /**
  * TCP segmentation offload. To enable this offload feature for a
@@ -279,12 +277,7 @@ extern "C" {
  */
 #define PKT_TX_IPV6          (1ULL << 56)
 
-/**
- * TX packet is a 802.1q VLAN packet.
- */
-#define PKT_TX_VLAN          (1ULL << 57)
-/* this old name is deprecated */
-#define PKT_TX_VLAN_PKT      PKT_TX_VLAN
+#define PKT_TX_VLAN_PKT      (1ULL << 57) /**< TX packet is a 802.1q VLAN packet. */
 
 /**
  * Offload the IP checksum of an external header in the hardware. The
@@ -323,8 +316,7 @@ extern "C" {
 		PKT_TX_QINQ_PKT |        \
 		PKT_TX_VLAN_PKT |        \
 		PKT_TX_TUNNEL_MASK |	 \
-		PKT_TX_MACSEC |		 \
-		PKT_TX_SEC_OFFLOAD)
+		PKT_TX_MACSEC)
 
 #define __RESERVED           (1ULL << 61) /**< reserved for future mbuf use */
 
@@ -419,11 +411,7 @@ struct rte_mbuf {
 	 * same mbuf cacheline0 layout for 32-bit and 64-bit. This makes
 	 * working on vector drivers easier.
 	 */
-	RTE_STD_C11
-	union {
-		rte_iova_t buf_iova;
-		rte_iova_t buf_physaddr; /**< deprecated */
-	} __rte_aligned(sizeof(rte_iova_t));
+	phys_addr_t buf_physaddr __rte_aligned(sizeof(phys_addr_t));
 
 	/* next 8 bytes are initialised on RX descriptor rearm */
 	MARKER64 rearm_data;
@@ -468,28 +456,15 @@ struct rte_mbuf {
 			uint32_t l3_type:4; /**< (Outer) L3 type. */
 			uint32_t l4_type:4; /**< (Outer) L4 type. */
 			uint32_t tun_type:4; /**< Tunnel type. */
-			RTE_STD_C11
-			union {
-				uint8_t inner_esp_next_proto;
-				/**< ESP next protocol type, valid if
-				 * RTE_PTYPE_TUNNEL_ESP tunnel type is set
-				 * on both Tx and Rx.
-				 */
-				__extension__
-				struct {
-					uint8_t inner_l2_type:4;
-					/**< Inner L2 type. */
-					uint8_t inner_l3_type:4;
-					/**< Inner L3 type. */
-				};
-			};
+			uint32_t inner_l2_type:4; /**< Inner L2 type. */
+			uint32_t inner_l3_type:4; /**< Inner L3 type. */
 			uint32_t inner_l4_type:4; /**< Inner L4 type. */
 		};
 	};
 
 	uint32_t pkt_len;         /**< Total pkt len: sum of all segments. */
 	uint16_t data_len;        /**< Amount of data in segment buffer. */
-	/** VLAN TCI (CPU order), valid if PKT_RX_VLAN is set. */
+	/** VLAN TCI (CPU order), valid if PKT_RX_VLAN_STRIPPED is set. */
 	uint16_t vlan_tci;
 
 	union {
@@ -515,7 +490,7 @@ struct rte_mbuf {
 		uint32_t usr;	  /**< User defined tags. See rte_distributor_process() */
 	} hash;                   /**< hash information */
 
-	/** Outer VLAN TCI (CPU order), valid if PKT_RX_QINQ is set. */
+	/** Outer VLAN TCI (CPU order), valid if PKT_RX_QINQ_STRIPPED is set. */
 	uint16_t vlan_tci_outer;
 
 	uint16_t buf_len;         /**< Length of segment buffer. */
@@ -571,9 +546,6 @@ struct rte_mbuf {
 
 } __rte_cache_aligned;
 
-/**< Maximum number of nb_segs allowed. */
-#define RTE_MBUF_MAX_NB_SEGS	UINT16_MAX
-
 /**
  * Prefetch the first part of the mbuf
  *
@@ -615,28 +587,21 @@ rte_mbuf_prefetch_part2(struct rte_mbuf *m)
 static inline uint16_t rte_pktmbuf_priv_size(struct rte_mempool *mp);
 
 /**
- * Return the IO address of the beginning of the mbuf data
+ * Return the DMA address of the beginning of the mbuf data
  *
  * @param mb
  *   The pointer to the mbuf.
  * @return
- *   The IO address of the beginning of the mbuf data
+ *   The physical address of the beginning of the mbuf data
  */
-static inline rte_iova_t
-rte_mbuf_data_iova(const struct rte_mbuf *mb)
-{
-	return mb->buf_iova + mb->data_off;
-}
-
-__rte_deprecated
 static inline phys_addr_t
 rte_mbuf_data_dma_addr(const struct rte_mbuf *mb)
 {
-	return rte_mbuf_data_iova(mb);
+	return mb->buf_physaddr + mb->data_off;
 }
 
 /**
- * Return the default IO address of the beginning of the mbuf data
+ * Return the default DMA address of the beginning of the mbuf data
  *
  * This function is used by drivers in their receive function, as it
  * returns the location where data should be written by the NIC, taking
@@ -645,19 +610,12 @@ rte_mbuf_data_dma_addr(const struct rte_mbuf *mb)
  * @param mb
  *   The pointer to the mbuf.
  * @return
- *   The IO address of the beginning of the mbuf data
+ *   The physical address of the beginning of the mbuf data
  */
-static inline rte_iova_t
-rte_mbuf_data_iova_default(const struct rte_mbuf *mb)
-{
-	return mb->buf_iova + RTE_PKTMBUF_HEADROOM;
-}
-
-__rte_deprecated
 static inline phys_addr_t
 rte_mbuf_data_dma_addr_default(const struct rte_mbuf *mb)
 {
-	return rte_mbuf_data_iova_default(mb);
+	return mb->buf_physaddr + RTE_PKTMBUF_HEADROOM;
 }
 
 /**
@@ -751,13 +709,6 @@ rte_mbuf_refcnt_set(struct rte_mbuf *m, uint16_t new_value)
 	rte_atomic16_set(&m->refcnt_atomic, new_value);
 }
 
-/* internal */
-static inline uint16_t
-__rte_mbuf_refcnt_update(struct rte_mbuf *m, int16_t value)
-{
-	return (uint16_t)(rte_atomic16_add_return(&m->refcnt_atomic, value));
-}
-
 /**
  * Adds given value to an mbuf's refcnt and returns its new value.
  * @param m
@@ -782,18 +733,10 @@ rte_mbuf_refcnt_update(struct rte_mbuf *m, int16_t value)
 		return 1 + value;
 	}
 
-	return __rte_mbuf_refcnt_update(m, value);
+	return (uint16_t)(rte_atomic16_add_return(&m->refcnt_atomic, value));
 }
 
 #else /* ! RTE_MBUF_REFCNT_ATOMIC */
-
-/* internal */
-static inline uint16_t
-__rte_mbuf_refcnt_update(struct rte_mbuf *m, int16_t value)
-{
-	m->refcnt = (uint16_t)(m->refcnt + value);
-	return m->refcnt;
-}
 
 /**
  * Adds given value to an mbuf's refcnt and returns its new value.
@@ -801,7 +744,8 @@ __rte_mbuf_refcnt_update(struct rte_mbuf *m, int16_t value)
 static inline uint16_t
 rte_mbuf_refcnt_update(struct rte_mbuf *m, int16_t value)
 {
-	return __rte_mbuf_refcnt_update(m, value);
+	m->refcnt = (uint16_t)(m->refcnt + value);
+	return m->refcnt;
 }
 
 /**
@@ -854,15 +798,15 @@ rte_mbuf_sanity_check(const struct rte_mbuf *m, int is_header);
 } while (0)
 
 /**
- * Allocate an uninitialized mbuf from mempool *mp*.
+ * Allocate an unitialized mbuf from mempool *mp*.
  *
  * This function can be used by PMDs (especially in RX functions) to
- * allocate an uninitialized mbuf. The driver is responsible of
+ * allocate an unitialized mbuf. The driver is responsible of
  * initializing all the required fields. See rte_pktmbuf_reset().
  * For standard needs, prefer rte_pktmbuf_alloc().
  *
  * The caller can expect that the following fields of the mbuf structure
- * are initialized: buf_addr, buf_iova, buf_len, refcnt=1, nb_segs=1,
+ * are initialized: buf_addr, buf_physaddr, buf_len, refcnt=1, nb_segs=1,
  * next=NULL, pool, priv_size. The other fields must be initialized
  * by the caller.
  *
@@ -875,9 +819,11 @@ rte_mbuf_sanity_check(const struct rte_mbuf *m, int is_header);
 static inline struct rte_mbuf *rte_mbuf_raw_alloc(struct rte_mempool *mp)
 {
 	struct rte_mbuf *m;
+	void *mb = NULL;
 
-	if (rte_mempool_get(mp, (void **)&m) < 0)
+	if (rte_mempool_get(mp, &mb) < 0)
 		return NULL;
+	m = (struct rte_mbuf *)mb;
 	MBUF_RAW_ALLOC_CHECK(m);
 	return m;
 }
@@ -1080,48 +1026,6 @@ rte_pktmbuf_pool_create(const char *name, unsigned n,
 	int socket_id);
 
 /**
- * Create a mbuf pool with a given mempool ops name
- *
- * This function creates and initializes a packet mbuf pool. It is
- * a wrapper to rte_mempool functions.
- *
- * @param name
- *   The name of the mbuf pool.
- * @param n
- *   The number of elements in the mbuf pool. The optimum size (in terms
- *   of memory usage) for a mempool is when n is a power of two minus one:
- *   n = (2^q - 1).
- * @param cache_size
- *   Size of the per-core object cache. See rte_mempool_create() for
- *   details.
- * @param priv_size
- *   Size of application private are between the rte_mbuf structure
- *   and the data buffer. This value must be aligned to RTE_MBUF_PRIV_ALIGN.
- * @param data_room_size
- *   Size of data buffer in each mbuf, including RTE_PKTMBUF_HEADROOM.
- * @param socket_id
- *   The socket identifier where the memory should be allocated. The
- *   value can be *SOCKET_ID_ANY* if there is no NUMA constraint for the
- *   reserved zone.
- * @param ops_name
- *   The mempool ops name to be used for this mempool instead of
- *   default mempool. The value can be *NULL* to use default mempool.
- * @return
- *   The pointer to the new allocated mempool, on success. NULL on error
- *   with rte_errno set appropriately. Possible rte_errno values include:
- *    - E_RTE_NO_CONFIG - function could not get pointer to rte_config structure
- *    - E_RTE_SECONDARY - function was called from a secondary process instance
- *    - EINVAL - cache size provided is too large, or priv_size is not aligned.
- *    - ENOSPC - the maximum number of memzones has already been allocated
- *    - EEXIST - a memzone with the same name already exists
- *    - ENOMEM - no appropriate memory area found in which to create memzone
- */
-struct rte_mempool * __rte_experimental
-rte_pktmbuf_pool_create_by_ops(const char *name, unsigned int n,
-	unsigned int cache_size, uint16_t priv_size, uint16_t data_room_size,
-	int socket_id, const char *ops_name);
-
-/**
  * Get the data room size of mbufs stored in a pktmbuf_pool
  *
  * The data room size is the amount of data that can be stored in a
@@ -1183,8 +1087,6 @@ static inline void rte_pktmbuf_reset_headroom(struct rte_mbuf *m)
  * @param m
  *   The packet mbuf to be resetted.
  */
-#define MBUF_INVALID_PORT UINT16_MAX
-
 static inline void rte_pktmbuf_reset(struct rte_mbuf *m)
 {
 	m->next = NULL;
@@ -1193,7 +1095,7 @@ static inline void rte_pktmbuf_reset(struct rte_mbuf *m)
 	m->vlan_tci = 0;
 	m->vlan_tci_outer = 0;
 	m->nb_segs = 1;
-	m->port = MBUF_INVALID_PORT;
+	m->port = 0xff;
 
 	m->ol_flags = 0;
 	m->packet_type = 0;
@@ -1312,7 +1214,7 @@ static inline void rte_pktmbuf_attach(struct rte_mbuf *mi, struct rte_mbuf *m)
 
 	rte_mbuf_refcnt_update(md, 1);
 	mi->priv_size = m->priv_size;
-	mi->buf_iova = m->buf_iova;
+	mi->buf_physaddr = m->buf_physaddr;
 	mi->buf_addr = m->buf_addr;
 	mi->buf_len = m->buf_len;
 
@@ -1360,7 +1262,7 @@ static inline void rte_pktmbuf_detach(struct rte_mbuf *m)
 
 	m->priv_size = priv_size;
 	m->buf_addr = (char *)m + mbuf_size;
-	m->buf_iova = rte_mempool_virt2iova(m) + mbuf_size;
+	m->buf_physaddr = rte_mempool_virt2phy(mp, m) + mbuf_size;
 	m->buf_len = (uint16_t)buf_len;
 	rte_pktmbuf_reset_headroom(m);
 	m->data_len = 0;
@@ -1405,7 +1307,8 @@ rte_pktmbuf_prefree_seg(struct rte_mbuf *m)
 
 		return m;
 
-	} else if (__rte_mbuf_refcnt_update(m, -1) == 0) {
+       } else if (rte_atomic16_add_return(&m->refcnt_atomic, -1) == 0) {
+
 
 		if (RTE_MBUF_INDIRECT(m))
 			rte_pktmbuf_detach(m);
@@ -1453,14 +1356,13 @@ rte_pktmbuf_free_seg(struct rte_mbuf *m)
  * segment is added back into its original mempool.
  *
  * @param m
- *   The packet mbuf to be freed. If NULL, the function does nothing.
+ *   The packet mbuf to be freed.
  */
 extern inline void rte_pktmbuf_free(struct rte_mbuf *m)
 {
 	struct rte_mbuf *m_next;
 
-	if (m != NULL)
-		__rte_mbuf_sanity_check(m, 1);
+	__rte_mbuf_sanity_check(m, 1);
 
 	while (m != NULL) {
 		m_next = m->next;
@@ -1491,7 +1393,7 @@ static inline struct rte_mbuf *rte_pktmbuf_clone(struct rte_mbuf *md,
 {
 	struct rte_mbuf *mc, *mi, **prev;
 	uint32_t pktlen;
-	uint16_t nseg;
+	uint8_t nseg;
 
 	if (unlikely ((mc = rte_pktmbuf_alloc(mp)) == NULL))
 		return NULL;
@@ -1582,10 +1484,12 @@ static inline uint16_t rte_pktmbuf_tailroom(const struct rte_mbuf *m)
  */
 static inline struct rte_mbuf *rte_pktmbuf_lastseg(struct rte_mbuf *m)
 {
+	struct rte_mbuf *m2 = (struct rte_mbuf *)m;
+
 	__rte_mbuf_sanity_check(m, 1);
-	while (m->next != NULL)
-		m = m->next;
-	return m;
+	while (m2->next != NULL)
+		m2 = m2->next;
+	return m2;
 }
 
 /**
@@ -1620,7 +1524,7 @@ static inline struct rte_mbuf *rte_pktmbuf_lastseg(struct rte_mbuf *m)
 #define rte_pktmbuf_mtod(m, t) rte_pktmbuf_mtod_offset(m, t, 0)
 
 /**
- * A macro that returns the IO address that points to an offset of the
+ * A macro that returns the physical address that points to an offset of the
  * start of the data in the mbuf
  *
  * @param m
@@ -1628,24 +1532,17 @@ static inline struct rte_mbuf *rte_pktmbuf_lastseg(struct rte_mbuf *m)
  * @param o
  *   The offset into the data to calculate address from.
  */
-#define rte_pktmbuf_iova_offset(m, o) \
-	(rte_iova_t)((m)->buf_iova + (m)->data_off + (o))
-
-/* deprecated */
 #define rte_pktmbuf_mtophys_offset(m, o) \
-	rte_pktmbuf_iova_offset(m, o)
+	(phys_addr_t)((m)->buf_physaddr + (m)->data_off + (o))
 
 /**
- * A macro that returns the IO address that points to the start of the
+ * A macro that returns the physical address that points to the start of the
  * data in the mbuf
  *
  * @param m
  *   The packet mbuf.
  */
-#define rte_pktmbuf_iova(m) rte_pktmbuf_iova_offset(m, 0)
-
-/* deprecated */
-#define rte_pktmbuf_mtophys(m) rte_pktmbuf_iova(m)
+#define rte_pktmbuf_mtophys(m) rte_pktmbuf_mtophys_offset(m, 0)
 
 /**
  * A macro that returns the length of the packet.
@@ -1820,7 +1717,7 @@ const void *__rte_pktmbuf_read(const struct rte_mbuf *m, uint32_t off,
  * @param len
  *   The amount of bytes to read.
  * @param buf
- *   The buffer where data is copied if it is not contiguous in mbuf
+ *   The buffer where data is copied if it is not contigous in mbuf
  *   data. Its length should be at least equal to the len parameter.
  * @return
  *   The pointer to the data, either in the mbuf if it is contiguous,
@@ -1849,14 +1746,14 @@ static inline const void *rte_pktmbuf_read(const struct rte_mbuf *m,
  *
  * @return
  *   - 0, on success.
- *   - -EOVERFLOW, if the chain segment limit exceeded
+ *   - -EOVERFLOW, if the chain is full (256 entries)
  */
 static inline int rte_pktmbuf_chain(struct rte_mbuf *head, struct rte_mbuf *tail)
 {
 	struct rte_mbuf *cur_tail;
 
 	/* Check for number-of-segments-overflow */
-	if (head->nb_segs + tail->nb_segs > RTE_MBUF_MAX_NB_SEGS)
+	if (head->nb_segs + tail->nb_segs >= 1 << (sizeof(head->nb_segs) * 8))
 		return -EOVERFLOW;
 
 	/* Chain 'tail' onto the old tail */
@@ -1864,7 +1761,7 @@ static inline int rte_pktmbuf_chain(struct rte_mbuf *head, struct rte_mbuf *tail
 	cur_tail->next = tail;
 
 	/* accumulate number of segments and total length. */
-	head->nb_segs += tail->nb_segs;
+	head->nb_segs = (uint8_t)(head->nb_segs + tail->nb_segs);
 	head->pkt_len += tail->pkt_len;
 
 	/* pkt_len is only set in the head */

@@ -75,20 +75,18 @@ class Dpdk
 
   # performance measure dump
   private macro measure_output(name)
-    if count > 0
-      total += count
-      total_bytes += bytes
-      lcore = rte_lcore_id
-      now_time = microseconds
-      ms = (now_time - prev_time) / 1000
-      printf("\r[%hu] {{name}} iter: %s, pkts count: %lu (%lu), bytes: %3.0f Mbps (%lu), time: %.2f ms\n",
-        lcore, to_si_measure(iter),
-        count, total,
-        (bytes_crc << 3).to_f / 1_000_f64 / ms, total_bytes,
-        ms)
-      iter = count = bytes = bytes_crc = 0_u64
-      prev_time = microseconds
-    end
+    total += count
+    total_bytes += bytes
+    lcore = rte_lcore_id
+    now_time = microseconds
+    ms = (now_time - prev_time) / 1000
+    printf("\r[%hu] {{name}} iter: %s, pkts count: %lu (%lu), bytes: %3.0f Mbps (%lu), time: %.2f ms\n",
+      lcore, to_si_measure(iter),
+      count, total,
+      (bytes_crc << 3).to_f / 1_000_f64 / ms, total_bytes,
+      ms)
+    iter = count = bytes = bytes_crc = 0_u64
+    prev_time = microseconds
   end
 
   def microseconds

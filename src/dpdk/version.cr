@@ -1,8 +1,8 @@
 lib LibDpdk
-  VERSION  = 18.02
-  IS_17_8  = false
+  VERSION  = 17.08
+  IS_17_8  = true
   IS_17_11 = false
-  IS_18_2  = true
+  IS_18_2  = false
 
-  HAS_OFFLOAD = true
+  HAS_OFFLOAD = false
 end
