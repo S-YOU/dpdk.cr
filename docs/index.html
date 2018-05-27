@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta id="repository-name" content="github.com/S-YOU/dpdk.cr">
+  <link href="css/style.css" rel="stylesheet" type="text/css" />
+  <script type="text/javascript" src="js/doc.js"></script>
+  <title>README - github.com/S-YOU/dpdk.cr</title>
+</head>
+<body>
+
+<div id="types-list">
+  <div id="search-box">
+    <input type="search" id="search-input" placeholder="Search...">
+  </div>
+
+  <ul>
+    <li class="current"><a href="index.html">README</a></li>
+  </ul>
+
+  <ul>
+  
+  <li class=" " data-id="github.com/S-YOU/dpdk.cr/Constants" data-name="constants">
+      <a href="Constants.html">Constants</a>
+      
+    </li>
+  
+  <li class=" " data-id="github.com/S-YOU/dpdk.cr/Dpdk" data-name="dpdk">
+      <a href="Dpdk.html">Dpdk</a>
+      
+    </li>
+  
+</ul>
+
+</div>
+
+<div id="main-content">
+<h2><a href="https://github.com/s-you/dpdk.cr" target="_blank">dpdk.cr</a></h2>
+
+<p>Crystal bindings to <a href="http://dpdk.org" target="_blank">DPDK</a>, development in progress.</p>
+
+<h3>Hello World (examples/hello.cr)</h3>
+
+<pre><code class='language-crystal'><span class="k">require</span> <span class="s">&quot;../src/dpdk&quot;</span>
+
+<span class="k">class</span> <span class="t">Hello</span> <span class="o"><</span> <span class="t">Dpdk</span>
+  <span class="k">def</span> <span class="m">hello_thread</span>
+    printf(<span class="s">&quot;Hello from lcore: %d\n&quot;</span>, rte_lcore_id)
+  <span class="k">end</span>
+
+  <span class="k">def</span> <span class="m">main</span>(argc, argv)
+    rte_eal_init(argc, argv)
+    rte_eal_mp_remote_launch(hello_thread)
+    rte_eal_mp_wait_lcore
+  <span class="k">end</span>
+<span class="k">end</span>
+
+<span class="t">Hello</span>.run</code></pre>
+
+<h3>Requirements</h3>
+
+<ul><li>Crystal (0.24.2)</li><li>Recent Clang (5.0) or GCC, make and coreutils</li><li>Working DPDK (18.02, 17.11(branch), 17.08(branch)), with RTE_SDK environment variable is set
+  (Works with or without shared library enabled)</li></ul>
+
+<h3>Documentation</h3>
+
+<p><a href="https://s-you.github.io/dpdk.cr/docs/index.html" target="_blank">https://s-you.github.io/dpdk.cr/docs/index.html</a></p>
+
+<h3>Building</h3>
+
+<pre><code><span class="o">%</span> make help
+
+targets:
+  all             <span class="t">Build</span> all files (currently dpdk only) [default]
+  clean           <span class="t">Clean</span> up built directories and files
+  clean_examples  <span class="t">Clean</span> up examples
+  docs            <span class="t">Generate</span> standard library documentation
+  dpdk            <span class="t">Build</span> the library
+  help            <span class="t">Show</span> this help
+  spec            <span class="t">Run</span> all specs
+
+optional variables:
+  debug           <span class="t">Add</span> symbolic debug info (not full)
+  progress        <span class="t">Enable</span> progress output [default]
+  release         <span class="t">Compile</span> <span class="k">in</span> release mode [default]
+  stats           <span class="t">Enable</span> statistics output
+  threads         <span class="t">Maximum</span> number <span class="k">of</span> threads to use
+  verbose         <span class="t">Run</span> specs <span class="k">in</span> verbose mode
+
+recipes:
+  <span class="t">Build</span> an example from examples<span class="o">/</span> directory and output <span class="k">in</span> build<span class="o">/</span> directory
+    <span class="o">%</span> make hello
+  <span class="t">Enable</span> stats output <span class="k">of</span> example
+    <span class="o">%</span> make l2fwd stats<span class="o">=</span><span class="n">1</span>
+  <span class="t">Build</span> an example <span class="k">in</span> non release mode
+    <span class="o">%</span> make hello release<span class="o">=</span>
+  <span class="t">Clean</span> up built files <span class="k">then</span> the library
+    <span class="o">%</span> make clean
+</code></pre>
+
+<h3>Compiling an example</h3>
+
+<pre><code><span class="o">%</span> make hello</code></pre>
+
+<h3>Running an example</h3>
+
+<ul><li>Output depends on number of CPU and NICs available on your machine.</li></ul>
+
+<pre><code> <span class="o">%</span> sudo build<span class="s">/hello
+EAL: Detected 10 lcore(s)
+EAL: Probing VFIO support...
+EAL: PCI device 0000:00:03.0 on NUMA socket -1
+EAL:   Invalid NUMA socket, default to 0
+EAL:   probe driver: 8086:100e net_e1000_em
+EAL: PCI device 0000:00:08.0 on NUMA socket -1
+EAL:   Invalid NUMA socket, default to 0
+EAL:   probe driver: 8086:100e net_e1000_em
+EAL: PCI device 0000:00:09.0 on NUMA socket -1
+EAL:   Invalid NUMA socket, default to 0
+EAL:   probe driver: 8086:100e net_e1000_em
+EAL: PCI device 0000:00:0a.0 on NUMA socket -1
+EAL:   Invalid NUMA socket, default to 0
+EAL:   probe driver: 8086:100e net_e1000_em
+EAL: PCI device 0000:00:10.0 on NUMA socket -1
+EAL:   Invalid NUMA socket, default to 0
+EAL:   probe driver: 8086:100e net_e1000_em
+EAL: PCI device 0000:00:11.0 on NUMA socket -1
+EAL:   Invalid NUMA socket, default to 0
+EAL:   probe driver: 8086:100e net_e1000_em
+EAL: PCI device 0000:00:12.0 on NUMA socket -1
+EAL:   Invalid NUMA socket, default to 0
+EAL:   probe driver: 8086:100e net_e1000_em
+EAL: PCI device 0000:00:13.0 on NUMA socket -1
+EAL:   Invalid NUMA socket, default to 0
+EAL:   probe driver: 8086:100e net_e1000_em
+Hello from lcore: 1
+Hello from lcore: 3
+Hello from lcore: 2
+Hello from lcore: 4
+Hello from lcore: 5
+Hello from lcore: 6
+Hello from lcore: 7
+Hello from lcore: 8
+Hello from lcore: 9
+Hello from lcore: 0</code></pre>
+
+<h3>Examples (Tested only on VirtualBox)</h3>
+
+<ul><li><a href="https://github.com/s-you/dpdk.cr/blob/master/examples/hello.cr" target="_blank">hello</a></li><li><a href="https://github.com/s-you/dpdk.cr/blob/master/examples/basicfwd.cr" target="_blank">basicfwd</a> (skeleton)</li><li><a href="https://github.com/s-you/dpdk.cr/blob/master/examples/l2fwd.cr" target="_blank">l2fwd</a></li><li><a href="https://github.com/s-you/dpdk.cr/blob/master/examples/rxtx_callbacks.cr" target="_blank">rxtx_callbacks</a></li><li><a href="https://github.com/s-you/dpdk.cr/blob/master/examples/timer.cr" target="_blank">timer</a></li><li><a href="https://github.com/s-you/dpdk.cr/blob/master/examples/packet_ordering.cr" target="_blank">packet_ordering</a> (rx - worker - tx)</li><li><a href="https://github.com/s-you/dpdk.cr/blob/master/examples/load_balancer.cr" target="_blank">load_balancer</a> (Load balance IO RX/TX & Worker + LPM)</li><li><a href="https://github.com/s-you/dpdk.cr/blob/master/examples/distributor.cr" target="_blank">distributor</a> (Distributor, RX, TX, Worker)</li></ul>
+
+<h3>Performance</h3>
+
+<ul><li>rxtx_callbacks sample on one end, as fast as C</li></ul>
+
+<p><img src="https://user-images.githubusercontent.com/1001175/36676493-2f3a5e0c-1b4f-11e8-82d3-c313f94181c2.png" alt="rxtx_callbacks"/></p>
+
+<ul><li>pktgen on the other end, 14Mpps with 64 byte packets (Wirerate at 10G)</li></ul>
+
+<p><img src="https://user-images.githubusercontent.com/1001175/36676500-34160ea8-1b4f-11e8-99da-8bb1ef3480d1.png" alt="2018-02-26 20 07 57"/> |</p>
+
+<h3>TODO</h3>
+
+<ul><li>Supports all possible examples provided by DPDK</li></ul>
+
+<h3>Limitations</h3>
+
+<ul><li>All static inlines in the dpdk headers either need to write it in Crystal or extern from C.</li><li>GC is disabled for now (It can turn on, but GC cannot collect dpdk threads anyway)</li><li>Following funtions are compiled as C library currently -</li><ul><li>rte_pktmbuf_free</li><li>rte_pktmbuf_alloc</li><li>rte_pktmbuf_append</li><li>rte_pktmbuf_prepend</li><li>rte_pktmbuf_adj</li><li>rte_pktmbuf_trim</li><li>rte_eth_rx_burst</li><li>rte_eth_tx_burst</li><li>rte_ring_dequeue_burst</li><li>rte_ring_enqueue_burst</li><li>rte_ring_sp_enqueue_bulk</li><li>rte_ring_sc_dequeue_bulk</li><li>rte_lpm_lookup</li><li>rte_lcore_to_socket_id</li><li>rte_socket_id (because per_lcore__socket_id not avaialable in some build)</li><li>rte_memcpy (optional)</li></ul><li>Branches other than master is not actively maintained.</li></ul>
+
+
+</div>
+</body>
+</html>

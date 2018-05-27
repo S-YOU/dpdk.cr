@@ -1,0 +1,2073 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta id="repository-name" content="github.com/S-YOU/dpdk.cr">
+  <link href="css/style.css" rel="stylesheet" type="text/css" />
+  <script type="text/javascript" src="js/doc.js"></script>
+  <title>Dpdk - github.com/S-YOU/dpdk.cr</title>
+</head>
+<body>
+
+<div id="types-list">
+  <div id="search-box">
+    <input type="search" id="search-input" placeholder="Search...">
+  </div>
+
+  <ul>
+    <li><a href="index.html">README</a></li>
+  </ul>
+
+  <ul>
+  
+  <li class=" " data-id="github.com/S-YOU/dpdk.cr/Constants" data-name="constants">
+      <a href="Constants.html">Constants</a>
+      
+    </li>
+  
+  <li class=" current" data-id="github.com/S-YOU/dpdk.cr/Dpdk" data-name="dpdk">
+      <a href="Dpdk.html">Dpdk</a>
+      
+    </li>
+  
+</ul>
+
+</div>
+
+<div id="main-content">
+<h1 class="type-name">
+
+  <span class="kind">abstract class</span> Dpdk
+
+</h1>
+
+
+  <ul class="superclass-hierarchy"><li class="superclass"><a href="Dpdk.html">Dpdk</a></li><li class="superclass">Reference</li><li class="superclass">Object</li></ul>
+
+
+
+
+  <h2>Overview</h2>
+
+  <p>Crystal bindings to Intel's DPDK</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  <h2>Defined in:</h2>
+  
+    
+      <a href="https://github.com/S-YOU/dpdk.cr/blob/2e979b8262603c5161eb867da55889f91dd761c5/src/dpdk/core.cr#L2" target="_blank">dpdk/core.cr</a>
+    
+    <br/>
+  
+    
+      <a href="https://github.com/S-YOU/dpdk.cr/blob/2e979b8262603c5161eb867da55889f91dd761c5/src/dpdk/asm.cr#L1" target="_blank">dpdk/asm.cr</a>
+    
+    <br/>
+  
+    
+      <a href="https://github.com/S-YOU/dpdk.cr/blob/2e979b8262603c5161eb867da55889f91dd761c5/src/dpdk/llvm.cr#L3" target="_blank">dpdk/llvm.cr</a>
+    
+    <br/>
+  
+    
+      <a href="https://github.com/S-YOU/dpdk.cr/blob/2e979b8262603c5161eb867da55889f91dd761c5/src/dpdk/macros_defines.cr#L1" target="_blank">dpdk/macros_defines.cr</a>
+    
+    <br/>
+  
+    
+      <a href="https://github.com/S-YOU/dpdk.cr/blob/2e979b8262603c5161eb867da55889f91dd761c5/src/dpdk/macros_overrides.cr#L1" target="_blank">dpdk/macros_overrides.cr</a>
+    
+    <br/>
+  
+    
+      <a href="https://github.com/S-YOU/dpdk.cr/blob/2e979b8262603c5161eb867da55889f91dd761c5/src/dpdk/macros_overloads.cr#L1" target="_blank">dpdk/macros_overloads.cr</a>
+    
+    <br/>
+  
+    
+      <a href="https://github.com/S-YOU/dpdk.cr/blob/2e979b8262603c5161eb867da55889f91dd761c5/src/dpdk/inlines.cr#L3" target="_blank">dpdk/inlines.cr</a>
+    
+    <br/>
+  
+    
+      <a href="https://github.com/S-YOU/dpdk.cr/blob/2e979b8262603c5161eb867da55889f91dd761c5/src/dpdk/extras.cr#L1" target="_blank">dpdk/extras.cr</a>
+    
+    <br/>
+  
+    
+      <a href="https://github.com/S-YOU/dpdk.cr/blob/2e979b8262603c5161eb867da55889f91dd761c5/src/dpdk/units.cr#L1" target="_blank">dpdk/units.cr</a>
+    
+    <br/>
+  
+    
+      <a href="https://github.com/S-YOU/dpdk.cr/blob/2e979b8262603c5161eb867da55889f91dd761c5/src/dpdk/debug.cr#L1" target="_blank">dpdk/debug.cr</a>
+    
+    <br/>
+  
+
+
+
+
+
+
+
+
+
+  <h2>Instance Method Summary</h2>
+  <ul class="list-summary">
+    
+      <li class="entry-summary">
+        <a href="#_mm_pause-instance-method" class="signature"><strong>#_mm_pause</strong></a>
+        
+          <div class="summary"><p>emmintrin.h pause implementation</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#print_macaddr%28port%29-instance-method" class="signature"><strong>#print_macaddr</strong>(port)</a>
+        
+          <div class="summary"><p>rte_eth_macaddr_get and print</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#rte_errno-instance-method" class="signature"><strong>#rte_errno</strong></a>
+        
+          <div class="summary"><p>per core rte_errno, use with rte_strerror(rte_errno)</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#rte_eth_tx_buffer%28port_id%3AUInt16%2Cqueue_id%3AUInt16%2Cbuffer%3A%3A%3APointer%28RteEthDevTxBuffer%29%2Ctx_pkt%3A%3A%3APointer%28RteMbuf%29%29%3AUInt16-instance-method" class="signature"><strong>#rte_eth_tx_buffer</strong>(port_id : UInt16, queue_id : UInt16, buffer : ::Pointer(RteEthDevTxBuffer), tx_pkt : ::Pointer(RteMbuf)) : UInt16</a>
+        
+          <div class="summary"><p>Buffer a single packet for future transmission on a port and queue TODO: measure performance vs C</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#rte_eth_tx_buffer_flush%28port_id%3AUInt16%2Cqueue_id%3AUInt16%2Cbuffer%3A%3A%3APointer%28RteEthDevTxBuffer%29%29%3AUInt16-instance-method" class="signature"><strong>#rte_eth_tx_buffer_flush</strong>(port_id : UInt16, queue_id : UInt16, buffer : ::Pointer(RteEthDevTxBuffer)) : UInt16</a>
+        
+          <div class="summary"><p>Send any packets queued up for transmission on a port and HW queue TODO: measure performance vs C</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#rte_get_master_lcore-instance-method" class="signature"><strong>#rte_get_master_lcore</strong></a>
+        
+          <div class="summary"><p>return master_lcore number</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#rte_get_next_lcore%28i%3AUInt32%2Cskip_master%3D1%2Cwrap%3D0%29%3AUInt32-instance-method" class="signature"><strong>#rte_get_next_lcore</strong>(i : UInt32, skip_master = <span class="n">1</span>, wrap = <span class="n">0</span>) : UInt32</a>
+        
+          <div class="summary"><p>return next available lcore</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#rte_lcore_count-instance-method" class="signature"><strong>#rte_lcore_count</strong></a>
+        
+          <div class="summary"><p>return lcore_count</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#rte_lcore_foreach_slave%28%26block%29-instance-method" class="signature"><strong>#rte_lcore_foreach_slave</strong>(&block)</a>
+        
+          <div class="summary"><p>RTE_LCORE_FOREACH_SLAVE equivalent</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#rte_lcore_foreach_worker%28limit%3D32%2C%26block%29-instance-method" class="signature"><strong>#rte_lcore_foreach_worker</strong>(limit = <span class="n">32</span>, &block)</a>
+        
+          <div class="summary"><p>rte_lcore_foreach_slave with worker_id</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#rte_lcore_id-instance-method" class="signature"><strong>#rte_lcore_id</strong></a>
+        
+          <div class="summary"><p>per core lcore_id</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#rte_lcore_is_enabled%28lcore_id%29%3ABool-instance-method" class="signature"><strong>#rte_lcore_is_enabled</strong>(lcore_id) : Bool</a>
+        
+          <div class="summary"><p>check lcore is enabled or not, return boolean</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#rte_prefetch0%28p%3APointer%29%3AVoid-instance-method" class="signature"><strong>#rte_prefetch0</strong>(p : Pointer) : Void</a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#rte_prefetch1%28p%3APointer%29%3AVoid-instance-method" class="signature"><strong>#rte_prefetch1</strong>(p : Pointer) : Void</a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#rte_prefetch2%28p%3APointer%29%3AVoid-instance-method" class="signature"><strong>#rte_prefetch2</strong>(p : Pointer) : Void</a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#rte_prefetch_non_temporal%28p%3APointer%29%3AVoid-instance-method" class="signature"><strong>#rte_prefetch_non_temporal</strong>(p : Pointer) : Void</a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#rte_ring_count%28r%3A%3A%3APointer%28RteRing%29%29-instance-method" class="signature"><strong>#rte_ring_count</strong>(r : ::Pointer(RteRing))</a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#rte_socket_id-instance-method" class="signature"><strong>#rte_socket_id</strong></a>
+        
+          <div class="summary"><p>per core socket_id, unavailable on old gcc</p></div>
+        
+      </li>
+    
+  </ul>
+
+
+
+  <h2>Macro Summary</h2>
+  <ul class="list-summary">
+    
+      <li class="entry-summary">
+        <a href="#apply_from_si_measure%28var%2Cs%29-macro" class="signature"><strong>apply_from_si_measure</strong>(var, s)</a>
+        
+          <div class="summary"><p>SI Measure Units (T, G, M, k) to number converter</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#apply_from_si_time%28var%2Cs%29-macro" class="signature"><strong>apply_from_si_time</strong>(var, s)</a>
+        
+          <div class="summary"><p>SI Time Units (s, ms, us) to number converter</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#b16%28x%29-macro" class="signature"><strong>b16</strong>(x)</a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#b32%28x%29-macro" class="signature"><strong>b32</strong>(x)</a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#configure_tx_offload%28port_conf%2Cdev_info%29-macro" class="signature"><strong>configure_tx_offload</strong>(port_conf, dev_info)</a>
+        
+          <div class="summary"><p>set txmode.offloads and return txconf pointer</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#copy32%28dst%2Csrc%2Csize%29-macro" class="signature"><strong>copy32</strong>(dst, src, size)</a>
+        
+          <div class="summary"><p>copy by u32</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#copy64%28dst%2Csrc%2Csize%29-macro" class="signature"><strong>copy64</strong>(dst, src, size)</a>
+        
+          <div class="summary"><p>copy by u64</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#distributor_create%28cores%29-macro" class="signature"><strong>distributor_create</strong>(cores)</a>
+        
+          <div class="summary"><p>rte_distributor_create with error handling</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#ether_addr_copy%28ea_from%2Cea_to%29-macro" class="signature"><strong>ether_addr_copy</strong>(ea_from, ea_to)</a>
+        
+          <div class="summary"><p>ether_addr_copy</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#fail%28%2Aargs%29-macro" class="signature"><strong>fail</strong>(*args)</a>
+        
+          <div class="summary"><p>rte_exit with EXIT_FAILURE</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#fflush%28arg%29-macro" class="signature"><strong>fflush</strong>(arg)</a>
+        
+          <div class="summary"><p>fflush</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#hexdump%28name%2Cpkt%2Cpkt_len%29-macro" class="signature"><strong>hexdump</strong>(name, pkt, pkt_len)</a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#inet_pton%28address%2Caddr%29-macro" class="signature"><strong>inet_pton</strong>(address, addr)</a>
+        
+          <div class="summary"><p>inet_pton with buf</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#inet_pton%28address%29-macro" class="signature"><strong>inet_pton</strong>(address)</a>
+        
+          <div class="summary"><p>inet_pton equivalent</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#ipv4%28a%2Cb%2Cc%2Cd%29-macro" class="signature"><strong>ipv4</strong>(a, b, c, d)</a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#ipv4x%28a%2Cb%2Cc%2Cd%29-macro" class="signature"><strong>ipv4x</strong>(a, b, c, d)</a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#ipv6%28address%29-macro" class="signature"><strong>ipv6</strong>(address)</a>
+        
+          <div class="summary"><p>inet_pton for IPv6</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#log_dp%28l%2Ct%2C%2Aargs%29-macro" class="signature"><strong>log_dp</strong>(l, t, *args)</a>
+        
+          <div class="summary"><p>rte_log with log level condition.</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#panic%28%2Aargs%29-macro" class="signature"><strong>panic</strong>(*args)</a>
+        
+          <div class="summary"><p>rte_panic equivalent without function name NOTE: lots of assembly</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#pool_create%28name%2Cn%2Ccache_size%29-macro" class="signature"><strong>pool_create</strong>(name, n, cache_size)</a>
+        
+          <div class="summary"><p>pool creation shortcut with only name, numbers of pool, and cache_size</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#pool_create%28n%2Ccache_size%29-macro" class="signature"><strong>pool_create</strong>(n, cache_size)</a>
+        
+          <div class="summary"><p>pool creation shortcut with only numbers of pool, and cache_size</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#printf%28%2Aargs%29-macro" class="signature"><strong>printf</strong>(*args)</a>
+        
+          <div class="summary"><p>printf from LibC</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#puts%28args%29-macro" class="signature"><strong>puts</strong>(args)</a>
+        
+          <div class="summary"><p>puts from LibC</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#rte_eal_init%28%2Aargs%29-macro" class="signature"><strong>rte_eal_init</strong>(*args)</a>
+        
+          <div class="summary"><p>rte_eal_init with error handling</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#rte_eal_mp_remote_launch%28call%29-macro" class="signature"><strong>rte_eal_mp_remote_launch</strong>(call)</a>
+        
+          <div class="summary"><p>similar to rte_eal_mp_remote_launch without writing proc directly</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#rte_eal_remote_launch%28call%2C%2Aargs%29-macro" class="signature"><strong>rte_eal_remote_launch</strong>(call, *args)</a>
+        
+          <div class="summary"><p>rte_eal_remote_launch with automatic proc creation</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#rte_eth_dev_adjust_nb_rx_tx_desc%28%2Aargs%29-macro" class="signature"><strong>rte_eth_dev_adjust_nb_rx_tx_desc</strong>(*args)</a>
+        
+          <div class="summary"><p>rte_eth_dev_adjust_nb_rx_tx_desc with error handling</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#rte_eth_dev_configure%28%2Aargs%29-macro" class="signature"><strong>rte_eth_dev_configure</strong>(*args)</a>
+        
+          <div class="summary"><p>rte_eth_dev_configure with error handling</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#rte_eth_dev_start%28portid%29-macro" class="signature"><strong>rte_eth_dev_start</strong>(portid)</a>
+        
+          <div class="summary"><p>rte_eth_dev_start with error handling</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#rte_eth_rx_queue_setup%28%2Aargs%29-macro" class="signature"><strong>rte_eth_rx_queue_setup</strong>(*args)</a>
+        
+          <div class="summary"><p>rte_eth_rx_queue_setup with error handling</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#rte_eth_tx_buffer_size%28sz%29-macro" class="signature"><strong>rte_eth_tx_buffer_size</strong>(sz)</a>
+        
+          <div class="summary"><p>RTE_ETH_TX_BUFFER_SIZE</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#rte_eth_tx_queue_setup%28%2Aargs%29-macro" class="signature"><strong>rte_eth_tx_queue_setup</strong>(*args)</a>
+        
+          <div class="summary"><p>rte_eth_tx_queue_setup with error handling</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#rte_get_timer_hz-macro" class="signature"><strong>rte_get_timer_hz</strong></a>
+        
+          <div class="summary"><p>Get the number of cycles in one second for the default timer.</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#rte_log%28l%2Ct%2C%2Aargs%29-macro" class="signature"><strong>rte_log</strong>(l, t, *args)</a>
+        
+          <div class="summary"><p>rte_log equivalent</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#rte_lpm_create%28%2Aargs%29-macro" class="signature"><strong>rte_lpm_create</strong>(*args)</a>
+        
+          <div class="summary"><p>rte_lpm_create with error handling</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#rte_max%28a%2Cb%29-macro" class="signature"><strong>rte_max</strong>(a, b)</a>
+        
+          <div class="summary"><p>RTE_MAX</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#rte_min%28a%2Cb%29-macro" class="signature"><strong>rte_min</strong>(a, b)</a>
+        
+          <div class="summary"><p>RTE_MIN</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#rte_pause-macro" class="signature"><strong>rte_pause</strong></a>
+        
+          <div class="summary"><p>rte_pause implementation</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#rte_pktmbuf_adj%28mbuf%2Clen%29-macro" class="signature"><strong>rte_pktmbuf_adj</strong>(mbuf, len)</a>
+        
+          <div class="summary"><p>rte_pktmbuf_adj with error handling</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#rte_pktmbuf_alloc%28arg%29-macro" class="signature"><strong>rte_pktmbuf_alloc</strong>(arg)</a>
+        
+          <div class="summary"><p>rte_pktmbuf_alloc with error handling</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#rte_pktmbuf_clone%28arg%29-macro" class="signature"><strong>rte_pktmbuf_clone</strong>(arg)</a>
+        
+          <div class="summary"><p>rte_pktmbuf_clone with error handling</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#rte_pktmbuf_copy%28mbuf_old%2Cpool%29-macro" class="signature"><strong>rte_pktmbuf_copy</strong>(mbuf_old, pool)</a>
+        
+          <div class="summary"><p>rte_pktmbuf_alloc + memcpy packet data</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#rte_pktmbuf_free%28pkts%2Cnb%29-macro" class="signature"><strong>rte_pktmbuf_free</strong>(pkts, nb)</a>
+        
+          <div class="summary"><p>batch rte_pktmbuf_free</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#rte_pktmbuf_mtod%28m%29-macro" class="signature"><strong>rte_pktmbuf_mtod</strong>(m)</a>
+        
+          <div class="summary"><p>similar to rte_pktmbuf_mtod, but without type parameters, use .as(...) after this</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#rte_pktmbuf_mtod_offset%28m%2Co%29-macro" class="signature"><strong>rte_pktmbuf_mtod_offset</strong>(m, o)</a>
+        
+          <div class="summary"><p>similar to rte_pktmbuf_mtod_offset, but without type parameters, use .as(...) after this</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#rte_pktmbuf_pool_create%28%2Aargs%29-macro" class="signature"><strong>rte_pktmbuf_pool_create</strong>(*args)</a>
+        
+          <div class="summary"><p>rte_pktmbuf_pool_create with error handling</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#rte_pktmbuf_prepend%28mbuf%2Clen%29-macro" class="signature"><strong>rte_pktmbuf_prepend</strong>(mbuf, len)</a>
+        
+          <div class="summary"><p>rte_pktmbuf_prepend with error handling</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#rte_rdtsc-macro" class="signature"><strong>rte_rdtsc</strong></a>
+        
+          <div class="summary"><p>rte_rdtsc</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#rte_ring_create%28%2Aargs%29-macro" class="signature"><strong>rte_ring_create</strong>(*args)</a>
+        
+          <div class="summary"><p>rte_ring_create with error handling</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#rte_ring_dequeue_burst%28r%2Cobj_table%2Cn%2Cavailable%29-macro" class="signature"><strong>rte_ring_dequeue_burst</strong>(r, obj_table, n, available)</a>
+        
+          <div class="summary"><p>rte_ring_dequeue_burst with casting to Void**</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#rte_ring_enqueue_burst%28r%2Cobj_table%2Cn%2Cfree_space%29-macro" class="signature"><strong>rte_ring_enqueue_burst</strong>(r, obj_table, n, free_space)</a>
+        
+          <div class="summary"><p>rte_ring_enqueue_burst with casting to Void**</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#rte_ring_free_count%28r%29-macro" class="signature"><strong>rte_ring_free_count</strong>(r)</a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#rte_ring_lookup%28name%29-macro" class="signature"><strong>rte_ring_lookup</strong>(name)</a>
+        
+          <div class="summary"><p>wait rte_ring_lookup, until success</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#rte_ring_sc_dequeue_burst%28ring%2Cobj_table%2Cnb%29-macro" class="signature"><strong>rte_ring_sc_dequeue_burst</strong>(ring, obj_table, nb)</a>
+        
+          <div class="summary"><p>rte_ring_sc_dequeue_burst with block</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#rte_zmalloc_socket%28type%2Csize%2Calign%2Csocket%29-macro" class="signature"><strong>rte_zmalloc_socket</strong>(type, size, align, socket)</a>
+        
+          <div class="summary"><p>rte_zmalloc_socket with error handling</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#signal%28signum%2Ccall%29-macro" class="signature"><strong>signal</strong>(signum, call)</a>
+        
+          <div class="summary"><p>LibC.signal shortcut with automatic proc creation</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#snprintf%28%2Aargs%29-macro" class="signature"><strong>snprintf</strong>(*args)</a>
+        
+          <div class="summary"><p>snprintf from LibC</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#to_si_measure%28n%29-macro" class="signature"><strong>to_si_measure</strong>(n)</a>
+        
+          <div class="summary"><p>number to SI Measure Units (T, G, M, k) string converter</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#to_si_time%28n%29-macro" class="signature"><strong>to_si_time</strong>(n)</a>
+        
+          <div class="summary"><p>number to SI Time Units (s, ms, us) string converter</p></div>
+        
+      </li>
+    
+  </ul>
+
+
+
+<div class="methods-inherited">
+  
+    
+
+
+    
+
+
+    
+
+
+  
+    
+
+
+    
+
+
+    
+
+
+  
+</div>
+
+
+
+
+
+
+  <h2>Instance Method Detail</h2>
+  
+    <div class="entry-detail" id="_mm_pause-instance-method">
+      <div class="signature">
+        
+        def <strong>_mm_pause</strong>
+
+        <a class="method-permalink" href="#_mm_pause-instance-method">#</a>
+      </div>
+      
+        <div class="doc"><p>emmintrin.h pause implementation</p></div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/S-YOU/dpdk.cr/blob/2e979b8262603c5161eb867da55889f91dd761c5/src/dpdk/asm.cr#L37" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="print_macaddr(port)-instance-method">
+      <div class="signature">
+        
+        def <strong>print_macaddr</strong>(port)
+
+        <a class="method-permalink" href="#print_macaddr%28port%29-instance-method">#</a>
+      </div>
+      
+        <div class="doc"><p>rte_eth_macaddr_get and print</p></div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/S-YOU/dpdk.cr/blob/2e979b8262603c5161eb867da55889f91dd761c5/src/dpdk/extras.cr#L4" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="rte_errno-instance-method">
+      <div class="signature">
+        
+        def <strong>rte_errno</strong>
+
+        <a class="method-permalink" href="#rte_errno-instance-method">#</a>
+      </div>
+      
+        <div class="doc"><p>per core rte_errno, use with rte_strerror(rte_errno)</p></div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/S-YOU/dpdk.cr/blob/2e979b8262603c5161eb867da55889f91dd761c5/src/dpdk/inlines.cr#L15" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="rte_eth_tx_buffer(port_id:UInt16,queue_id:UInt16,buffer:::Pointer(RteEthDevTxBuffer),tx_pkt:::Pointer(RteMbuf)):UInt16-instance-method">
+      <div class="signature">
+        
+        def <strong>rte_eth_tx_buffer</strong>(port_id : UInt16, queue_id : UInt16, buffer : ::Pointer(RteEthDevTxBuffer), tx_pkt : ::Pointer(RteMbuf)) : UInt16
+
+        <a class="method-permalink" href="#rte_eth_tx_buffer%28port_id%3AUInt16%2Cqueue_id%3AUInt16%2Cbuffer%3A%3A%3APointer%28RteEthDevTxBuffer%29%2Ctx_pkt%3A%3A%3APointer%28RteMbuf%29%29%3AUInt16-instance-method">#</a>
+      </div>
+      
+        <div class="doc"><p>Buffer a single packet for future transmission on a port and queue</p>
+
+<p><span class="flag orange">TODO</span>  measure performance vs C</p></div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/S-YOU/dpdk.cr/blob/2e979b8262603c5161eb867da55889f91dd761c5/src/dpdk/inlines.cr#L62" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="rte_eth_tx_buffer_flush(port_id:UInt16,queue_id:UInt16,buffer:::Pointer(RteEthDevTxBuffer)):UInt16-instance-method">
+      <div class="signature">
+        
+        def <strong>rte_eth_tx_buffer_flush</strong>(port_id : UInt16, queue_id : UInt16, buffer : ::Pointer(RteEthDevTxBuffer)) : UInt16
+
+        <a class="method-permalink" href="#rte_eth_tx_buffer_flush%28port_id%3AUInt16%2Cqueue_id%3AUInt16%2Cbuffer%3A%3A%3APointer%28RteEthDevTxBuffer%29%29%3AUInt16-instance-method">#</a>
+      </div>
+      
+        <div class="doc"><p>Send any packets queued up for transmission on a port and HW queue</p>
+
+<p><span class="flag orange">TODO</span>  measure performance vs C</p></div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/S-YOU/dpdk.cr/blob/2e979b8262603c5161eb867da55889f91dd761c5/src/dpdk/inlines.cr#L76" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="rte_get_master_lcore-instance-method">
+      <div class="signature">
+        
+        def <strong>rte_get_master_lcore</strong>
+
+        <a class="method-permalink" href="#rte_get_master_lcore-instance-method">#</a>
+      </div>
+      
+        <div class="doc"><p>return master_lcore number</p></div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/S-YOU/dpdk.cr/blob/2e979b8262603c5161eb867da55889f91dd761c5/src/dpdk/inlines.cr#L39" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="rte_get_next_lcore(i:UInt32,skip_master=1,wrap=0):UInt32-instance-method">
+      <div class="signature">
+        
+        def <strong>rte_get_next_lcore</strong>(i : UInt32, skip_master = <span class="n">1</span>, wrap = <span class="n">0</span>) : UInt32
+
+        <a class="method-permalink" href="#rte_get_next_lcore%28i%3AUInt32%2Cskip_master%3D1%2Cwrap%3D0%29%3AUInt32-instance-method">#</a>
+      </div>
+      
+        <div class="doc"><p>return next available lcore</p></div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/S-YOU/dpdk.cr/blob/2e979b8262603c5161eb867da55889f91dd761c5/src/dpdk/inlines.cr#L44" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="rte_lcore_count-instance-method">
+      <div class="signature">
+        
+        def <strong>rte_lcore_count</strong>
+
+        <a class="method-permalink" href="#rte_lcore_count-instance-method">#</a>
+      </div>
+      
+        <div class="doc"><p>return lcore_count</p></div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/S-YOU/dpdk.cr/blob/2e979b8262603c5161eb867da55889f91dd761c5/src/dpdk/inlines.cr#L34" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="rte_lcore_foreach_slave(&amp;block)-instance-method">
+      <div class="signature">
+        
+        def <strong>rte_lcore_foreach_slave</strong>(&block)
+
+        <a class="method-permalink" href="#rte_lcore_foreach_slave%28%26block%29-instance-method">#</a>
+      </div>
+      
+        <div class="doc"><p>RTE_LCORE_FOREACH_SLAVE equivalent</p></div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/S-YOU/dpdk.cr/blob/2e979b8262603c5161eb867da55889f91dd761c5/src/dpdk/inlines.cr#L106" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="rte_lcore_foreach_worker(limit=32,&amp;block)-instance-method">
+      <div class="signature">
+        
+        def <strong>rte_lcore_foreach_worker</strong>(limit = <span class="n">32</span>, &block)
+
+        <a class="method-permalink" href="#rte_lcore_foreach_worker%28limit%3D32%2C%26block%29-instance-method">#</a>
+      </div>
+      
+        <div class="doc"><p>rte_lcore_foreach_slave with worker_id</p></div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/S-YOU/dpdk.cr/blob/2e979b8262603c5161eb867da55889f91dd761c5/src/dpdk/inlines.cr#L115" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="rte_lcore_id-instance-method">
+      <div class="signature">
+        
+        def <strong>rte_lcore_id</strong>
+
+        <a class="method-permalink" href="#rte_lcore_id-instance-method">#</a>
+      </div>
+      
+        <div class="doc"><p>per core lcore_id</p></div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/S-YOU/dpdk.cr/blob/2e979b8262603c5161eb867da55889f91dd761c5/src/dpdk/inlines.cr#L5" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="rte_lcore_is_enabled(lcore_id):Bool-instance-method">
+      <div class="signature">
+        
+        def <strong>rte_lcore_is_enabled</strong>(lcore_id) : Bool
+
+        <a class="method-permalink" href="#rte_lcore_is_enabled%28lcore_id%29%3ABool-instance-method">#</a>
+      </div>
+      
+        <div class="doc"><p>check lcore is enabled or not, return boolean</p></div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/S-YOU/dpdk.cr/blob/2e979b8262603c5161eb867da55889f91dd761c5/src/dpdk/inlines.cr#L26" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="rte_prefetch0(p:Pointer):Void-instance-method">
+      <div class="signature">
+        
+        def <strong>rte_prefetch0</strong>(p : Pointer) : Void
+
+        <a class="method-permalink" href="#rte_prefetch0%28p%3APointer%29%3AVoid-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/S-YOU/dpdk.cr/blob/2e979b8262603c5161eb867da55889f91dd761c5/src/dpdk/asm.cr#L4" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="rte_prefetch1(p:Pointer):Void-instance-method">
+      <div class="signature">
+        
+        def <strong>rte_prefetch1</strong>(p : Pointer) : Void
+
+        <a class="method-permalink" href="#rte_prefetch1%28p%3APointer%29%3AVoid-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/S-YOU/dpdk.cr/blob/2e979b8262603c5161eb867da55889f91dd761c5/src/dpdk/asm.cr#L12" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="rte_prefetch2(p:Pointer):Void-instance-method">
+      <div class="signature">
+        
+        def <strong>rte_prefetch2</strong>(p : Pointer) : Void
+
+        <a class="method-permalink" href="#rte_prefetch2%28p%3APointer%29%3AVoid-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/S-YOU/dpdk.cr/blob/2e979b8262603c5161eb867da55889f91dd761c5/src/dpdk/asm.cr#L20" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="rte_prefetch_non_temporal(p:Pointer):Void-instance-method">
+      <div class="signature">
+        
+        def <strong>rte_prefetch_non_temporal</strong>(p : Pointer) : Void
+
+        <a class="method-permalink" href="#rte_prefetch_non_temporal%28p%3APointer%29%3AVoid-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/S-YOU/dpdk.cr/blob/2e979b8262603c5161eb867da55889f91dd761c5/src/dpdk/asm.cr#L28" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="rte_ring_count(r:::Pointer(RteRing))-instance-method">
+      <div class="signature">
+        
+        def <strong>rte_ring_count</strong>(r : ::Pointer(RteRing))
+
+        <a class="method-permalink" href="#rte_ring_count%28r%3A%3A%3APointer%28RteRing%29%29-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/S-YOU/dpdk.cr/blob/2e979b8262603c5161eb867da55889f91dd761c5/src/dpdk/inlines.cr#L96" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="rte_socket_id-instance-method">
+      <div class="signature">
+        
+        def <strong>rte_socket_id</strong>
+
+        <a class="method-permalink" href="#rte_socket_id-instance-method">#</a>
+      </div>
+      
+        <div class="doc"><p>per core socket_id, unavailable on old gcc</p></div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/S-YOU/dpdk.cr/blob/2e979b8262603c5161eb867da55889f91dd761c5/src/dpdk/inlines.cr#L10" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+
+
+
+  <h2>Macro Detail</h2>
+  
+    <div class="entry-detail" id="apply_from_si_measure(var,s)-macro">
+      <div class="signature">
+        
+        macro <strong>apply_from_si_measure</strong>(var, s)
+
+        <a class="method-permalink" href="#apply_from_si_measure%28var%2Cs%29-macro">#</a>
+      </div>
+      
+        <div class="doc"><p>SI Measure Units (T, G, M, k) to number converter</p></div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/S-YOU/dpdk.cr/blob/2e979b8262603c5161eb867da55889f91dd761c5/src/dpdk/units.cr#L3" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="apply_from_si_time(var,s)-macro">
+      <div class="signature">
+        
+        macro <strong>apply_from_si_time</strong>(var, s)
+
+        <a class="method-permalink" href="#apply_from_si_time%28var%2Cs%29-macro">#</a>
+      </div>
+      
+        <div class="doc"><p>SI Time Units (s, ms, us) to number converter</p></div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/S-YOU/dpdk.cr/blob/2e979b8262603c5161eb867da55889f91dd761c5/src/dpdk/units.cr#L21" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="b16(x)-macro">
+      <div class="signature">
+        
+        macro <strong>b16</strong>(x)
+
+        <a class="method-permalink" href="#b16%28x%29-macro">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/S-YOU/dpdk.cr/blob/2e979b8262603c5161eb867da55889f91dd761c5/src/dpdk/units.cr#L44" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="b32(x)-macro">
+      <div class="signature">
+        
+        macro <strong>b32</strong>(x)
+
+        <a class="method-permalink" href="#b32%28x%29-macro">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/S-YOU/dpdk.cr/blob/2e979b8262603c5161eb867da55889f91dd761c5/src/dpdk/units.cr#L48" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="configure_tx_offload(port_conf,dev_info)-macro">
+      <div class="signature">
+        
+        macro <strong>configure_tx_offload</strong>(port_conf, dev_info)
+
+        <a class="method-permalink" href="#configure_tx_offload%28port_conf%2Cdev_info%29-macro">#</a>
+      </div>
+      
+        <div class="doc"><p>set txmode.offloads and return txconf pointer</p></div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/S-YOU/dpdk.cr/blob/2e979b8262603c5161eb867da55889f91dd761c5/src/dpdk/extras.cr#L11" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="copy32(dst,src,size)-macro">
+      <div class="signature">
+        
+        macro <strong>copy32</strong>(dst, src, size)
+
+        <a class="method-permalink" href="#copy32%28dst%2Csrc%2Csize%29-macro">#</a>
+      </div>
+      
+        <div class="doc"><p>copy by u32</p></div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/S-YOU/dpdk.cr/blob/2e979b8262603c5161eb867da55889f91dd761c5/src/dpdk/macros_defines.cr#L30" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="copy64(dst,src,size)-macro">
+      <div class="signature">
+        
+        macro <strong>copy64</strong>(dst, src, size)
+
+        <a class="method-permalink" href="#copy64%28dst%2Csrc%2Csize%29-macro">#</a>
+      </div>
+      
+        <div class="doc"><p>copy by u64</p></div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/S-YOU/dpdk.cr/blob/2e979b8262603c5161eb867da55889f91dd761c5/src/dpdk/macros_defines.cr#L23" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="distributor_create(cores)-macro">
+      <div class="signature">
+        
+        macro <strong>distributor_create</strong>(cores)
+
+        <a class="method-permalink" href="#distributor_create%28cores%29-macro">#</a>
+      </div>
+      
+        <div class="doc"><p>rte_distributor_create with error handling</p></div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/S-YOU/dpdk.cr/blob/2e979b8262603c5161eb867da55889f91dd761c5/src/dpdk/macros_overloads.cr#L37" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="ether_addr_copy(ea_from,ea_to)-macro">
+      <div class="signature">
+        
+        macro <strong>ether_addr_copy</strong>(ea_from, ea_to)
+
+        <a class="method-permalink" href="#ether_addr_copy%28ea_from%2Cea_to%29-macro">#</a>
+      </div>
+      
+        <div class="doc"><p>ether_addr_copy</p></div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/S-YOU/dpdk.cr/blob/2e979b8262603c5161eb867da55889f91dd761c5/src/dpdk/inlines.cr#L138" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="fail(*args)-macro">
+      <div class="signature">
+        
+        macro <strong>fail</strong>(*args)
+
+        <a class="method-permalink" href="#fail%28%2Aargs%29-macro">#</a>
+      </div>
+      
+        <div class="doc"><p>rte_exit with EXIT_FAILURE</p></div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/S-YOU/dpdk.cr/blob/2e979b8262603c5161eb867da55889f91dd761c5/src/dpdk/debug.cr#L24" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="fflush(arg)-macro">
+      <div class="signature">
+        
+        macro <strong>fflush</strong>(arg)
+
+        <a class="method-permalink" href="#fflush%28arg%29-macro">#</a>
+      </div>
+      
+        <div class="doc"><p>fflush</p></div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/S-YOU/dpdk.cr/blob/2e979b8262603c5161eb867da55889f91dd761c5/src/dpdk/debug.cr#L52" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="hexdump(name,pkt,pkt_len)-macro">
+      <div class="signature">
+        
+        macro <strong>hexdump</strong>(name, pkt, pkt_len)
+
+        <a class="method-permalink" href="#hexdump%28name%2Cpkt%2Cpkt_len%29-macro">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/S-YOU/dpdk.cr/blob/2e979b8262603c5161eb867da55889f91dd761c5/src/dpdk/debug.cr#L109" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="inet_pton(address,addr)-macro">
+      <div class="signature">
+        
+        macro <strong>inet_pton</strong>(address, addr)
+
+        <a class="method-permalink" href="#inet_pton%28address%2Caddr%29-macro">#</a>
+      </div>
+      
+        <div class="doc"><p>inet_pton with buf</p></div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/S-YOU/dpdk.cr/blob/2e979b8262603c5161eb867da55889f91dd761c5/src/dpdk/inlines.cr#L144" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="inet_pton(address)-macro">
+      <div class="signature">
+        
+        macro <strong>inet_pton</strong>(address)
+
+        <a class="method-permalink" href="#inet_pton%28address%29-macro">#</a>
+      </div>
+      
+        <div class="doc"><p>inet_pton equivalent</p></div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/S-YOU/dpdk.cr/blob/2e979b8262603c5161eb867da55889f91dd761c5/src/dpdk/inlines.cr#L153" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="ipv4(a,b,c,d)-macro">
+      <div class="signature">
+        
+        macro <strong>ipv4</strong>(a, b, c, d)
+
+        <a class="method-permalink" href="#ipv4%28a%2Cb%2Cc%2Cd%29-macro">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/S-YOU/dpdk.cr/blob/2e979b8262603c5161eb867da55889f91dd761c5/src/dpdk/units.cr#L36" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="ipv4x(a,b,c,d)-macro">
+      <div class="signature">
+        
+        macro <strong>ipv4x</strong>(a, b, c, d)
+
+        <a class="method-permalink" href="#ipv4x%28a%2Cb%2Cc%2Cd%29-macro">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/S-YOU/dpdk.cr/blob/2e979b8262603c5161eb867da55889f91dd761c5/src/dpdk/units.cr#L40" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="ipv6(address)-macro">
+      <div class="signature">
+        
+        macro <strong>ipv6</strong>(address)
+
+        <a class="method-permalink" href="#ipv6%28address%29-macro">#</a>
+      </div>
+      
+        <div class="doc"><p>inet_pton for IPv6</p></div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/S-YOU/dpdk.cr/blob/2e979b8262603c5161eb867da55889f91dd761c5/src/dpdk/macros_defines.cr#L37" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="log_dp(l,t,*args)-macro">
+      <div class="signature">
+        
+        macro <strong>log_dp</strong>(l, t, *args)
+
+        <a class="method-permalink" href="#log_dp%28l%2Ct%2C%2Aargs%29-macro">#</a>
+      </div>
+      
+        <div class="doc"><p>rte_log with log level condition.</p>
+
+<p><span class="flag orange">TODO</span>  fix log level check at compile time</p></div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/S-YOU/dpdk.cr/blob/2e979b8262603c5161eb867da55889f91dd761c5/src/dpdk/debug.cr#L10" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="panic(*args)-macro">
+      <div class="signature">
+        
+        macro <strong>panic</strong>(*args)
+
+        <a class="method-permalink" href="#panic%28%2Aargs%29-macro">#</a>
+      </div>
+      
+        <div class="doc"><p>rte_panic equivalent without function name</p>
+
+<p><span class="flag purple">NOTE</span>  lots of assembly</p></div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/S-YOU/dpdk.cr/blob/2e979b8262603c5161eb867da55889f91dd761c5/src/dpdk/debug.cr#L32" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="pool_create(name,n,cache_size)-macro">
+      <div class="signature">
+        
+        macro <strong>pool_create</strong>(name, n, cache_size)
+
+        <a class="method-permalink" href="#pool_create%28name%2Cn%2Ccache_size%29-macro">#</a>
+      </div>
+      
+        <div class="doc"><p>pool creation shortcut with only name, numbers of pool, and cache_size</p></div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/S-YOU/dpdk.cr/blob/2e979b8262603c5161eb867da55889f91dd761c5/src/dpdk/macros_overloads.cr#L12" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="pool_create(n,cache_size)-macro">
+      <div class="signature">
+        
+        macro <strong>pool_create</strong>(n, cache_size)
+
+        <a class="method-permalink" href="#pool_create%28n%2Ccache_size%29-macro">#</a>
+      </div>
+      
+        <div class="doc"><p>pool creation shortcut with only numbers of pool, and cache_size</p></div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/S-YOU/dpdk.cr/blob/2e979b8262603c5161eb867da55889f91dd761c5/src/dpdk/macros_overloads.cr#L6" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="printf(*args)-macro">
+      <div class="signature">
+        
+        macro <strong>printf</strong>(*args)
+
+        <a class="method-permalink" href="#printf%28%2Aargs%29-macro">#</a>
+      </div>
+      
+        <div class="doc"><p>printf from LibC</p></div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/S-YOU/dpdk.cr/blob/2e979b8262603c5161eb867da55889f91dd761c5/src/dpdk/debug.cr#L37" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="puts(args)-macro">
+      <div class="signature">
+        
+        macro <strong>puts</strong>(args)
+
+        <a class="method-permalink" href="#puts%28args%29-macro">#</a>
+      </div>
+      
+        <div class="doc"><p>puts from LibC</p></div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/S-YOU/dpdk.cr/blob/2e979b8262603c5161eb867da55889f91dd761c5/src/dpdk/debug.cr#L42" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="rte_eal_init(*args)-macro">
+      <div class="signature">
+        
+        macro <strong>rte_eal_init</strong>(*args)
+
+        <a class="method-permalink" href="#rte_eal_init%28%2Aargs%29-macro">#</a>
+      </div>
+      
+        <div class="doc"><p>rte_eal_init with error handling</p></div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/S-YOU/dpdk.cr/blob/2e979b8262603c5161eb867da55889f91dd761c5/src/dpdk/macros_overrides.cr#L36" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="rte_eal_mp_remote_launch(call)-macro">
+      <div class="signature">
+        
+        macro <strong>rte_eal_mp_remote_launch</strong>(call)
+
+        <a class="method-permalink" href="#rte_eal_mp_remote_launch%28call%29-macro">#</a>
+      </div>
+      
+        <div class="doc"><p>similar to rte_eal_mp_remote_launch without writing proc directly</p></div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/S-YOU/dpdk.cr/blob/2e979b8262603c5161eb867da55889f91dd761c5/src/dpdk/macros_overloads.cr#L30" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="rte_eal_remote_launch(call,*args)-macro">
+      <div class="signature">
+        
+        macro <strong>rte_eal_remote_launch</strong>(call, *args)
+
+        <a class="method-permalink" href="#rte_eal_remote_launch%28call%2C%2Aargs%29-macro">#</a>
+      </div>
+      
+        <div class="doc"><p>rte_eal_remote_launch with automatic proc creation</p></div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/S-YOU/dpdk.cr/blob/2e979b8262603c5161eb867da55889f91dd761c5/src/dpdk/macros_overrides.cr#L132" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="rte_eth_dev_adjust_nb_rx_tx_desc(*args)-macro">
+      <div class="signature">
+        
+        macro <strong>rte_eth_dev_adjust_nb_rx_tx_desc</strong>(*args)
+
+        <a class="method-permalink" href="#rte_eth_dev_adjust_nb_rx_tx_desc%28%2Aargs%29-macro">#</a>
+      </div>
+      
+        <div class="doc"><p>rte_eth_dev_adjust_nb_rx_tx_desc with error handling</p></div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/S-YOU/dpdk.cr/blob/2e979b8262603c5161eb867da55889f91dd761c5/src/dpdk/macros_overrides.cr#L101" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="rte_eth_dev_configure(*args)-macro">
+      <div class="signature">
+        
+        macro <strong>rte_eth_dev_configure</strong>(*args)
+
+        <a class="method-permalink" href="#rte_eth_dev_configure%28%2Aargs%29-macro">#</a>
+      </div>
+      
+        <div class="doc"><p>rte_eth_dev_configure with error handling</p></div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/S-YOU/dpdk.cr/blob/2e979b8262603c5161eb867da55889f91dd761c5/src/dpdk/macros_overrides.cr#L95" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="rte_eth_dev_start(portid)-macro">
+      <div class="signature">
+        
+        macro <strong>rte_eth_dev_start</strong>(portid)
+
+        <a class="method-permalink" href="#rte_eth_dev_start%28portid%29-macro">#</a>
+      </div>
+      
+        <div class="doc"><p>rte_eth_dev_start with error handling</p></div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/S-YOU/dpdk.cr/blob/2e979b8262603c5161eb867da55889f91dd761c5/src/dpdk/macros_overrides.cr#L119" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="rte_eth_rx_queue_setup(*args)-macro">
+      <div class="signature">
+        
+        macro <strong>rte_eth_rx_queue_setup</strong>(*args)
+
+        <a class="method-permalink" href="#rte_eth_rx_queue_setup%28%2Aargs%29-macro">#</a>
+      </div>
+      
+        <div class="doc"><p>rte_eth_rx_queue_setup with error handling</p></div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/S-YOU/dpdk.cr/blob/2e979b8262603c5161eb867da55889f91dd761c5/src/dpdk/macros_overrides.cr#L107" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="rte_eth_tx_buffer_size(sz)-macro">
+      <div class="signature">
+        
+        macro <strong>rte_eth_tx_buffer_size</strong>(sz)
+
+        <a class="method-permalink" href="#rte_eth_tx_buffer_size%28sz%29-macro">#</a>
+      </div>
+      
+        <div class="doc"><p>RTE_ETH_TX_BUFFER_SIZE</p></div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/S-YOU/dpdk.cr/blob/2e979b8262603c5161eb867da55889f91dd761c5/src/dpdk/macros_defines.cr#L3" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="rte_eth_tx_queue_setup(*args)-macro">
+      <div class="signature">
+        
+        macro <strong>rte_eth_tx_queue_setup</strong>(*args)
+
+        <a class="method-permalink" href="#rte_eth_tx_queue_setup%28%2Aargs%29-macro">#</a>
+      </div>
+      
+        <div class="doc"><p>rte_eth_tx_queue_setup with error handling</p></div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/S-YOU/dpdk.cr/blob/2e979b8262603c5161eb867da55889f91dd761c5/src/dpdk/macros_overrides.cr#L113" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="rte_get_timer_hz-macro">
+      <div class="signature">
+        
+        macro <strong>rte_get_timer_hz</strong>
+
+        <a class="method-permalink" href="#rte_get_timer_hz-macro">#</a>
+      </div>
+      
+        <div class="doc"><p>Get the number of cycles in one second for the default timer.
+using rte_get_tsc_hz, not rte_get_hpet_hz</p></div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/S-YOU/dpdk.cr/blob/2e979b8262603c5161eb867da55889f91dd761c5/src/dpdk/inlines.cr#L21" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="rte_log(l,t,*args)-macro">
+      <div class="signature">
+        
+        macro <strong>rte_log</strong>(l, t, *args)
+
+        <a class="method-permalink" href="#rte_log%28l%2Ct%2C%2Aargs%29-macro">#</a>
+      </div>
+      
+        <div class="doc"><p>rte_log equivalent</p></div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/S-YOU/dpdk.cr/blob/2e979b8262603c5161eb867da55889f91dd761c5/src/dpdk/debug.cr#L3" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="rte_lpm_create(*args)-macro">
+      <div class="signature">
+        
+        macro <strong>rte_lpm_create</strong>(*args)
+
+        <a class="method-permalink" href="#rte_lpm_create%28%2Aargs%29-macro">#</a>
+      </div>
+      
+        <div class="doc"><p>rte_lpm_create with error handling</p></div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/S-YOU/dpdk.cr/blob/2e979b8262603c5161eb867da55889f91dd761c5/src/dpdk/macros_overrides.cr#L125" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="rte_max(a,b)-macro">
+      <div class="signature">
+        
+        macro <strong>rte_max</strong>(a, b)
+
+        <a class="method-permalink" href="#rte_max%28a%2Cb%29-macro">#</a>
+      </div>
+      
+        <div class="doc"><p>RTE_MAX</p></div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/S-YOU/dpdk.cr/blob/2e979b8262603c5161eb867da55889f91dd761c5/src/dpdk/macros_defines.cr#L8" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="rte_min(a,b)-macro">
+      <div class="signature">
+        
+        macro <strong>rte_min</strong>(a, b)
+
+        <a class="method-permalink" href="#rte_min%28a%2Cb%29-macro">#</a>
+      </div>
+      
+        <div class="doc"><p>RTE_MIN</p></div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/S-YOU/dpdk.cr/blob/2e979b8262603c5161eb867da55889f91dd761c5/src/dpdk/macros_defines.cr#L13" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="rte_pause-macro">
+      <div class="signature">
+        
+        macro <strong>rte_pause</strong>
+
+        <a class="method-permalink" href="#rte_pause-macro">#</a>
+      </div>
+      
+        <div class="doc"><p>rte_pause implementation</p></div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/S-YOU/dpdk.cr/blob/2e979b8262603c5161eb867da55889f91dd761c5/src/dpdk/macros_defines.cr#L18" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="rte_pktmbuf_adj(mbuf,len)-macro">
+      <div class="signature">
+        
+        macro <strong>rte_pktmbuf_adj</strong>(mbuf, len)
+
+        <a class="method-permalink" href="#rte_pktmbuf_adj%28mbuf%2Clen%29-macro">#</a>
+      </div>
+      
+        <div class="doc"><p>rte_pktmbuf_adj with error handling</p></div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/S-YOU/dpdk.cr/blob/2e979b8262603c5161eb867da55889f91dd761c5/src/dpdk/macros_overrides.cr#L74" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="rte_pktmbuf_alloc(arg)-macro">
+      <div class="signature">
+        
+        macro <strong>rte_pktmbuf_alloc</strong>(arg)
+
+        <a class="method-permalink" href="#rte_pktmbuf_alloc%28arg%29-macro">#</a>
+      </div>
+      
+        <div class="doc"><p>rte_pktmbuf_alloc with error handling</p></div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/S-YOU/dpdk.cr/blob/2e979b8262603c5161eb867da55889f91dd761c5/src/dpdk/macros_overrides.cr#L10" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="rte_pktmbuf_clone(arg)-macro">
+      <div class="signature">
+        
+        macro <strong>rte_pktmbuf_clone</strong>(arg)
+
+        <a class="method-permalink" href="#rte_pktmbuf_clone%28arg%29-macro">#</a>
+      </div>
+      
+        <div class="doc"><p>rte_pktmbuf_clone with error handling</p></div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/S-YOU/dpdk.cr/blob/2e979b8262603c5161eb867da55889f91dd761c5/src/dpdk/macros_overrides.cr#L19" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="rte_pktmbuf_copy(mbuf_old,pool)-macro">
+      <div class="signature">
+        
+        macro <strong>rte_pktmbuf_copy</strong>(mbuf_old, pool)
+
+        <a class="method-permalink" href="#rte_pktmbuf_copy%28mbuf_old%2Cpool%29-macro">#</a>
+      </div>
+      
+        <div class="doc"><p>rte_pktmbuf_alloc + memcpy packet data</p></div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/S-YOU/dpdk.cr/blob/2e979b8262603c5161eb867da55889f91dd761c5/src/dpdk/macros_overrides.cr#L26" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="rte_pktmbuf_free(pkts,nb)-macro">
+      <div class="signature">
+        
+        macro <strong>rte_pktmbuf_free</strong>(pkts, nb)
+
+        <a class="method-permalink" href="#rte_pktmbuf_free%28pkts%2Cnb%29-macro">#</a>
+      </div>
+      
+        <div class="doc"><p>batch rte_pktmbuf_free</p></div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/S-YOU/dpdk.cr/blob/2e979b8262603c5161eb867da55889f91dd761c5/src/dpdk/macros_overloads.cr#L44" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="rte_pktmbuf_mtod(m)-macro">
+      <div class="signature">
+        
+        macro <strong>rte_pktmbuf_mtod</strong>(m)
+
+        <a class="method-permalink" href="#rte_pktmbuf_mtod%28m%29-macro">#</a>
+      </div>
+      
+        <div class="doc"><p>similar to rte_pktmbuf_mtod, but without type parameters, use .as(...) after this</p></div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/S-YOU/dpdk.cr/blob/2e979b8262603c5161eb867da55889f91dd761c5/src/dpdk/macros_overloads.cr#L18" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="rte_pktmbuf_mtod_offset(m,o)-macro">
+      <div class="signature">
+        
+        macro <strong>rte_pktmbuf_mtod_offset</strong>(m, o)
+
+        <a class="method-permalink" href="#rte_pktmbuf_mtod_offset%28m%2Co%29-macro">#</a>
+      </div>
+      
+        <div class="doc"><p>similar to rte_pktmbuf_mtod_offset, but without type parameters, use .as(...) after this</p></div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/S-YOU/dpdk.cr/blob/2e979b8262603c5161eb867da55889f91dd761c5/src/dpdk/macros_overloads.cr#L24" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="rte_pktmbuf_pool_create(*args)-macro">
+      <div class="signature">
+        
+        macro <strong>rte_pktmbuf_pool_create</strong>(*args)
+
+        <a class="method-permalink" href="#rte_pktmbuf_pool_create%28%2Aargs%29-macro">#</a>
+      </div>
+      
+        <div class="doc"><p>rte_pktmbuf_pool_create with error handling</p></div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/S-YOU/dpdk.cr/blob/2e979b8262603c5161eb867da55889f91dd761c5/src/dpdk/macros_overrides.cr#L3" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="rte_pktmbuf_prepend(mbuf,len)-macro">
+      <div class="signature">
+        
+        macro <strong>rte_pktmbuf_prepend</strong>(mbuf, len)
+
+        <a class="method-permalink" href="#rte_pktmbuf_prepend%28mbuf%2Clen%29-macro">#</a>
+      </div>
+      
+        <div class="doc"><p>rte_pktmbuf_prepend with error handling</p></div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/S-YOU/dpdk.cr/blob/2e979b8262603c5161eb867da55889f91dd761c5/src/dpdk/macros_overrides.cr#L67" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="rte_rdtsc-macro">
+      <div class="signature">
+        
+        macro <strong>rte_rdtsc</strong>
+
+        <a class="method-permalink" href="#rte_rdtsc-macro">#</a>
+      </div>
+      
+        <div class="doc"><p>rte_rdtsc</p></div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/S-YOU/dpdk.cr/blob/2e979b8262603c5161eb867da55889f91dd761c5/src/dpdk/llvm.cr#L5" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="rte_ring_create(*args)-macro">
+      <div class="signature">
+        
+        macro <strong>rte_ring_create</strong>(*args)
+
+        <a class="method-permalink" href="#rte_ring_create%28%2Aargs%29-macro">#</a>
+      </div>
+      
+        <div class="doc"><p>rte_ring_create with error handling</p></div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/S-YOU/dpdk.cr/blob/2e979b8262603c5161eb867da55889f91dd761c5/src/dpdk/macros_overrides.cr#L43" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="rte_ring_dequeue_burst(r,obj_table,n,available)-macro">
+      <div class="signature">
+        
+        macro <strong>rte_ring_dequeue_burst</strong>(r, obj_table, n, available)
+
+        <a class="method-permalink" href="#rte_ring_dequeue_burst%28r%2Cobj_table%2Cn%2Cavailable%29-macro">#</a>
+      </div>
+      
+        <div class="doc"><p>rte_ring_dequeue_burst with casting to Void**</p></div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/S-YOU/dpdk.cr/blob/2e979b8262603c5161eb867da55889f91dd761c5/src/dpdk/macros_overrides.cr#L57" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="rte_ring_enqueue_burst(r,obj_table,n,free_space)-macro">
+      <div class="signature">
+        
+        macro <strong>rte_ring_enqueue_burst</strong>(r, obj_table, n, free_space)
+
+        <a class="method-permalink" href="#rte_ring_enqueue_burst%28r%2Cobj_table%2Cn%2Cfree_space%29-macro">#</a>
+      </div>
+      
+        <div class="doc"><p>rte_ring_enqueue_burst with casting to Void**</p></div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/S-YOU/dpdk.cr/blob/2e979b8262603c5161eb867da55889f91dd761c5/src/dpdk/macros_overrides.cr#L62" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="rte_ring_free_count(r)-macro">
+      <div class="signature">
+        
+        macro <strong>rte_ring_free_count</strong>(r)
+
+        <a class="method-permalink" href="#rte_ring_free_count%28r%29-macro">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/S-YOU/dpdk.cr/blob/2e979b8262603c5161eb867da55889f91dd761c5/src/dpdk/inlines.cr#L101" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="rte_ring_lookup(name)-macro">
+      <div class="signature">
+        
+        macro <strong>rte_ring_lookup</strong>(name)
+
+        <a class="method-permalink" href="#rte_ring_lookup%28name%29-macro">#</a>
+      </div>
+      
+        <div class="doc"><p>wait rte_ring_lookup, until success</p></div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/S-YOU/dpdk.cr/blob/2e979b8262603c5161eb867da55889f91dd761c5/src/dpdk/macros_overrides.cr#L81" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="rte_ring_sc_dequeue_burst(ring,obj_table,nb)-macro">
+      <div class="signature">
+        
+        macro <strong>rte_ring_sc_dequeue_burst</strong>(ring, obj_table, nb)
+
+        <a class="method-permalink" href="#rte_ring_sc_dequeue_burst%28ring%2Cobj_table%2Cnb%29-macro">#</a>
+      </div>
+      
+        <div class="doc"><p>rte_ring_sc_dequeue_burst with block</p></div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/S-YOU/dpdk.cr/blob/2e979b8262603c5161eb867da55889f91dd761c5/src/dpdk/inlines.cr#L126" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="rte_zmalloc_socket(type,size,align,socket)-macro">
+      <div class="signature">
+        
+        macro <strong>rte_zmalloc_socket</strong>(type, size, align, socket)
+
+        <a class="method-permalink" href="#rte_zmalloc_socket%28type%2Csize%2Calign%2Csocket%29-macro">#</a>
+      </div>
+      
+        <div class="doc"><p>rte_zmalloc_socket with error handling</p></div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/S-YOU/dpdk.cr/blob/2e979b8262603c5161eb867da55889f91dd761c5/src/dpdk/macros_overrides.cr#L50" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="signal(signum,call)-macro">
+      <div class="signature">
+        
+        macro <strong>signal</strong>(signum, call)
+
+        <a class="method-permalink" href="#signal%28signum%2Ccall%29-macro">#</a>
+      </div>
+      
+        <div class="doc"><p>LibC.signal shortcut with automatic proc creation</p></div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/S-YOU/dpdk.cr/blob/2e979b8262603c5161eb867da55889f91dd761c5/src/dpdk/macros_overrides.cr#L139" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="snprintf(*args)-macro">
+      <div class="signature">
+        
+        macro <strong>snprintf</strong>(*args)
+
+        <a class="method-permalink" href="#snprintf%28%2Aargs%29-macro">#</a>
+      </div>
+      
+        <div class="doc"><p>snprintf from LibC</p></div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/S-YOU/dpdk.cr/blob/2e979b8262603c5161eb867da55889f91dd761c5/src/dpdk/debug.cr#L47" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="to_si_measure(n)-macro">
+      <div class="signature">
+        
+        macro <strong>to_si_measure</strong>(n)
+
+        <a class="method-permalink" href="#to_si_measure%28n%29-macro">#</a>
+      </div>
+      
+        <div class="doc"><p>number to SI Measure Units (T, G, M, k) string converter</p></div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/S-YOU/dpdk.cr/blob/2e979b8262603c5161eb867da55889f91dd761c5/src/dpdk/units.cr#L8" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="to_si_time(n)-macro">
+      <div class="signature">
+        
+        macro <strong>to_si_time</strong>(n)
+
+        <a class="method-permalink" href="#to_si_time%28n%29-macro">#</a>
+      </div>
+      
+        <div class="doc"><p>number to SI Time Units (s, ms, us) string converter</p></div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/S-YOU/dpdk.cr/blob/2e979b8262603c5161eb867da55889f91dd761c5/src/dpdk/units.cr#L26" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+
+
+</div>
+
+</body>
+</html>
